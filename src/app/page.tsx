@@ -699,32 +699,12 @@ import { Heading } from "@/components/Heading";
 import { Paragraph } from "@/components/Paragraph";
 import { Highlight } from "@/components/Highlight";
 import { motion } from "framer-motion";
-import { useState, useEffect, useCallback } from "react"; // Add useCallback import
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { Linkedin, Twitter, Users, Youtube, Github, Book } from "lucide-react";
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import { TypewriterEffectSmooth } from "../components/ui/typewriter-effect";
 
-
-export function TypewriterEffectSmoothDemo() {
-  const words = [
-    {
-      text: "Build",
-    },
-    {
-      text: "with",
-    },
-    {
-      text: "Indranil",
-      className: "text-blue-500 dark:text-blue-500",
-    },
-  ];
-  return (
-    <div>
-      <TypewriterEffectSmooth words={words} />
-    </div>
-  );
-}
 // Progressive loading hook
 function useProgressiveLoading() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -866,7 +846,7 @@ const Elegant3DProjects = ({
       const interval = setInterval(handleNext, 4000);
       return () => clearInterval(interval);
     }
-  }, [autoplay, handleNext]); // Fixed: Added handleNext to dependency array
+  }, [autoplay, handleNext]);
 
   const getCardStyle = (index: number) => {
     const position = (index - active + projects.length) % projects.length;
@@ -899,7 +879,6 @@ const Elegant3DProjects = ({
   return (
     <div className="relative w-full">
       {/* 3D Carousel Container */}
-      {/* 3D Carousel Container */}
       <div className="relative h-96 mb-8" style={{ perspective: '1000px' }}>
         <div className="relative w-full h-full flex items-center justify-center">
           {projects.map((project, index) => {
@@ -921,7 +900,7 @@ const Elegant3DProjects = ({
       >
         {/* Card Container */}
         <div className="relative w-full h-full bg-white rounded-xl border border-gray-200 shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden group">
-          {/* Project Image - Fixed: Use Next.js Image component */}
+          {/* Project Image */}
           <div className="relative h-40 overflow-hidden">
             <Image
               src={project.src}
@@ -1106,8 +1085,6 @@ function MiniProjects() {
   );
 }
 
-
-
 // Compact Contact Bar
 function CompactContactBar() {
   return (
@@ -1163,6 +1140,27 @@ function CompactContactBar() {
 // Main Homepage Component
 export default function HomePage() {
   const isLoaded = useProgressiveLoading();
+  
+  // Moved TypewriterEffectSmoothDemo inside the main component
+  const TypewriterEffectSmoothDemo = () => {
+    const words = [
+      {
+        text: "Build",
+      },
+      {
+        text: "with",
+      },
+      {
+        text: "Indranil",
+        className: "text-blue-500 dark:text-blue-500",
+      },
+    ];
+    return (
+      <div>
+        <TypewriterEffectSmooth words={words} />
+      </div>
+    );
+  };
   
   if (!isLoaded) {
     return (
@@ -1370,11 +1368,6 @@ export default function HomePage() {
             <MiniProjects />
           </div>
         </motion.section>
-
-        {/* Contact Bar - 10% of screen */}
-        {/* <section className="flex-none">
-          <CompactContactBar />
-        </section> */}
       </div>
     </Container>
   );

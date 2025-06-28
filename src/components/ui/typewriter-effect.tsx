@@ -42,7 +42,7 @@ export const TypewriterEffect = ({
         }
       );
     }
-  }, [isInView]);
+  }, [isInView, animate]); // Fixed: Added 'animate' to dependency array
 
   const renderWords = () => {
     return (

@@ -790,13 +790,10 @@ function SocialMediaGrid() {
              whileTap={{ scale: 0.95 }}
              className={`relative bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-lg p-3 flex flex-col items-center justify-center h-16 transition-all duration-300 hover:shadow-md group cursor-pointer ${social.bgColor}`}
            >
-             {/* Icon */}
              <IconComponent 
                size={20} 
                className={`${social.color} transition-colors duration-200 mb-1`}
              />
-             
-             {/* Platform name */}
              <span className="text-xs font-medium text-gray-700 group-hover:text-gray-900 transition-colors duration-200 text-center leading-tight">
                {social.name}
              </span>
@@ -804,16 +801,14 @@ function SocialMediaGrid() {
          );
        })}
        
-       {/* Empty space for 6th position to maintain 3-column layout */}
        <div className="col-span-3 grid grid-cols-2 gap-3">
-         {/* This creates a centered layout for the last 2 items */}
        </div>
      </div>
    </div>
  );
 }
 
-// Add this after your imports and before other component functions
+// Project type
 type Project = {
   title: string;
   description: string;
@@ -832,7 +827,6 @@ const Elegant3DProjects = ({
 }) => {
   const [active, setActive] = useState(0);
 
-  // Wrap handleNext with useCallback to fix the dependency warning
   const handleNext = useCallback(() => {
     setActive((prev) => (prev + 1) % projects.length);
   }, [projects.length]);
@@ -852,14 +846,12 @@ const Elegant3DProjects = ({
     const position = (index - active + projects.length) % projects.length;
     
     if (position === 0) {
-      // Center card
       return {
         transform: 'translateX(0%) scale(1) rotateY(0deg)',
         zIndex: 30,
         opacity: 1,
       };
     } else if (position === 1 || position === projects.length - 1) {
-      // Side cards
       const isLeft = position === projects.length - 1;
       return {
         transform: `translateX(${isLeft ? '-60%' : '60%'}) scale(0.85) rotateY(${isLeft ? '15deg' : '-15deg'})`,
@@ -867,7 +859,6 @@ const Elegant3DProjects = ({
         opacity: 0.6,
       };
     } else {
-      // Hidden cards
       return {
         transform: 'translateX(0%) scale(0.7) rotateY(0deg)',
         zIndex: 1,
@@ -878,7 +869,6 @@ const Elegant3DProjects = ({
 
   return (
     <div className="relative w-full">
-      {/* 3D Carousel Container */}
       <div className="relative h-96 mb-8" style={{ perspective: '1000px' }}>
         <div className="relative w-full h-full flex items-center justify-center">
           {projects.map((project, index) => {
@@ -898,9 +888,7 @@ const Elegant3DProjects = ({
         }}
         onClick={() => setActive(index)}
       >
-        {/* Card Container */}
         <div className="relative w-full h-full bg-white rounded-xl border border-gray-200 shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden group">
-          {/* Project Image */}
           <div className="relative h-40 overflow-hidden">
             <Image
               src={project.src}
@@ -912,7 +900,6 @@ const Elegant3DProjects = ({
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </div>
 
-          {/* Card Content */}
           <div className="p-5">
             <h4 className="font-bold text-base text-gray-900 group-hover:text-primary transition-colors duration-300 mb-3 line-clamp-1">
               {project.title}
@@ -922,7 +909,6 @@ const Elegant3DProjects = ({
               {project.description}
             </p>
 
-            {/* Tech Tags */}
             <div className="flex flex-wrap gap-1 mb-4">
               {project.tags.slice(0, 3).map((tag) => (
                 <span key={tag} className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
@@ -934,7 +920,6 @@ const Elegant3DProjects = ({
               )}
             </div>
 
-            {/* Project Links - Only show for center card */}
             {index === active && (
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}
@@ -974,7 +959,6 @@ const Elegant3DProjects = ({
         </div>
       </div>
 
-      {/* Center Card Details */}
       <motion.div
         key={active}
         initial={{ opacity: 0, y: 20 }}
@@ -990,7 +974,6 @@ const Elegant3DProjects = ({
         </p>
       </motion.div>
 
-      {/* Navigation Controls */}
       <div className="flex items-center justify-center gap-4">
         <motion.button
           onClick={handlePrev}
@@ -1001,7 +984,6 @@ const Elegant3DProjects = ({
           <IconArrowLeft className="h-4 w-4 text-gray-600" />
         </motion.button>
 
-        {/* Dots Indicator */}
         <div className="flex gap-2">
           {projects.map((_, index) => (
             <button
@@ -1029,7 +1011,6 @@ const Elegant3DProjects = ({
   );
 };
 
-// Updated MiniProjects function
 function MiniProjects() {
   const projects = [
     {
@@ -1085,82 +1066,23 @@ function MiniProjects() {
   );
 }
 
-// Compact Contact Bar
-function CompactContactBar() {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: 0.8 }}
-      className="bg-gradient-to-r from-gray-50 to-blue-50/30 border border-gray-200/50 rounded-xl p-4"
-    >
-      <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
-        {/* Status and info */}
-        <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2">
-            <motion.div
-              className="w-2 h-2 bg-green-500 rounded-full"
-              animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            />
-            <span className="text-sm font-medium text-green-700">Available for projects</span>
-          </div>
-          
-          <div className="hidden sm:block w-px h-4 bg-gray-300" />
-          
-          <div className="flex items-center gap-4 text-sm text-gray-600">
-            <span>📧 Within 24h</span>
-            <span>🌍 Remote & On-site</span>
-          </div>
-        </div>
-        
-        {/* Action buttons */}
-        <div className="flex gap-3">
-          <motion.button 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-primary text-white px-4 py-2 text-sm font-medium rounded-lg hover:bg-primary/90 transition-colors shadow-sm"
-          >
-            Contact Me
-          </motion.button>
-          
-          <motion.button 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="border border-primary text-primary px-4 py-2 text-sm font-medium rounded-lg hover:bg-primary hover:text-white transition-colors"
-          >
-            Schedule Call
-          </motion.button>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-
-// Main Homepage Component
+// ONLY DEFAULT EXPORT - Main Homepage Component
 export default function HomePage() {
   const isLoaded = useProgressiveLoading();
   
-  // Moved TypewriterEffectSmoothDemo inside the main component
-  const TypewriterEffectSmoothDemo = () => {
-    const words = [
-      {
-        text: "Build",
-      },
-      {
-        text: "with",
-      },
-      {
-        text: "Indranil",
-        className: "text-blue-500 dark:text-blue-500",
-      },
-    ];
-    return (
-      <div>
-        <TypewriterEffectSmooth words={words} />
-      </div>
-    );
-  };
+  // Typewriter words config
+  const typewriterWords = [
+    {
+      text: "Build",
+    },
+    {
+      text: "with",
+    },
+    {
+      text: "Indranil",
+      className: "text-blue-500 dark:text-blue-500",
+    },
+  ];
   
   if (!isLoaded) {
     return (
@@ -1177,7 +1099,6 @@ export default function HomePage() {
   return (
     <Container>
       <div className="h-screen flex flex-col py-6 gap-6">
-        {/* Hero Section - 60% of screen */}
         <motion.section 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -1185,7 +1106,6 @@ export default function HomePage() {
           className="flex-1 flex items-center"
         >
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 w-full">
-            {/* Left Content - 60% */}
             <div className="lg:col-span-3 flex flex-col justify-center space-y-4">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -1193,7 +1113,9 @@ export default function HomePage() {
                 transition={{ duration: 0.6 }}
               >
                 <Heading as="h1" className="font-black text-3xl md:text-4xl lg:text-5xl leading-tight">
-                  <TypewriterEffectSmoothDemo />
+                  <div>
+                    <TypewriterEffectSmooth words={typewriterWords} />
+                  </div>
                 </Heading>
               </motion.div>
 
@@ -1215,7 +1137,6 @@ export default function HomePage() {
                 className="space-y-3"
               >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                  {/* Frontend & Design */}
                   <div className="flex items-start gap-2">
                     <span className="text-blue-500 mt-0.5">🎨</span>
                     <div>
@@ -1228,7 +1149,6 @@ export default function HomePage() {
                     </div>
                   </div>
 
-                  {/* Backend Solutions */}
                   <div className="flex items-start gap-2">
                     <span className="text-green-500 mt-0.5">⚙️</span>
                     <div>
@@ -1239,7 +1159,6 @@ export default function HomePage() {
                     </div>
                   </div>
 
-                  {/* Database Management */}
                   <div className="flex items-start gap-2">
                     <span className="text-purple-500 mt-0.5">🗄️</span>
                     <div>
@@ -1250,7 +1169,6 @@ export default function HomePage() {
                     </div>
                   </div>
 
-                  {/* Deployment */}
                   <div className="flex items-start gap-2">
                     <span className="text-orange-500 mt-0.5">☁️</span>
                     <div>
@@ -1261,7 +1179,6 @@ export default function HomePage() {
                     </div>
                   </div>
 
-                  {/* AI Integration */}
                   <div className="flex items-start gap-2 md:col-span-2">
                     <span className="text-red-500 mt-0.5">🤖</span>
                     <div>
@@ -1304,9 +1221,7 @@ export default function HomePage() {
               </motion.div>
             </div>
 
-            {/* Right Content - 40% */}
             <div className="lg:col-span-2 flex flex-col items-center justify-center space-y-6">
-              {/* Compact Profile Image */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -1328,7 +1243,6 @@ export default function HomePage() {
                   />
                 </motion.div>
                 
-                {/* Compact animated ring */}
                 <motion.div 
                   className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400/20 to-purple-500/20 blur-lg -z-10"
                   animate={{ 
@@ -1343,7 +1257,6 @@ export default function HomePage() {
                 />
                 </motion.div>
 
-              {/* Compact Tech Stack */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -1356,14 +1269,12 @@ export default function HomePage() {
           </div>
         </motion.section>
 
-        {/* Middle Section - Featured Projects Full Width */}
         <motion.section 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
           className="flex-none"
         >
-          {/* Featured Projects - Full Width */}
           <div className="bg-white/50 backdrop-blur-sm rounded-xl border border-gray-600 p-6">
             <MiniProjects />
           </div>

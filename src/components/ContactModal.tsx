@@ -1,3 +1,223 @@
+// "use client";
+// import React, { useState } from "react";
+// import {
+//   Modal,
+//   ModalBody,
+//   ModalContent,
+//   ModalFooter,
+//   ModalTrigger,
+// } from "@/components/ui/animated-modal";
+// import { motion } from "framer-motion";
+// import { Send, User, Mail, MessageSquare, Briefcase } from "lucide-react";
+
+// interface ContactModalProps {
+//   triggerText?: string;
+//   triggerClassName?: string;
+//   children?: React.ReactNode;
+// }
+
+// export default function ContactModal({ 
+//   triggerText = "Let's Work Together", 
+//   triggerClassName = "",
+//   children 
+// }: ContactModalProps) {
+//   const [formData, setFormData] = useState({
+//     name: "",
+//     email: "",
+//     company: "",
+//     message: "",
+//     budget: ""
+//   });
+
+//   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+//     const { name, value } = e.target;
+//     setFormData(prev => ({
+//       ...prev,
+//       [name]: value
+//     }));
+//   };
+
+//   const handleSubmit = (e: React.FormEvent) => {
+//     e.preventDefault();
+//     console.log("Form submitted:", formData);
+//   };
+
+//   return (
+//     <Modal>
+//       {children ? (
+//         children
+//       ) : (
+//         <ModalTrigger className={`bg-primary text-white px-8 py-4 text-base font-medium rounded-lg hover:bg-primary/90 transition-all duration-300 shadow-md hover:shadow-lg relative overflow-hidden group min-w-[200px] ${triggerClassName}`}>
+//           <span className="group-hover:translate-x-[-200px] group-hover:opacity-0 flex items-center justify-center font-medium transition-all duration-300 ease-out">
+//             {triggerText}
+//           </span>
+          
+//           <div className="translate-x-[200px] opacity-0 group-hover:translate-x-0 group-hover:opacity-100 absolute inset-0 flex items-center justify-center transition-all duration-300 ease-out">
+//             <Send className="w-6 h-6" />
+//           </div>
+//         </ModalTrigger>
+//       )}
+      
+//       <ModalBody>
+//         <ModalContent className="max-w-4xl  "> {/* Increased max width */}
+//           {/* Header with improved spacing */}
+//           <div className="text-center pt-5 py-5 pb-6"> {/* Added padding */}
+//             <motion.div
+//               initial={{ scale: 0 }}
+//               animate={{ scale: 1 }}
+//               transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+//               className="w-20 h-20 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center mx-auto mb-6" /* Increased size and margin */
+//             >
+//               <Send className="w-10 h-10 text-white" /> {/* Larger icon */}
+//             </motion.div>
+            
+//             <h4 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3"> {/* Increased margin */}
+//               Let's Build Something Great Together
+//             </h4>
+//             <p className="text-gray-600 dark:text-gray-300 text-lg max-w-lg mx-auto"> {/* Increased text size and added max width */}
+//               Ready to bring your project to life? Tell me about your vision.
+//             </p>
+//           </div>
+
+//           {/* Contact Form with better spacing */}
+//           <div className="px-8 pb-8"> {/* Added consistent padding */}
+//             <form onSubmit={handleSubmit} className="space-y-5"> {/* Increased spacing */}
+//               {/* Name and Email Row */}
+//               <div className="grid grid-cols-1 md:grid-cols-2 gap-3"> {/* Increased gap */}
+//                 <div className="relative">
+//                   <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" /> {/* Adjusted position */}
+//                   <input
+//                     type="text"
+//                     name="name"
+//                     placeholder="Your Name"
+//                     value={formData.name}
+//                     onChange={handleInputChange}
+//                     className="w-full pl-12 pr-5 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200 bg-gray-50 focus:bg-white" /* Increased padding */
+//                     required
+//                   />
+//                 </div>
+                
+//                 <div className="relative">
+//                   <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" /> {/* Adjusted position */}
+//                   <input
+//                     type="email"
+//                     name="email"
+//                     placeholder="your@email.com"
+//                     value={formData.email}
+//                     onChange={handleInputChange}
+//                     className="w-full pl-12 pr-5 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200 bg-gray-50 focus:bg-white" /* Increased padding */
+//                     required
+//                   />
+//                 </div>
+//               </div>
+
+//               {/* Company and Budget Row */}
+//               <div className="grid grid-cols-1 md:grid-cols-2 gap-5"> {/* Increased gap */}
+//                 <div className="relative">
+//                   <Briefcase className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" /> {/* Adjusted position */}
+//                   <input
+//                     type="text"
+//                     name="company"
+//                     placeholder="Company (Optional)"
+//                     value={formData.company}
+//                     onChange={handleInputChange}
+//                     className="w-full pl-12 pr-5 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200 bg-gray-50 focus:bg-white" /* Increased padding */
+//                   />
+//                 </div>
+                
+//                 <div className="relative">
+//                   <select
+//                     name="budget"
+//                     value={formData.budget}
+//                     onChange={handleInputChange}
+//                     className="w-full px-5 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200 bg-gray-50 focus:bg-white appearance-none cursor-pointer" /* Increased padding */
+//                   >
+//                     <option value="">Project Budget</option>
+//                     <option value="under-5k">Under $5,000</option>
+//                     <option value="5k-15k">$5,000 - $15,000</option>
+//                     <option value="15k-50k">$15,000 - $50,000</option>
+//                     <option value="50k-plus">$50,000+</option>
+//                     <option value="discuss">Let's Discuss</option>
+//                   </select>
+//                   <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+//                     <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+//                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+//                     </svg>
+//                   </div>
+//                 </div>
+//               </div>
+
+//               {/* Message */}
+//               <div className="relative">
+//                 <MessageSquare className="absolute left-4 top-4 text-gray-400 w-5 h-5" /> {/* Adjusted position */}
+//                 <textarea
+//                   name="message"
+//                   placeholder="Tell me about your project. What are your goals and timeline?"
+//                   value={formData.message}
+//                   onChange={handleInputChange}
+//                   rows={5} /* Increased rows */
+//                   className="w-full pl-12 pr-5 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200 bg-gray-50 focus:bg-white resize-none" /* Increased padding */
+//                   required
+//                 />
+//               </div>
+
+//               {/* Project Types */}
+//               <div className="mt-8"> {/* Added margin top */}
+//                 <p className="text-base font-medium text-gray-700 dark:text-gray-300 mb-4"> {/* Increased text size and margin */}
+//                   What type of project do you need help with?
+//                 </p>
+//                 <div className="flex flex-wrap gap-3"> {/* Increased gap */}
+//                   {[
+//                     "Web Development",
+//                     "AI Integration",
+//                     "E-commerce",
+//                     "API Development",
+//                     "UI/UX Design",
+//                     "Database Design",
+//                     "Other"
+//                   ].map((type) => (
+//                     <motion.button
+//                       key={type}
+//                       type="button"
+//                       whileHover={{ scale: 1.05 }}
+//                       whileTap={{ scale: 0.95 }}
+//                       className="px-4 py-2 text-sm bg-gray-100 hover:bg-primary hover:text-white text-gray-700 rounded-full transition-all duration-200 border border-gray-200 hover:border-primary font-medium" /* Increased padding and added font-medium */
+//                     >
+//                       {type}
+//                     </motion.button>
+//                   ))}
+//                 </div>
+//               </div>
+//             </form>
+//           </div>
+//         </ModalContent>
+        
+//         <ModalFooter className="flex justify-between items-center bg-gray-50 dark:bg-gray-800/50 p-6"> {/* Added padding */}
+//           <div className="text-sm text-gray-500 font-medium"> {/* Added font-medium */}
+//             I'll respond within 24 hours
+//           </div>
+//           <div className="flex gap-2"> {/* Increased gap */}
+//             <button className="px-6 py-3 text-gray-600 hover:text-gray-800 transition-colors duration-200 font-medium"> {/* Increased padding */}
+//               Cancel
+//             </button>
+//             <motion.button
+//               type="submit"
+//               onClick={handleSubmit}
+//               whileHover={{ scale: 1.02 }}
+//               whileTap={{ scale: 0.98 }}
+//               className="px-8 py-3 bg-gradient-to-r from-primary to-primary/90 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2" /* Increased padding */
+//             >
+//               <span>Send Message</span>
+//               <Send className="w-4 h-4" />
+//             </motion.button>
+//           </div>
+//         </ModalFooter>
+//       </ModalBody>
+//     </Modal>
+//   );
+// }
+
+
 "use client";
 import React, { useState } from "react";
 import {
@@ -64,6 +284,7 @@ export default function ContactModal({
       
       <ModalBody>
         <ModalContent>
+          <div className="px-4 md:px-8 pt-5">
           {/* Header */}
           <div className="text-center mb-8">
             <motion.div
@@ -164,7 +385,7 @@ export default function ContactModal({
               <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                 What type of project do you need help with?
               </p>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 pb-5">
                 {[
                   "Web Development",
                   "Mobile App",
@@ -188,6 +409,7 @@ export default function ContactModal({
               </div>
             </div>
           </form>
+          </div>
         </ModalContent>
         
         <ModalFooter className="flex justify-between items-center bg-gray-50 dark:bg-gray-800/50">

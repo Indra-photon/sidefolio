@@ -544,7 +544,7 @@ function MiniProjects() {
       title: "Toonytalesworld: AI powered SaaS for Kids",
       description: "A comprehensive analytics platform with machine learning insights, real-time data processing, and interactive visualizations built with React and Python.",
       tags: ["React", "Python", "TensorFlow", "AWS"],
-      src: "/../images/toonytalesworld.webp",
+      src: "images/toonytalesworld.webp",
       liveUrl: "https://www.toonytalesworld.com/",
     },
     {
@@ -552,7 +552,7 @@ function MiniProjects() {
       title: "Fraterny: An exclusive Villa for your family",
       description: "A comprehensive analytics platform with machine learning insights, real-time data processing, and interactive visualizations built with React and Python.",
       tags: ["React", "Python", "TensorFlow", "AWS"],
-      src: "/../images/fraterny.webp",
+      src: "images/fraterny.webp",
       liveUrl: "https://www.fraterny.in/",
     },
     {
@@ -560,7 +560,7 @@ function MiniProjects() {
       title: "Fitness tracker Dashboard",
       description: "A comprehensive analytics platform with machine learning insights, real-time data processing, and interactive visualizations built with React and Python.",
       tags: ["React", "Python", "TensorFlow", "AWS"],
-      src: "/../images/fitness.webp",
+      src: "images/fitness.webp",
       liveUrl: "https://fitness-tracker-app-eta-six.vercel.app/",
     }
   ];

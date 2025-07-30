@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import AnimatedButton from "../AnimatedButton";
 import { Briefcase } from "lucide-react";
+import Link from 'next/link'
+
 
 let interval: any;
 
@@ -99,12 +101,11 @@ export const ProjectCardStack = ({
               {/* Card content */}
               <div className="relative z-10 flex flex-col h-full">
                 {/* Image (80% of card) */}
-                <div className="relative h-[75%] sm:h-[80%] w-full">
-                  <Image
+                <div className="relative h-[75%] sm:h-[80%] w-full flex items-center justify-center">
+                  <img
                     src={project.src}
                     alt={project.title}
-                    fill
-                    className="object-cover"
+                    className="w-[90%] h-[85%] sm:h-full sm:w-full"
                   />
                   
                   {/* Gradient overlay */}
@@ -116,13 +117,15 @@ export const ProjectCardStack = ({
                 <div className="p-2 sm:p-4 h-[25%] sm:h-[20%] flex items-center bg-gradient-to-r from-white/80 to-gray-50/80">
                   
                   <div className="ml-auto flex gap-2">
+                  <Link href = {project.liveUrl || ""}>
                      <AnimatedButton 
                         text="View Project" 
                         icon={Briefcase} 
-                        onClick={() => onKnowMore(project)}
+                        // onClick={() => onKnowMore(project)}
                         stopPropagation={true}
                         className="bg-black/80 text-primary border border-gray-200 px-2 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm font-medium rounded-lg hover:border-primary/30 transition-all duration-300 shadow-sm hover:shadow-md" 
                       />
+                  </Link>
                   </div>
                 </div>
               </div>

@@ -34,15 +34,12 @@ export const Products = () => {
                 src={product.thumbnail}
                 alt="thumbnail"
                 height="200"
-                width="200"
+                width="300"
                 className="rounded-md"
               />
               <div className="flex flex-col justify-between">
                 <div>
-                  <Heading
-                    as="h4"
-                    className="font-black text-lg md:text-lg lg:text-lg "
-                  >
+                  <Heading as="h1" className="font-black text-3xl sm:text-xl md:text-2xl lg:text-3xl pb-1">
                     {product.title}
                   </Heading>
                   <Paragraph className="text-sm md:text-sm lg:text-sm mt-2 max-w-xl">

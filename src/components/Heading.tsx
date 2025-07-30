@@ -57,7 +57,7 @@ export const Heading = ({
       className={twMerge(
         CalSans.className,
         // MOBILE-FIRST RESPONSIVE HEADING SIZES - Much improved hierarchy
-        "text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary leading-tight",
+        "text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary leading-tight",
         className
       )}
     >

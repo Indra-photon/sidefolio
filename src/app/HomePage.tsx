@@ -409,15 +409,15 @@ import { Highlight } from "@/components/Highlight";
 import { motion } from "framer-motion";
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { Linkedin, Twitter, Users, Youtube, Github, Book, Briefcase, ExternalLink } from "lucide-react";
+import { Linkedin, Twitter, Users, Youtube, Github, Book, Briefcase, ExternalLink, Mail } from "lucide-react";
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
-import { TypewriterEffectSmooth } from "../components/ui/typewriter-effect";
 import { Monitor, Server, Database, Cloud, Bot } from "lucide-react";
 import ContactModal from "@/components/ContactModal";
 import AnimatedButton from "../components/AnimatedButton";
 import { ProjectCardStack } from "@/components/ui/project-card-stack";
 import ProjectDetailModal from "@/components/ProjectDetailModal";
 import { SaasShowcase } from "@/components/SaasShowcase";
+import { ContainerTextFlip } from "@/components/ui/container-text-flip";
 // import { MiniProjects } from "@/components/MiniProjects";
 
 // Progressive loading hook
@@ -544,7 +544,7 @@ function MiniProjects() {
       title: "Toonytalesworld: AI powered SaaS for Kids",
       description: "A comprehensive analytics platform with machine learning insights, real-time data processing, and interactive visualizations built with React and Python.",
       tags: ["React", "Python", "TensorFlow", "AWS"],
-      src: "images/toonytalesworld.webp",
+      src: "/../images/toonytalesworld.webp",
       liveUrl: "https://www.toonytalesworld.com/",
     },
     {
@@ -552,7 +552,7 @@ function MiniProjects() {
       title: "Fraterny: An exclusive Villa for your family",
       description: "A comprehensive analytics platform with machine learning insights, real-time data processing, and interactive visualizations built with React and Python.",
       tags: ["React", "Python", "TensorFlow", "AWS"],
-      src: "images/fraterny.webp",
+      src: "/../images/fraterny.webp",
       liveUrl: "https://www.fraterny.in/",
     },
     {
@@ -560,7 +560,7 @@ function MiniProjects() {
       title: "Fitness tracker Dashboard",
       description: "A comprehensive analytics platform with machine learning insights, real-time data processing, and interactive visualizations built with React and Python.",
       tags: ["React", "Python", "TensorFlow", "AWS"],
-      src: "images/fitness.webp",
+      src: "/../images/fitness.webp",
       liveUrl: "https://fitness-tracker-app-eta-six.vercel.app/",
     }
   ];
@@ -575,8 +575,8 @@ function MiniProjects() {
   };
   
   return (
-    <div className="py-2 sm:py-6 md:py-6 backdrop-blur-sm rounded-xl relative">
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-xl"></div>
+    <div className="py-2 sm:py-6 md:py-6 backdrop-blur-sm shadow-lg rounded-xl relative border border-gradient-to-r from-blue-200/30 to-purple-200/30 ">
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-xl "></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.1),transparent)] rounded-xl"></div>
       
       <div className="flex-col items-center justify-center text-center mb-10">
@@ -597,6 +597,9 @@ function MiniProjects() {
           scaleFactor={0.05}
         />
       </div>
+      <div>
+        
+      </div>
       
       {/* Updated Project Detail Modal */}
       <ProjectDetailModal
@@ -610,19 +613,6 @@ function MiniProjects() {
 
 export default function HomePage() {
   const isLoaded = useProgressiveLoading();
-
-  const typewriterWords = [
-    {
-      text: "Build",
-    },
-    {
-      text: "with",
-    },
-    {
-      text: "Indranil",
-      className: "text-blue-500 dark:text-blue-500",
-    },
-  ];
   
   if (!isLoaded) {
     return (
@@ -637,8 +627,23 @@ export default function HomePage() {
   }
   
   return (
-    <Container>
+    <Container className="">
       <div className="flex flex-col py-4 sm:py-6 gap-4 sm:gap-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className=""
+        >
+          <Heading as="h1" className="font-black">
+            {/* <TypewriterEffectSmooth words={typewriterWords} /> */}
+              Build <ContainerTextFlip
+              className="mx-2"
+                words={["FAST", "MODERN", "STYLISH"]}
+              />
+              websites
+          </Heading>
+        </motion.div>
         
         {/* INTRO SECTION */}
         <motion.section 
@@ -647,103 +652,110 @@ export default function HomePage() {
           transition={{ duration: 0.8 }}
           className="flex-1 flex items-center"
         >
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 w-full">
 
             <div className="lg:col-span-3 flex flex-col justify-center space-y-6">
               {/* MOBILE-OPTIMIZED BRANDING SECTION */}
-              <motion.div
+              {/* <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
+                className="bg-red-400"
               >
                 <Heading as="h1" className="font-black">
-                  <TypewriterEffectSmooth words={typewriterWords} />
+                   Build <ContainerTextFlip
+                      words={["FAST", "MODERN", "STYLISH", "AWESOME"]}
+                    />
+                    websites
                 </Heading>
-              </motion.div>
+              </motion.div> */}
 
               {/* MAIN DESCRIPTION - Now properly sized relative to branding */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-              >
-                <Paragraph className="text-gray-600 leading-relaxed">
-                  <span className="font-semibold text-gray-900">Full Stack Developer</span> & <span className="font-semibold text-gray-900">Gen AI developer</span> specializing in 
-                  building scalable web applications and AI-driven solutions.
-                </Paragraph>
-              </motion.div>
+              <div className="bg-gradient-to-br rounded-3xl border border-gradient-to-r from-blue-200/30 to-purple-200/30 p-6 backdrop-blur-sm shadow-lg">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                >
+                  <Paragraph className="text-gray-600 leading-relaxed mb-5">
+                    <span className="font-semibold text-gray-900">Full Stack Developer</span> & <span className="font-semibold text-gray-900">Gen AI developer</span> specializing in 
+                    building scalable web applications and AI-driven solutions.
+                  </Paragraph>
+                </motion.div>
 
-              {/* FEATURE POINTS - Properly scaled */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="space-y-4"
-              >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm sm:text-base">
-                  <div className="flex items-start gap-3">
-                    <Monitor className="text-blue-500 mt-1 w-5 h-5 flex-shrink-0" />
-                    <div className="leading-relaxed">
-                      <span className="text-gray-700">Clean, polished </span>
-                      <span className="font-semibold text-gray-900">UI/UX designs</span>
-                      <span className="text-gray-700"> using </span>
-                      <span className="font-semibold text-gray-900">React</span>
-                      <span className="text-gray-700"> & </span>
-                      <span className="font-semibold text-gray-900">Next.js</span>
+                {/* FEATURE POINTS - Properly scaled */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="space-y-4"
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm sm:text-base">
+                    <div className="flex items-start gap-3">
+                      <Monitor className="text-blue-500 mt-1 w-5 h-5 flex-shrink-0" />
+                      <div className="leading-relaxed">
+                        <span className="text-gray-700">Clean, polished </span>
+                        <span className="font-semibold text-gray-900">UI/UX designs</span>
+                        <span className="text-gray-700"> using </span>
+                        <span className="font-semibold text-gray-900">React</span>
+                        <span className="text-gray-700"> & </span>
+                        <span className="font-semibold text-gray-900">Next.js</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3">
+                      <Server className="text-green-500 mt-1 w-5 h-5 flex-shrink-0" />
+                      <div className="leading-relaxed">
+                        <span className="text-gray-700">Robust backend solutions with </span>
+                        <span className="font-semibold text-gray-900">Express.js</span>
+                        <span className="text-gray-700"> & </span>
+                        <span className="font-semibold text-gray-900">Node.js</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3">
+                      <Database className="text-purple-500 mt-1 w-5 h-5 flex-shrink-0" />
+                      <div className="leading-relaxed">
+                        <span className="text-gray-700">Database architecture using </span>
+                        <span className="font-semibold text-gray-900">MongoDB</span>
+                        <span className="text-gray-700"> & </span>
+                        <span className="font-semibold text-gray-900">Supabase</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3">
+                      <Cloud className="text-orange-500 mt-1 w-5 h-5 flex-shrink-0" />
+                      <div className="leading-relaxed">
+                        <span className="text-gray-700">Deployment on </span>
+                        <span className="font-semibold text-gray-900">VPS</span>
+                        <span className="text-gray-700"> (Linode, DigitalOcean, Hostinger) & </span>
+                        <span className="font-semibold text-gray-900">AWS</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 md:col-span-2">
+                      <Bot className="text-red-500 mt-1 w-5 h-5 flex-shrink-0" />
+                      <div className="leading-relaxed">
+                        <span className="text-gray-700">Build and integrate </span>
+                        <span className="font-semibold text-gray-900">AI agents</span>
+                        <span className="text-gray-700"> into existing websites for enhanced functionality</span>
+                      </div>
                     </div>
                   </div>
+                </motion.div>
 
-                  <div className="flex items-start gap-3">
-                    <Server className="text-green-500 mt-1 w-5 h-5 flex-shrink-0" />
-                    <div className="leading-relaxed">
-                      <span className="text-gray-700">Robust backend solutions with </span>
-                      <span className="font-semibold text-gray-900">Express.js</span>
-                      <span className="text-gray-700"> & </span>
-                      <span className="font-semibold text-gray-900">Node.js</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <Database className="text-purple-500 mt-1 w-5 h-5 flex-shrink-0" />
-                    <div className="leading-relaxed">
-                      <span className="text-gray-700">Database architecture using </span>
-                      <span className="font-semibold text-gray-900">MongoDB</span>
-                      <span className="text-gray-700"> & </span>
-                      <span className="font-semibold text-gray-900">Supabase</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <Cloud className="text-orange-500 mt-1 w-5 h-5 flex-shrink-0" />
-                    <div className="leading-relaxed">
-                      <span className="text-gray-700">Deployment on </span>
-                      <span className="font-semibold text-gray-900">VPS</span>
-                      <span className="text-gray-700"> (Linode, DigitalOcean, Hostinger) & </span>
-                      <span className="font-semibold text-gray-900">AWS</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3 md:col-span-2">
-                    <Bot className="text-red-500 mt-1 w-5 h-5 flex-shrink-0" />
-                    <div className="leading-relaxed">
-                      <span className="text-gray-700">Build and integrate </span>
-                      <span className="font-semibold text-gray-900">AI agents</span>
-                      <span className="text-gray-700"> into existing websites for enhanced functionality</span>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* BUTTONS - Better spacing and sizing */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="flex flex-col sm:flex-row gap-4 pt-6"
-              >
-                <ContactModal />
-                <AnimatedButton text="View My Work" icon={Briefcase} href="/projects" className="bg-black/80 text-primary border border-gray-200 px-8 py-4 text-base font-medium rounded-lg hover:border-primary/30 transition-all duration-300 shadow-sm hover:shadow-md group" />
-              </motion.div>
+                {/* BUTTONS - Better spacing and sizing */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  className="flex flex-col sm:flex-row gap-4 pt-6"
+                >
+                  {/* <ContactModal /> */}
+                  <AnimatedButton text="View My Work" icon={Briefcase} href="/projects" className="bg-black/80 text-primary border border-gray-200 px-8 py-4 text-base font-medium rounded-lg hover:border-primary/30 transition-all duration-300 shadow-sm hover:shadow-md group" />
+                  <AnimatedButton text="Contact Me" icon={Mail} href="/contact" className="bg-black/80 text-primary border border-gray-200 px-8 py-4 text-base font-medium rounded-lg hover:border-primary/30 transition-all duration-300 shadow-sm hover:shadow-md group" />
+                </motion.div>
+              </div>
             </div>
             
             <div className="hidden lg:flex lg:col-span-2 flex-col items-center justify-center space-y-6">

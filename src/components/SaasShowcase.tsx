@@ -13,7 +13,7 @@ import Image from "next/image";
 export const SaasShowcase = () => {
   return (
     // VIVID BACKGROUND SECTION - This is the highlighted section
-    <section className="relative py-10 my-10 bg-gradient-to-br rounded-3xl border border-gradient-to-r from-blue-200/30 to-purple-200/30">
+    <section className="relative py-10 my-10 bg-gradient-to-br rounded-3xl border border-gradient-to-r from-blue-200/30 to-purple-200/30 backdrop-blur-sm shadow-lg">
       
       {/* Background effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl"></div>

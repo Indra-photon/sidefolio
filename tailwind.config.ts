@@ -20,6 +20,19 @@ const config: Config = {
       colors: {
         primary: "var(--neutral-700)",
         secondary: "var(--neutral-500)",
+        blog: "var(--neutral-100)",
+      },
+      typography: {
+        DEFAULT: {
+          css: {
+            strong: {
+              color: '#3b82f6',
+            },
+            code: {
+              color: '#10b981',
+            },
+          },
+        },
       },
       animation: {
         shimmer: "shimmer 2s linear infinite",

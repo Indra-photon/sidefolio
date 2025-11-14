@@ -40,7 +40,7 @@ export default function About() {
         ))}
       </div>
 
-      <div className="max-w-4xl">
+      <div className="max-w-7xl">
         <Paragraph className=" mt-4">
           Hey there, I'm Indranil Maiti - a passionate developer who believes 
           that great code is just the beginning of an extraordinary journey. 

@@ -23,9 +23,9 @@ export default function AboutPage() {
     "https://images.unsplash.com/photo-1692445381633-7999ebc03730?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzM3x8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
   ];
   return (
-    <Container>
+    <Container className="max-w-7xl">
       <span className="text-4xl">💬</span>
-      <Heading className="font-black">About Me</Heading>
+      <Heading className="">About Me</Heading>
       <About />
     </Container>
   );

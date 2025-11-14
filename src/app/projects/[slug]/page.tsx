@@ -43,7 +43,7 @@ export default function SingleProjectPage({
     redirect("/projects");
   }
   return (
-    <Container>
+    <Container className="max-w-7xl">
       <SingleProduct product={product} />
     </Container>
   );

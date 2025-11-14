@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function Projects() {
   return (
-    <Container>
+    <Container className="max-w-7xl">
       <span className="text-4xl">⚡</span>
       <Heading className="font-black mb-10">
         {" "}

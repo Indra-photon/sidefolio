@@ -11,9 +11,40 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Indranil Maiti - Developer",
-  description:
-    "Indranil Maiti is a developer, writer and speaker. He is a digital nomad and travels around the world while working remotely.",
+  metadataBase: new URL("https://www.indrabuildswebsites.com/"),
+  title: "Indranil Maiti | Full Stack & GenAI Developer",
+  description: "Indranil Maiti is a Full Stack Developer and Gen AI specialist with expertise in React, Next.js, Node.js, and AI integration for scalable web applications.",
+  keywords: "Indranil Maiti, Full Stack Developer, React Developer, Next.js, GenAI, AI Integration, Web Development Freelance full stack web developer, scalable web applications, modern web technologies. I am based on India and Poland",
+  openGraph: {
+    title: "Indranil Maiti | Full Stack & GenAI Developer",
+    description: "Building scalable web applications and AI-driven solutions with modern technologies.",
+    images: [
+      {
+        url: "/images/Indranil_2.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Indranil Maiti - Full Stack Developer"
+      }
+    ],
+    type: "website",
+    locale: "en_US"
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Indranil Maiti | Full Stack & GenAI Developer",
+    description: "Building scalable web applications and AI-driven solutions with modern technologies.",
+    images: ["/images/Indranil_2.jpg"]
+  },
+  robots: {
+    index: true,
+    follow: true
+  },
+  authors: [
+    {
+      name: "Indranil Maiti",
+      url: "https://github.com/Indra-photon"
+    }
+  ]
 };
 
 export default function RootLayout({
@@ -30,10 +61,9 @@ export default function RootLayout({
         )}
       >
         <Sidebar />
-        <div className="lg:pl-2 lg:pt-2 bg-gray-100 flex-1 overflow-y-auto">
-          <div className="flex-1 bg-white min-h-screen lg:rounded-tl-xl border border-transparent lg:border-neutral-200 overflow-y-auto">
+        <div className="lg:pl-2 lg:pt-2 bg-gray-900 flex-1 overflow-y-auto">
+          <div className="flex-1 bg-black min-h-screen lg:rounded-tl-xl overflow-y-auto">
             {children}
-            <Footer />
           </div>
         </div>
       </body>

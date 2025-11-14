@@ -15,7 +15,7 @@ export const products = [
     description:
       "An AI powered platform for creating personalized animated stories for kids in a storybooks format",
     thumbnail: sidefolioAceternity,
-    images: [sidefolioAceternity, sidefolioAceternity2],
+    images: [sidefolioAceternity],
     stack: ["Reactjs", "Tailwindcss", "MongoDB", "Nodejs"],
     slug: "toonytalesworld-create-storybooks-for-kids-using-ai",
     content: (
@@ -37,7 +37,7 @@ export const products = [
     description:
       "A platform for connecting with like-minded individuals and building communities",
     thumbnail: sidefolioAlgochurn,
-    images: [sidefolioAlgochurn, sidefolioAlgochurn2],
+    images: [sidefolioAlgochurn],
     stack: ["Nextjs", "Tailwindcss", "Typescript", "Supabase"],
     slug: "fraterny",
     content: (
@@ -58,7 +58,7 @@ export const products = [
     description:
       "An ecommerce website for selling high-quality deity products and accessories",
     thumbnail: sidefolioMoonbeam,
-    images: [sidefolioMoonbeam, sidefolioMoonbeam2],
+    images: [sidefolioMoonbeam],
     stack: ["Reactjs", "Tailwindcss", "Appwrite", "Nodejs"],
     slug: "avoron-ecommerce-website-for-deity-products",
     content: (

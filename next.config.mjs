@@ -10,6 +10,9 @@ const nextConfig = {
   experimental: {
     mdxRs: true,
   },
+   turbopack: {
+    // ...
+  },
 };
 
 const withMDX = nextMDX({

@@ -22,11 +22,11 @@ export const navlinks = [
     label: "Projects",
     icon: IconBriefcase2,
   },
-  // {
-  //   url: "/blog",
-  //   label: "Articles",
-  //   icon: IconArticle,
-  // },
+  {
+    url: "/blog",
+    label: "Articles",
+    icon: IconArticle,
+  },
   {
     url: "/contact",
     label: "Contact",

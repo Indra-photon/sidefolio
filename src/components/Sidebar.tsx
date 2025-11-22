@@ -11,7 +11,8 @@ import { socials } from "@/constants/socials";
 import { Badge } from "./Badge";
 import { AnimatePresence, motion } from "framer-motion";
 import { IconLayoutSidebarRightCollapse } from "@tabler/icons-react";
-import { isMobile } from "@/lib/utils";
+// import { isMobile } from "@/lib/utils";
+import { isMobile } from "@/lib/mobutils";
 import img from "../../public/images/Indranil.png";
 
 export const Sidebar = () => {

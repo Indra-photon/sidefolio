@@ -62,7 +62,7 @@ export default function RootLayout({
         )}
       >
         <Sidebar />
-        <div className="lg:pl-2 lg:pt-2 bg-gray-900 flex-1 overflow-y-auto">
+        <div className="lg:pl-2 lg:pt-2 bg-black flex-1 overflow-y-auto">
           <div className="flex-1 bg-black min-h-screen lg:rounded-tl-xl overflow-y-auto">
             {children}
           </div>

@@ -11,11 +11,11 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const slug = params.slug;
+  const slug = (await params).slug;
   const product = products.find((p) => p.slug === slug) as Product | undefined;
   if (product) {
     return {
@@ -31,12 +31,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default function SingleProjectPage({
+export default async function SingleProjectPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const slug = params.slug;
+  const slug = (await params).slug;
   const product = products.find((p) => p.slug === slug);
 
   if (!product) {

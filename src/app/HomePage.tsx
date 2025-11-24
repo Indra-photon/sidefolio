@@ -9,9 +9,15 @@ import { ProjectCardStack } from "@/components/ui/project-card-stack";
 import ProjectDetailModal from "@/components/ProjectDetailModal";
 import { SaasShowcase } from "@/components/SaasShowcase";
 import { ContainerTextFlip } from "@/components/ui/container-text-flip";
-import { ProfileSection } from "@/components/ProfileSection";
 import HeroHome from "@/components/HeroHome";
 import Head from "next/head";
+import { twMerge } from "tailwind-merge";
+import localFont from "next/font/local";
+
+const CalSans = localFont({
+  src: [{ path: "../../fonts/CalSans-SemiBold.woff2" }],
+  display: "swap",
+});
 // import { MiniProjects } from "@/components/MiniProjects";
 
 // Progressive loading hook
@@ -55,10 +61,10 @@ export default function HomePage() {
           className=" relative"
         >
           <Heading as="h1" className="text-white">
-              Full Stack & Gen AI <span className="">Developer</span>
+              I make <span className="line-through">boring</span> <span className="">Websites</span>
           </Heading>
-          <Paragraph className="text-lg text-gray-200 mx-auto text-left">
-            I love to build things that make a difference
+          <Paragraph className={twMerge(CalSans.className, 'text-white text-sm sm:text-lg lg:text-2xl font-extralight')}>
+            I build modern, responsive fast, scalable websites that actually makes sells...
           </Paragraph>
           <div className="flex mt-4 space-x-2 mb-2">
             <button className="btn rounded-2xl bg-white/90 backdrop-blur-md border border-neutral-400 px-3 py-1">Working as a freelance developer</button>

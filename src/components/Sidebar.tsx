@@ -66,7 +66,7 @@ export const Navigation = ({
           href={link.url}
           onClick={() => isMobile() && setOpen(false)}
           className={twMerge(
-            "text-secondary hover:text-primary transition duration-200 flex items-center space-x-2 py-2 px-2 rounded-md text-sm",
+            "text-secondary transition duration-200 flex items-center space-x-2 py-2 px-2 rounded-md text-sm",
             isActive(link.url) && "bg-white shadow-lg text-primary"
           )}
         >

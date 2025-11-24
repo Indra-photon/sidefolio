@@ -1,12 +1,3 @@
-import sidefolioAceternity from "public/images/toonytalesworld.webp";
-import sidefolioAceternity2 from "public/images/sidefolio-aceternity-2.png";
-import sidefolioAlgochurn from "public/images/fraterny.webp";
-import sidefolioAlgochurn2 from "public/images/sidefolio-algochurn.png";
-import sidefolioMoonbeam from "public/images/avoron.webp";
-import sidefolioMoonbeam2 from "public/images/sidefolio-moonbeam-2.png";
-import sidefolioTailwindMasterKit from "public/images/sidefolio-tailwindmasterkit.png";
-import sidefolioTailwindMasterKit2 from "public/images/sidefolio-tailwindmasterkit-2.png";
-import { Type } from "lucide-react";
 
 export const products = [
   {
@@ -14,8 +5,8 @@ export const products = [
     title: "ToonyTalesWorld",
     description:
       "An AI powered platform for creating personalized animated stories for kids in a storybooks format",
-    thumbnail: sidefolioAceternity,
-    images: [sidefolioAceternity],
+    thumbnail: "/images/toonytalesworld.webp",
+    images: ["/images/toonytalesworld.webp"],
     stack: ["Reactjs", "Tailwindcss", "MongoDB", "Nodejs"],
     slug: "toonytalesworld-create-storybooks-for-kids-using-ai",
     content: (
@@ -36,8 +27,8 @@ export const products = [
     title: "Fraterny",
     description:
       "A platform for connecting with like-minded individuals and building communities",
-    thumbnail: sidefolioAlgochurn,
-    images: [sidefolioAlgochurn],
+    thumbnail: "/images/fraterny.webp",
+    images: ["/images/fraterny.webp"],
     stack: ["Nextjs", "Tailwindcss", "Typescript", "Supabase"],
     slug: "fraterny",
     content: (
@@ -57,8 +48,8 @@ export const products = [
     title: "Avoron",
     description:
       "An ecommerce website for selling high-quality deity products and accessories",
-    thumbnail: sidefolioMoonbeam,
-    images: [sidefolioMoonbeam],
+    thumbnail: "/images/avoron.webp",
+    images: ["/images/avoron.webp"],
     stack: ["Reactjs", "Tailwindcss", "Appwrite", "Nodejs"],
     slug: "avoron-ecommerce-website-for-deity-products",
     content: (

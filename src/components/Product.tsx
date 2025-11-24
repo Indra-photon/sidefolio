@@ -59,7 +59,7 @@ export const SingleProduct = ({ product }: { product: Product }) => {
           {product.stack?.map((stack: string) => (
             <span
               key={stack}
-              className="text-xs  md:text-xs lg:text-xs bg-gray-50 px-2 py-1 rounded-sm text-secondary"
+              className="text-xs  md:text-xs lg:text-xs bg-gray-400 px-2 py-1 rounded-sm text-primary"
             >
               {stack}
             </span>
@@ -69,7 +69,7 @@ export const SingleProduct = ({ product }: { product: Product }) => {
       <div>
         <Paragraph className="max-w-xl mt-4">{product.description}</Paragraph>
       </div>
-      <div className="prose prose-sm md:prose-base max-w-none text-neutral-600">
+      <div className="prose prose-sm md:prose-base max-w-none text-neutral-100">
         {product?.content}
       </div>
 
@@ -86,9 +86,8 @@ export const SingleProduct = ({ product }: { product: Product }) => {
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
           className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform"
         >
           <path d="M5 12l14 0"></path>

@@ -8,27 +8,27 @@ import {
 
 export const navlinks = [
   {
-    href: "/",
+    url: "/",
     label: "Home",
     icon: IconBolt,
   },
   {
-    href: "/about",
+    url: "/about",
     label: "About",
     icon: IconMessage2,
   },
   {
-    href: "/projects",
+    url: "/projects",
     label: "Projects",
     icon: IconBriefcase2,
   },
-  // {
-  //   href: "/blog",
-  //   label: "Articles",
-  //   icon: IconArticle,
-  // },
   {
-    href: "/contact",
+    url: "/blog",
+    label: "Articles",
+    icon: IconArticle,
+  },
+  {
+    url: "/contact",
     label: "Contact",
     icon: IconMail,
   },

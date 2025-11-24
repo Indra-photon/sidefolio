@@ -28,7 +28,7 @@ export const Products = () => {
             <Link
               href={product.slug ? `/projects/${product.slug}` : product.href}
               key={product.href}
-              className="group flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 hover:bg-gray-50 rounded-2xl transition duration-200 pt-4"
+              className="group flex flex-col md:flex-row bg-neutral-800 space-y-4 md:space-y-0 md:space-x-4 hover:bg-neutral-900 rounded-2xl backdrop-blur-2xl shadow-2xl transition duration-200 pt-4 pb-4"
             >
               <Image
                 src={product.thumbnail}
@@ -50,7 +50,7 @@ export const Products = () => {
                   {product.stack?.map((stack: string) => (
                     <span
                       key={stack}
-                      className="text-xs  md:text-xs lg:text-xs bg-gray-50 px-2 py-1 rounded-sm text-secondary"
+                      className="text-xs  md:text-xs lg:text-xs bg-gray-400 px-2 py-1 rounded-sm text-primary"
                     >
                       {stack}
                     </span>

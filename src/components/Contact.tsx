@@ -146,10 +146,10 @@ export const Contact = () => {
           <Send className="w-8 h-8 text-white" />
         </motion.div>
         
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-100 dark:text-white mb-2">
           Let's Work Together
         </h2>
-        <p className="text-gray-600 dark:text-gray-500">
+        <p className="text-gray-200 dark:text-gray-500">
           Ready to bring your project to life? Tell me about your vision.
         </p>
       </div>
@@ -232,7 +232,7 @@ export const Contact = () => {
 
         {/* Project Types */}
         <div>
-          <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+          <p className="text-sm font-medium text-gray-200 dark:text-gray-300 mb-3">
             What type of project do you need help with?
           </p>
           <div className="flex flex-wrap gap-2 mb-6">
@@ -265,7 +265,7 @@ export const Contact = () => {
             type="submit"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="px-8 py-3 bg-gradient-to-r from-primary to-primary/90 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
+            className="px-8 py-3 bg-neutral-700 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
           >
             <span>Send Message</span>
             <Send className="w-4 h-4" />

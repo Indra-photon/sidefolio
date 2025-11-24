@@ -2,7 +2,10 @@ import React from "react";
 
 export const Container = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => {
   return (
-    <main className={`max-w-4xl w-full mx-auto py-5 px-4 md:px-10 ${className}`}>
+    <main className={`w-full mx-auto md:px-10 relative ${className}`}>
+      {/* <div className="absolute left-0 top-0 w-px h-full bg-gradient-to-b from-neutral-50 via-neutral-300 to-neutral-50"></div>
+      <div className="absolute right-0 top-0 w-px h-full bg-gradient-to-b from-neutral-50 via-neutral-300 to-neutral-50"></div> */}
+      {/* <div className="absolute right-0 top-36 h-px w-full bg-gradient-to-r from-neutral-50 via-neutral-300 to-neutral-50"></div> */}
       {children}
     </main>
   );

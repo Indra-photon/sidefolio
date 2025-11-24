@@ -60,11 +60,11 @@ export default function HomePage() {
           transition={{ duration: 0.6 }}
           className=" relative"
         >
-          <Heading as="h1" className="text-white">
+          <Heading as="h1" className="text-white text-3xl sm:text-4xl lg:text-5xl font-bold">
               I make <span className="line-through">boring</span> <span className="">Websites</span>
           </Heading>
           <Paragraph className={twMerge(CalSans.className, 'text-white text-sm sm:text-lg lg:text-2xl font-extralight')}>
-            I build modern, responsive fast, scalable websites that actually makes sells...
+            I build modern, responsive fast, scalable websites that actually makes sales...
           </Paragraph>
           <div className="flex mt-4 space-x-2 mb-2">
             <button className="btn rounded-2xl bg-white/90 backdrop-blur-md border border-neutral-400 px-3 py-1">Working as a freelance developer</button>

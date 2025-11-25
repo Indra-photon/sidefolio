@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import BlogModel from '../../models/Blog';
 import mongoose from 'mongoose';
@@ -14,7 +14,7 @@ export async function GET(
         const { id } = await params;
 
         if (!id) {
-            return Response.json(
+            return NextResponse.json(
                 { success: false, message: 'Blog ID or slug is required' },
                 { status: 400 }
             );
@@ -38,13 +38,13 @@ export async function GET(
         }
 
         if (!blog) {
-            return Response.json(
+            return NextResponse.json(
                 { success: false, message: 'Blog not found' },
                 { status: 404 }
             );
         }
 
-        return Response.json(
+        return NextResponse.json(
             {
                 success: true,
                 blog
@@ -54,7 +54,7 @@ export async function GET(
 
     } catch (error) {
         console.error('Error fetching blog:', error);
-        return Response.json(
+        return NextResponse.json(
             { success: false, message: 'Internal server error' },
             { status: 500 }
         );

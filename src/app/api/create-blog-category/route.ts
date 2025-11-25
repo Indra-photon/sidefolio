@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import BlogCategoryModel from '../models/BlogCategory';
 import { uploadImage } from '@/lib/imagekit';
@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
 
         // Validate required fields
         if (!name || !slug || !description) {
-            return Response.json(
+            return NextResponse.json(
                 { success: false, message: 'Name, slug, and description are required' },
                 { status: 400 }
             );
@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
         // Check if slug already exists
         const existingCategory = await BlogCategoryModel.findOne({ slug });
         if (existingCategory) {
-            return Response.json(
+            return NextResponse.json(
                 { success: false, message: 'Slug already exists' },
                 { status: 409 }
             );
@@ -85,7 +85,7 @@ console.log('💾 Saving to DB - thumbnailFileId:', thumbnailFileId);
 
         await newCategory.save();
 
-        return Response.json(
+        return NextResponse.json(
             {
                 success: true,
                 message: 'Category created successfully',
@@ -96,7 +96,7 @@ console.log('💾 Saving to DB - thumbnailFileId:', thumbnailFileId);
 
     } catch (error) {
         console.error('Error creating category:', error);
-        return Response.json(
+        return NextResponse.json(
             { success: false, message: 'Internal server error' },
             { status: 500 }
         );

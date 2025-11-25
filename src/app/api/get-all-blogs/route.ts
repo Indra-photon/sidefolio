@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import BlogModel from '../models/Blog';
 
@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
         const totalBlogs = await BlogModel.countDocuments(query);
         const totalPages = Math.ceil(totalBlogs / limit);
 
-        return Response.json(
+        return NextResponse.json(
             {
                 success: true,
                 blogs,
@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
 
     } catch (error) {
         console.error('Error fetching blogs:', error);
-        return Response.json(
+        return NextResponse.json(
             { success: false, message: 'Internal server error' },
             { status: 500 }
         );

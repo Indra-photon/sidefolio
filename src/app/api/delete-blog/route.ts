@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import BlogModel from '../models/Blog';
 import { deleteImage } from '@/lib/imagekit';
@@ -11,7 +11,7 @@ export async function DELETE(request: NextRequest) {
         const blogId = searchParams.get('blogId');
 
         if (!blogId) {
-            return Response.json(
+            return NextResponse.json(
                 { success: false, message: 'Blog ID is required' },
                 { status: 400 }
             );
@@ -20,7 +20,7 @@ export async function DELETE(request: NextRequest) {
         // Find blog
         const blog = await BlogModel.findById(blogId);
         if (!blog) {
-            return Response.json(
+            return NextResponse.json(
                 { success: false, message: 'Blog not found' },
                 { status: 404 }
             );
@@ -45,14 +45,14 @@ export async function DELETE(request: NextRequest) {
         // Delete blog from database
         await BlogModel.findByIdAndDelete(blogId);
 
-        return Response.json(
+        return NextResponse.json(
             { success: true, message: 'Blog and all associated files deleted successfully' },
             { status: 200 }
         );
 
     } catch (error) {
         console.error('Error deleting blog:', error);
-        return Response.json(
+        return NextResponse.json(
             { success: false, message: 'Internal server error' },
             { status: 500 }
         );

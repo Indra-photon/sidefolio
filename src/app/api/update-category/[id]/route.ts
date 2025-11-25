@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import BlogCategoryModel from '../../models/BlogCategory';
 import { uploadImage, deleteImage } from '@/lib/imagekit';
@@ -23,7 +23,7 @@ export async function PUT(
         
 
         if (!id) {
-            return Response.json(
+            return NextResponse.json(
                 { success: false, message: 'Category ID is required' },
                 { status: 400 }
             );
@@ -32,7 +32,7 @@ export async function PUT(
         // Find category
         const category = await BlogCategoryModel.findById(id);
         if (!category) {
-            return Response.json(
+            return NextResponse.json(
                 { success: false, message: 'Category not found' },
                 { status: 404 }
             );
@@ -42,7 +42,7 @@ export async function PUT(
         if (slug && slug !== category.slug) {
             const existingCategory = await BlogCategoryModel.findOne({ slug, _id: { $ne: id } });
             if (existingCategory) {
-                return Response.json(
+                return NextResponse.json(
                     { success: false, message: 'Slug already exists' },
                     { status: 409 }
                 );
@@ -86,7 +86,7 @@ export async function PUT(
 
         await category.save();
 
-        return Response.json(
+        return NextResponse.json(
             {
                 success: true,
                 message: 'Category updated successfully',
@@ -97,7 +97,7 @@ export async function PUT(
 
     } catch (error) {
         console.error('Error updating category:', error);
-        return Response.json(
+        return NextResponse.json(
             { success: false, message: 'Internal server error' },
             { status: 500 }
         );

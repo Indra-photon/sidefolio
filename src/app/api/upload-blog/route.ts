@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import BlogModel from '../models/Blog';
 import { calculateReadingTime, sanitizeSlug, formatTags } from '@/lib/blogHelpers';
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
 
         // Validate required fields
         if (!title || !slug || !description || !content || !categoryId || !author || !thumbnailFile) {
-            return Response.json(
+            return NextResponse.json(
                 { success: false, message: 'Missing required fields' },
                 { status: 400 }
             );
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
         // Check if slug already exists
         const existingBlog = await BlogModel.findOne({ slug: sanitizedSlug });
         if (existingBlog) {
-            return Response.json(
+            return NextResponse.json(
                 { success: false, message: 'Slug already exists' },
                 { status: 409 }
             );
@@ -168,7 +168,7 @@ export async function POST(request: NextRequest) {
 
         await newBlog.save();
 
-        return Response.json(
+        return NextResponse.json(
             { 
                 success: true, 
                 message: 'Blog created successfully',
@@ -183,7 +183,7 @@ export async function POST(request: NextRequest) {
 
     } catch (error) {
         console.error('Error creating blog:', error);
-        return Response.json(
+        return NextResponse.json(
             { success: false, message: 'Internal server error' },
             { status: 500 }
         );

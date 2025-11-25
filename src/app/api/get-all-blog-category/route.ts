@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import BlogCategoryModel from '../models/BlogCategory';
 
@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
             .sort({ displayOrder: 1, createdAt: -1 })
             .lean();
 
-        return Response.json(
+        return NextResponse.json(
             {
                 success: true,
                 categories
@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
 
     } catch (error) {
         console.error('Error fetching categories:', error);
-        return Response.json(
+        return NextResponse.json(
             { success: false, message: 'Internal server error' },
             { status: 500 }
         );

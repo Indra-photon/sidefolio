@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import BlogModel from '../../models/Blog';
 import { calculateReadingTime, sanitizeSlug, formatTags, findRemovedUrls, cleanupRemovedFiles, extractImageKitUrls, extractFileIdFromUrl } from '@/lib/blogHelpers';
@@ -31,7 +31,7 @@ export async function PUT(request: NextRequest) {
         const twitterCreator = formData.get('twitterCreator') as string;
 
         if (!blogId) {
-            return Response.json(
+            return NextResponse.json(
                 { success: false, message: 'Blog ID is required' },
                 { status: 400 }
             );
@@ -40,7 +40,7 @@ export async function PUT(request: NextRequest) {
         // Find existing blog
         const existingBlog = await BlogModel.findById(blogId);
         if (!existingBlog) {
-            return Response.json(
+            return NextResponse.json(
                 { success: false, message: 'Blog not found' },
                 { status: 404 }
             );
@@ -154,14 +154,14 @@ export async function PUT(request: NextRequest) {
 
         await existingBlog.save();
 
-        return Response.json(
+        return NextResponse.json(
             { success: true, message: 'Blog updated successfully' },
             { status: 200 }
         );
 
     } catch (error) {
         console.error('Error updating blog:', error);
-        return Response.json(
+        return NextResponse.json(
             { success: false, message: 'Internal server error' },
             { status: 500 }
         );

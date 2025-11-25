@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import BlogCategoryModel from '../../models/BlogCategory';
 
@@ -13,7 +13,7 @@ export async function DELETE(
         const { id } = await params;
 
         if (!id) {
-            return Response.json(
+            return NextResponse.json(
                 { success: false, message: 'Category ID is required' },
                 { status: 400 }
             );
@@ -22,13 +22,13 @@ export async function DELETE(
         // Find and delete category
         const category = await BlogCategoryModel.findByIdAndDelete(id);
         if (!category) {
-            return Response.json(
+            return NextResponse.json(
                 { success: false, message: 'Category not found' },
                 { status: 404 }
             );
         }
 
-        return Response.json(
+        return NextResponse.json(
             {
                 success: true,
                 message: 'Category deleted successfully'
@@ -38,7 +38,7 @@ export async function DELETE(
 
     } catch (error) {
         console.error('Error deleting category:', error);
-        return Response.json(
+        return NextResponse.json(
             { success: false, message: 'Internal server error' },
             { status: 500 }
         );

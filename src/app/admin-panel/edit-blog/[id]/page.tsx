@@ -53,7 +53,7 @@ export default function EditBlogPage() {
   const fetchBlogData = async () => {
     try {
       setFetching(true);
-      const res = await fetch(`/api/get-one-blog/[id]`);
+      const res = await fetch(`/api/get-one-blog/${blogId}`);
       const data = await res.json();
       
       if (data.success) {
@@ -322,7 +322,7 @@ export default function EditBlogPage() {
           </CardHeader>
           <CardContent>
             <Editor
-              apiKey="your-tinymce-api-key"
+              apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
               onInit={(evt, editor) => (editorRef.current = editor)}
               initialValue={formData.content}
               init={{

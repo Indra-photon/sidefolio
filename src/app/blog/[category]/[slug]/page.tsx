@@ -8,6 +8,14 @@ import Image from 'next/image';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Clock, Eye, Calendar, User, ArrowLeft, Tag } from 'lucide-react';
+import { twMerge } from "tailwind-merge";
+import localFont from "next/font/local";
+
+
+const CalSans = localFont({
+  src: [{ path: "../../../../../fonts/CalSans-SemiBold.woff2" }],
+  display: "swap",
+});
 
 type Props = {
   params: Promise<{ category: string; slug: string }>;
@@ -157,7 +165,7 @@ export default async function BlogPostPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
-      <Container className="max-w-7xl">
+      <Container className={twMerge(CalSans.className,"max-w-7xl")}>
         {/* Breadcrumb */}
         <div className="mb-8">
           <Link href="/blog" className="text-sm text-gray-500 hover:text-gray-700">
@@ -185,7 +193,7 @@ export default async function BlogPostPage({ params }: Props) {
             </Heading>
 
             {/* Meta Info */}
-            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-6">
+            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-300 mb-6">
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4" />
                 <span>{blog.author}</span>
@@ -206,12 +214,13 @@ export default async function BlogPostPage({ params }: Props) {
               </div>
               <div className="flex items-center gap-2">
                 <Eye className="w-4 h-4" />
-                <span>{blog.views} views</span>
+                {/* <span>{blog.views} views</span> */}
+                <span>33 views</span>
               </div>
             </div>
 
             {/* Description */}
-            <Paragraph className="text-lg text-gray-700 leading-relaxed">
+            <Paragraph className="text-xl text-gray-400 leading-relaxed">
               {blog.description}
             </Paragraph>
           </header>
@@ -231,23 +240,26 @@ export default async function BlogPostPage({ params }: Props) {
           <Separator className="my-8" />
 
           {/* Blog Content */}
-          {blog.content && (
-            <div 
-              className="prose prose-lg prose-gray max-w-none
-                prose-headings:font-bold prose-headings:text-gray-900
-                prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
-                prose-p:text-gray-700 prose-p:leading-relaxed
-                prose-a:text-emerald-600 prose-a:no-underline hover:prose-a:underline
-                prose-strong:text-gray-900 prose-strong:font-semibold
-                prose-code:text-emerald-600 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
-                prose-pre:bg-gray-900 prose-pre:text-gray-100
-                prose-img:rounded-lg prose-img:shadow-lg
-                prose-blockquote:border-l-4 prose-blockquote:border-emerald-500 prose-blockquote:pl-4 prose-blockquote:italic
-                prose-ul:list-disc prose-ol:list-decimal
-                prose-li:text-gray-700"
-              dangerouslySetInnerHTML={{ __html: blog.content }}
+        {blog.content && (
+            <div
+                className={twMerge(
+                    CalSans.className,
+                    `prose prose-lg prose-gray max-w-none
+                    prose-headings:font-bold prose-headings:text-white
+                    prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
+                    prose-p:text-white prose-p:leading-relaxed
+                    prose-a:text-emerald-600 prose-a:no-underline hover:prose-a:underline
+                    prose-strong:text-gray-300 prose-strong:font-semibold
+                    prose-code:text-neutral-200 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
+                    prose-pre:bg-neutral-600 prose-pre:text-gray-100
+                    prose-img:rounded-lg prose-img:shadow-lg
+                    prose-blockquote:border-l-4 prose-blockquote:border-emerald-500 prose-blockquote:pl-4 prose-blockquote:italic
+                    prose-ul:list-disc prose-ol:list-decimal
+                    prose-li:text-gray-700`
+                )}
+                dangerouslySetInnerHTML={{ __html: blog.content }}
             />
-          )}
+        )}
 
           <Separator className="my-12" />
 

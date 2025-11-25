@@ -9,7 +9,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: 'Indranil Maiti | Full Stack & GenAI Developer | Blog',
-  description: 'In this blog, I share insights on full stack development, GenAI technologies, and best practices for building scalable web applications using modern frameworks like React, Next.js, and Node.js.  I write business oriented articles for enterpreneurs to help them leverage web technologies and AI to grow their businesses.',
+  description: 'Here, I share insights on full stack development, GenAI technologies, and best practices for building scalable web applications using modern frameworks like React, Next.js, and Node.js.  I write business oriented articles for enterpreneurs to help them leverage web technologies and AI to grow their businesses.',
   keywords: ['GenAI developer',
     'Full stack web developer',
     'React developer',

@@ -38,7 +38,7 @@ export const Products = () => {
                 className="rounded-md"
               />
               <div className="flex flex-col justify-between">
-                <div>
+                <div className="pl-4 sm:pl-0">
                   <Heading as="h1" className="font-black text-3xl sm:text-xl md:text-2xl lg:text-3xl pb-1">
                     {product.title}
                   </Heading>
@@ -46,7 +46,7 @@ export const Products = () => {
                     {product.description}
                   </Paragraph>
                 </div>
-                <div className="flex space-x-2 md:mb-1 mt-2 md:mt-0">
+                <div className="flex space-x-2 md:mb-1 mt-2 md:mt-0 pl-4 sm:pl-0">
                   {product.stack?.map((stack: string) => (
                     <span
                       key={stack}

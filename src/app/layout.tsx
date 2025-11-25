@@ -14,17 +14,33 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.indrabuildswebsites.com/"),
   title: "Indranil Maiti | Full Stack & GenAI Developer",
-  description: "Indranil Maiti is a Full Stack Developer and Gen AI specialist with expertise in React, Next.js, Node.js, and AI integration for scalable web applications.",
-  keywords: "Indranil Maiti, Full Stack Developer, React Developer, Next.js, GenAI, AI Integration, Web Development Freelance full stack web developer, scalable web applications, modern web technologies. I am based on India and Poland",
+  description: "I am a Full Stack Developer and Gen AI specialist with expertise in React, Next.js, Node.js, and AI integration for scalable web applications. I build modern, responsive, and fast websites that drive results. I focus on microinteractions, animations , and user-centric design to create engaging digital experiences.",
+  keywords: [
+    "GenAI developer",
+    "Full stack web developer",
+    "React developer",
+    "Next.js developer",
+    "Node.js developer",
+    "AI integration",
+    "Scalable web applications",
+    "Modern web technologies",
+    "Freelance developer",
+    "Responsive web design",
+    "Web development services",
+    "Digital experiences",
+    "User-centric design",
+    "Microinteractions",
+    "Web animations"
+  ],
   openGraph: {
     title: "Indranil Maiti | Full Stack & GenAI Developer",
-    description: "Building scalable web applications and AI-driven solutions with modern technologies.",
+    description: "I am a Full Stack Developer and Gen AI specialist with expertise in React, Next.js, Node.js, and AI integration for scalable web applications. I build modern, responsive, and fast websites that drive results. I focus on microinteractions, animations , and user-centric design to create engaging digital experiences.",
     images: [
       {
         url: "/images/Indranil_2.jpg",
         width: 1200,
         height: 630,
-        alt: "Indranil Maiti - Full Stack Developer"
+        alt: "Indranil Maiti - Full Stack Developer and GenAI Specialist"
       }
     ],
     type: "website",
@@ -34,7 +50,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Indranil Maiti | Full Stack & GenAI Developer",
     description: "Building scalable web applications and AI-driven solutions with modern technologies.",
-    images: ["/images/Indranil_2.jpg"]
+    images: ["/images/Indranil_2.jpg"],
+    creator: "@Nil_phy_dreamer"
   },
   robots: {
     index: true,

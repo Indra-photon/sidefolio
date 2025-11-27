@@ -1,15 +1,20 @@
 import type { MetadataRoute } from 'next'
 import { products } from '@/constants/products'
 
-// Base URL for your website
 const BASE_URL = 'https://www.indrabuildswebsites.com'
 
-// Helper function to fetch all published blogs from your API
+// Fetch ALL published blogs (no pagination limit)
 async function getAllBlogs() {
   try {
-    const response = await fetch(`${BASE_URL}/api/get-all-blogs`, {
-      cache: 'no-store', // Always get fresh data
-    })
+    // Fetch with a very high limit to get all blogs
+    // Alternatively, you could fetch in batches if you have 1000+ blogs
+    const response = await fetch(
+      `${BASE_URL}/api/get-all-blogs?isPublished=true&limit=100`,
+      { 
+        cache: 'no-store',
+        next: { revalidate: 0 }
+      }
+    )
     
     if (!response.ok) {
       console.error('Failed to fetch blogs for sitemap')
@@ -24,12 +29,16 @@ async function getAllBlogs() {
   }
 }
 
-// Helper function to fetch all blog categories
+// Fetch all active categories
 async function getAllCategories() {
   try {
-    const response = await fetch(`${BASE_URL}/api/get-all-blog-category?activeOnly=true`, {
-      cache: 'no-store',
-    })
+    const response = await fetch(
+      `${BASE_URL}/api/get-all-blog-category?activeOnly=true`,
+      { 
+        cache: 'no-store',
+        next: { revalidate: 0 }
+      }
+    )
     
     if (!response.ok) {
       console.error('Failed to fetch categories for sitemap')
@@ -83,7 +92,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ]
 
-  // Project pages (from products constant)
+  // Project pages (from constants)
   const projectPages: MetadataRoute.Sitemap = products.map((product) => ({
     url: `${BASE_URL}/projects/${product.slug}`,
     lastModified: new Date(),
@@ -99,7 +108,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }))
 
-  // Individual blog post pages
+  // Individual blog post pages - THIS IS THE KEY FIX
   const blogPages: MetadataRoute.Sitemap = blogs.map((blog: any) => ({
     url: `${BASE_URL}/blog/${blog.categoryId.slug}/${blog.slug}`,
     lastModified: new Date(blog.updatedAt),

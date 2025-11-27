@@ -33,9 +33,9 @@ export const Sidebar = () => {
               <SidebarHeader />
               <Navigation setOpen={setOpen} />
             </div>
-            <div onClick={() => isMobile() && setOpen(false)}>
+            {/* <div onClick={() => isMobile() && setOpen(false)}>
               <Badge href="/resume" text="Read Resume" />
-            </div>
+            </div> */}
           </motion.div>
         )}
       </AnimatePresence>
@@ -64,7 +64,15 @@ export const Navigation = ({
         <Link
           key={link.url}
           href={link.url}
-          onClick={() => isMobile() && setOpen(false)}
+          onClick={() => {
+            isMobile() && setOpen(false);
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event: 'navigation_click',
+              menu_item: link.label,
+              destination_url: link.url
+            });
+          }}
           className={twMerge(
             "text-secondary transition duration-200 flex items-center space-x-2 py-2 px-2 rounded-md text-sm",
             isActive(link.url) && "bg-white shadow-lg text-primary"
@@ -87,6 +95,14 @@ export const Navigation = ({
         <Link
           key={link.url}
           href={link.url}
+          onClick={() => {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: 'social_media_click',
+            social_platform: link.url,
+            page_location: window.location.href
+          });
+        }}
           className={twMerge(
             "text-secondary hover:text-primary transition duration-200 flex items-center space-x-2 py-2 px-2 rounded-md text-sm"
           )}
@@ -115,8 +131,8 @@ const SidebarHeader = () => {
         className="object-cover object-top rounded-full flex-shrink-0"
       />
       <div className="flex text-sm flex-col">
-        <p className="font-bold text-primary">Indranil Maiti</p>
-        <p className="font-light text-secondary">Developer</p>
+        <p className="font-bold text-secondary">Hi,</p>
+        <p className="font-light text-secondary">Nice to meet you</p>
       </div>
     </div>
   );

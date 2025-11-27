@@ -28,6 +28,14 @@ export const Products = () => {
             <Link
               href={product.slug ? `/projects/${product.slug}` : product.href}
               key={product.href}
+              onClick={() => {
+              window.dataLayer = window.dataLayer || [];
+              window.dataLayer.push({
+                event: 'project_click',
+                project_url: product.slug ? `/projects/${product.slug}` : product.href,
+                project_name: product.title
+              });
+            }}
               className="group flex flex-col md:flex-row bg-neutral-800 space-y-4 md:space-y-0 md:space-x-4 hover:bg-neutral-900 rounded-2xl backdrop-blur-2xl shadow-2xl transition duration-200 pt-4 pb-4"
             >
               <Image

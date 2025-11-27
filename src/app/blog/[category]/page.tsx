@@ -9,6 +9,7 @@ import Image from 'next/image';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Clock, Eye, Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
+import { BlogLink } from '@/components/BlogLink';
 
 type Props = {
   params: Promise<{ category: string }>;
@@ -154,15 +155,87 @@ export default async function CategoryBlogsPage({ params, searchParams }: Props)
       {/* Blogs Grid */}
       {blogs.length === 0 ? (
         <div className="text-center py-12">
-          <Paragraph className="text-gray-500">No blogs in this category yet.</Paragraph>
+          <Paragraph className="text-gray-500">I am writing articles. Please check back later.</Paragraph>
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
             {blogs.map((blog: any) => (
               <Link 
                 key={blog._id} 
                 href={`/blog/${categoryData.slug}/${blog.slug}`}
+                
+                className="group"
+              >
+                <Card 
+                 className="h-full transition-shadow hover:shadow-lg overflow-hidden">
+                
+                  <div className="relative w-full h-56 overflow-hidden">
+                    <Image
+                      src={getOptimizedImageUrl(blog.thumbnail, 800)}
+                      alt={blog.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    {blog.isFeatured && (
+                      <Badge className="absolute top-4 right-4 bg-yellow-500">
+                        Featured
+                      </Badge>
+                    )}
+                  </div>
+
+                  <CardHeader>
+                    <CardTitle className="group-hover:text-emerald-600 transition-colors line-clamp-2">
+                      {blog.title}
+                    </CardTitle>
+                    <CardDescription className="line-clamp-3 mt-2">
+                      {blog.description}
+                    </CardDescription>
+                  </CardHeader>
+
+                  <CardContent>
+                   
+                    <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
+                      <div className="flex items-center gap-1">
+                        <Calendar className="w-4 h-4" />
+                        {new Date(blog.createdAt).toLocaleDateString('en-US', {
+                          month: 'short',
+                          day: 'numeric',
+                          year: 'numeric'
+                        })}
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Clock className="w-4 h-4" />
+                        {blog.readingTime} min read
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Eye className="w-4 h-4" />
+                        {blog.views} views
+                      </div>
+                    </div>
+
+                   
+                    {blog.tags && blog.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mt-4">
+                        {blog.tags.slice(0, 3).map((tag: string) => (
+                          <Badge key={tag} variant="outline" className="text-xs">
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div> */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            {blogs.map((blog: any) => (
+              <BlogLink 
+                key={blog._id} 
+                href={`/blog/${categoryData.slug}/${blog.slug}`}
+                articleTitle={blog.title}
                 className="group"
               >
                 <Card className="h-full transition-shadow hover:shadow-lg overflow-hidden">
@@ -224,7 +297,7 @@ export default async function CategoryBlogsPage({ params, searchParams }: Props)
                     )}
                   </CardContent>
                 </Card>
-              </Link>
+              </BlogLink>
             ))}
           </div>
 

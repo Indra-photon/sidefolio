@@ -1,38 +1,10 @@
-// import { Container } from "@/components/Container";
-// import { Heading } from "@/components/Heading";
-// import { Highlight } from "@/components/Highlight";
-// import { Paragraph } from "@/components/Paragraph";
-// import { Products } from "@/components/Products";
-// import { getAllBlogs } from "../../../lib/getAllBlogs";
-// import { Blogs } from "@/components/Blogs";
-// import { Metadata } from "next";
-
-
-// export default async function Blog() {
-//   const blogs = await getAllBlogs();
-//   const data = blogs.map(({ component, ...meta }) => meta);
-
-//   return (
-//     <Container className="max-w-7xl">
-//       <span className="text-4xl">📝</span>
-//       <Heading className="font-black pb-4">I write about technology</Heading>
-//       <Paragraph className="pb-10">
-//         Ever since I was a kid, I&apos;ve been fascinated by technology.
-//         fascinated by technology.
-//       </Paragraph>
-//       <Blogs blogs={data} />
-//     </Container>
-//   );
-// }
-
-
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Container } from '@/components/Container';
 import { Heading } from '@/components/Heading';
 import { Paragraph } from '@/components/Paragraph';
 import Link from 'next/link';
 import Image from 'next/image';
+import { BlogCategoryLink } from '@/components/BlogCategoryLink';
 
 async function getAllCategories() {
   try {
@@ -87,9 +59,10 @@ export default async function BlogPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map((category: any) => (
-            <Link 
+            <BlogCategoryLink 
               key={category._id} 
               href={`/blog/${category.slug}`}
+              categoryName={category.name}
               className="group"
             >
               <Card className="h-full transition-shadow hover:shadow-lg">
@@ -120,7 +93,7 @@ export default async function BlogPage() {
                   </CardDescription>
                 </CardHeader>
               </Card>
-            </Link>
+            </BlogCategoryLink>
           ))}
         </div>
       )}

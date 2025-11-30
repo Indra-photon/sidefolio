@@ -41,7 +41,7 @@ export default function About() {
       </div>
 
       <div className="max-w-7xl">
-        <Paragraph className=" mt-4">
+        <Paragraph className=" mt-4 text-neutral-400">
           Hey there, I'm Indranil Maiti - a passionate developer who believes 
           that great code is just the beginning of an extraordinary journey. 
           From the early days of my coding adventure, I've been captivated by 
@@ -50,7 +50,7 @@ export default function About() {
           blend innovation with elegance.
         </Paragraph>
 
-        <Paragraph className=" mt-4">
+        <Paragraph className=" mt-4 text-neutral-400">
           But my curiosity doesn't end with lines of code. With a heart that 
           beats for history's fascinating tales and a mind that dreams of 
           exploring every corner of our beautiful world, I find inspiration in 
@@ -59,7 +59,7 @@ export default function About() {
           perspectives to everything I build.
         </Paragraph>
 
-        <Paragraph className=" mt-4">
+        <Paragraph className=" mt-4 text-neutral-400">
           What truly sets me apart is my love for the finer things in life. 
           Whether I'm experimenting with new flavors in the kitchen, crafting 
           the perfect dish that brings people together, or getting lost in the 
@@ -69,7 +69,7 @@ export default function About() {
           and precision.
         </Paragraph>
 
-        <Paragraph className=" mt-4">
+        <Paragraph className=" mt-4 text-neutral-400">
           Through this website, I aim to share my journey of code, culture, and 
           creativity with you. Whether you're a fellow developer seeking 
           innovative solutions, a history enthusiast ready to dive into 
@@ -78,14 +78,14 @@ export default function About() {
           cricket, there's something here for you.
         </Paragraph>
 
-        <Paragraph className=" mt-4">
+        <Paragraph className=" mt-4 text-neutral-400">
           Join me on this journey of algorithms and adventures, logic and 
           wanderlust, code and culture. Together, we can explore the boundless 
           possibilities of technology and life's beautiful experiences, all while 
           celebrating the passion that drives us to create, discover, and savor 
           every moment.
         </Paragraph>
-        <Paragraph className=" mt-4">
+        <Paragraph className=" mt-4 text-neutral-400">
           Thank you for being here, and I can&apos;t wait to embark on this
           adventure with you.
         </Paragraph>

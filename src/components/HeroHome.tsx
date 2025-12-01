@@ -97,7 +97,7 @@ function HeroHome() {
                         </motion.div>
 
                         <motion.div className='pt-2'>
-                            <motion.div className='flex flex-row items-center justify-center gap-6'>
+                            <motion.div className='flex flex-row items-center justify-start gap-6'>
                                 <div className={twMerge(CalSans.className, 'text-white text-md sm:text-lg lg:text-xl hidden sm:hidden md:inline-block')}>Find me here :</div>
                                 <div className='flex justify-start items-start gap-4'>
                                   {SocialLinks.map((social, idx) => (

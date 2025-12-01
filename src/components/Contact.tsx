@@ -16,6 +16,10 @@ const defaultFormState = {
     value: "",
     error: "",
   },
+  projectTypes: {
+    value: [] as string[],  // Add this
+    error: "",
+  },
   message: {
     value: "",
     error: "",
@@ -28,6 +32,11 @@ const defaultFormState = {
 
 export const Contact = () => {
   const [formData, setFormData] = useState(defaultFormState);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: 'success' | 'error' | null;
+    message: string;
+  }>({ type: null, message: '' });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -40,17 +49,77 @@ export const Contact = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      event: 'contact_form_submit',
-      form_id: 'contact-form',
-      page_location: window.location.href
+  const handleProjectTypeToggle = (type: string) => {
+  setFormData(prev => {
+    const currentTypes = prev.projectTypes.value;
+    const newTypes = currentTypes.includes(type)
+      ? currentTypes.filter(t => t !== type)
+      : [...currentTypes, type];
+    
+    return {
+      ...prev,
+      projectTypes: {
+        value: newTypes,
+        error: "",
+      }
+    };
+  });
+};
+
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+  setSubmitStatus({ type: null, message: '' });
+
+  try {
+    const response = await fetch('/api/send-email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: formData.name.value,
+        email: formData.email.value,
+        company: formData.company.value,
+        message: formData.message.value,
+        budget: formData.budget.value,
+        projectTypes: formData.projectTypes.value,
+      }),
     });
-    // Write your submit logic here
-    console.log("Form submitted:", formData);
-  };
+
+    const data = await response.json();
+
+    if (data.success) {
+      // GTM tracking
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'contact_form_submit',
+        form_id: 'contact-form',
+        page_location: window.location.href
+      });
+
+      setSubmitStatus({
+        type: 'success',
+        message: data.message
+      });
+
+      // Reset form
+      setFormData(defaultFormState);
+    } else {
+      setSubmitStatus({
+        type: 'error',
+        message: data.message || 'Failed to send message. Please try again.'
+      });
+    }
+  } catch (error) {
+    setSubmitStatus({
+      type: 'error',
+      message: 'An unexpected error occurred. Please try again later.'
+    });
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <div className="mx-auto p-6 backdrop-blur-sm shadow-lg rounded-xl relative border border-gradient-to-r from-blue-200/30 to-purple-200/30">
@@ -126,11 +195,11 @@ export const Contact = () => {
               className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200 bg-gray-50 focus:bg-white appearance-none cursor-pointer"
             >
               <option value="">Project Budget</option>
-              <option value="under-5k">Under $5,000</option>
-              <option value="5k-15k">$5,000 - $15,000</option>
-              <option value="15k-50k">$15,000 - $50,000</option>
-              <option value="50k-plus">$50,000+</option>
-              <option value="discuss">Let's Discuss</option>
+              <option value="under-5k"> Under $500</option>
+              <option value="5k-15k">$5,00 - $1,000</option>
+              <option value="15k-50k">$1,000 - $1,500</option>
+              <option value="50k-plus">$1,500+</option>
+              <option value="discuss">Not sure yet, Lets discuss</option>
             </select>
           </div>
         </div>
@@ -168,9 +237,14 @@ export const Contact = () => {
               <motion.button
                 key={type}
                 type="button"
+                onClick={() => handleProjectTypeToggle(type)}  // Add onClick
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-primary hover:text-white text-gray-700 rounded-full transition-all duration-200 border border-gray-200 hover:border-primary"
+                className={`px-3 py-1.5 text-sm rounded-full transition-all duration-200 border ${
+                  formData.projectTypes.value.includes(type)  // Add conditional styling
+                    ? 'bg-primary text-white border-primary'
+                    : 'bg-gray-100 hover:bg-primary hover:text-white text-gray-700 border-gray-200 hover:border-primary'
+                }`}
               >
                 {type}
               </motion.button>
@@ -182,14 +256,34 @@ export const Contact = () => {
         <div className="flex justify-end">
           <motion.button
             type="submit"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="px-8 py-3 bg-neutral-700 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
+            disabled={isSubmitting}  // Add disabled
+            whileHover={{ scale: isSubmitting ? 1 : 1.02 }}  // Update
+            whileTap={{ scale: isSubmitting ? 1 : 0.98 }}  // Update
+            className={`px-8 py-3 rounded-lg font-semibold shadow-lg transition-all duration-300 flex items-center gap-2 ${
+              isSubmitting 
+                ? 'bg-gray-400 cursor-not-allowed' 
+                : 'bg-neutral-700 hover:shadow-xl text-white'
+            }`}
           >
-            <span>Send Message</span>
+            <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
             <Send className="w-4 h-4" />
           </motion.button>
         </div>
+
+        {/* Success/Error Messages */}
+        {submitStatus.type && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={`p-4 rounded-lg ${
+              submitStatus.type === 'success'
+                ? 'bg-green-50 text-green-800 border border-green-200'
+                : 'bg-red-50 text-red-800 border border-red-200'
+            }`}
+          >
+            <p className="text-sm font-medium">{submitStatus.message}</p>
+          </motion.div>
+        )}
 
         {/* Footer Note */}
         <div className="text-center">

@@ -160,7 +160,7 @@ export async function PUT(request: NextRequest) {
         );
 
     } catch (error) {
-        console.error('Error updating blog:', error);
+        console.log('Error updating blog:', error);
         return NextResponse.json(
             { success: false, message: 'Internal server error' },
             { status: 500 }

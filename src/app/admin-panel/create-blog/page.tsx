@@ -274,7 +274,62 @@ export default function CreateBlogPage() {
                 content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
                 images_upload_url: '/api/imagekit-auth',
                 automatic_uploads: true,
-                file_picker_types: 'image',
+                // file_picker_types: 'image',
+                file_picker_types: 'file',
+                file_picker_callback: (callback, value, meta) => {
+                // Create file input
+                const input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                
+                // Set accepted file types based on what's being inserted
+                if (meta.filetype === 'image') {
+                  input.setAttribute('accept', 'image/*');
+                } else if (meta.filetype === 'media') {
+                  input.setAttribute('accept', 'video/mp4,image/gif');
+                } else {
+                  input.setAttribute('accept', 'image/*,video/mp4,image/gif');
+                }
+
+                // Handle file selection
+                input.onchange = async function() {
+                  const file = (this as HTMLInputElement).files?.[0];
+                  if (!file) return;
+
+                  // Determine if it's a video/gif or image
+                  const isVideo = file.type === 'video/mp4' || file.type === 'image/gif';
+                  
+                  // Upload to appropriate endpoint
+                  const uploadUrl = isVideo ? '/api/upload-video' : '/api/imagekit-auth';
+                  
+                  try {
+                    const formData = new FormData();
+                    formData.append('file', file);
+
+                    const response = await fetch(uploadUrl, {
+                      method: 'POST',
+                      body: formData
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success || data.location) {
+                      // Return the URL to TinyMCE
+                      callback(data.location || data.url, { 
+                        alt: file.name,
+                        title: file.name 
+                      });
+                    } else {
+                      alert(data.message || 'Upload failed');
+                    }
+                  } catch (error) {
+                    console.error('Upload error:', error);
+                    alert('Failed to upload file');
+                  }
+                };
+
+                // Trigger file selection
+                input.click();
+              },
                 codesample_languages: [
                   { text: 'JavaScript', value: 'javascript' },
                   { text: 'TypeScript', value: 'typescript' },

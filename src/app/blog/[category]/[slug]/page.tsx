@@ -10,6 +10,7 @@ import { notFound } from 'next/navigation';
 import { Clock, Eye, Calendar, User, ArrowLeft, Tag } from 'lucide-react';
 import { twMerge } from "tailwind-merge";
 import localFont from "next/font/local";
+import PrismHighlighter from '@/components/PrismHighlighter';
 
 
 const CalSans = localFont({
@@ -226,22 +227,39 @@ export default async function BlogPostPage({ params }: Props) {
           </header>
 
           {/* Featured Image */}
-          <div className="relative w-full h-96 mb-12 rounded-xl overflow-hidden">
-            <Image
-              src={getOptimizedImageUrl(blog.thumbnail, 1200)}
-              alt={blog.title}
-              fill
-              sizes="(max-width: 896px) 100vw, 896px"
-              className="object-cover"
-              priority
-            />
+          <div className="relative w-full h-40 sm:h-96 mb-0 rounded-xl overflow-hidden">
+            <div className="relative w-full h-full rounded-xl overflow-hidden">
+              <Image
+                src={getOptimizedImageUrl(blog.thumbnail, 1200)}
+                alt={blog.title}
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 896px, 1200px"
+                className="object-contain rounded-xl"
+                priority
+              />
+            </div>
           </div>
 
           <Separator className="my-8" />
 
           {/* Blog Content */}
-        {blog.content && (
+        {/* {blog.content && (
             <div
+                // className={twMerge(
+                //     CalSans.className,
+                //     `prose prose-lg prose-gray max-w-none
+                //     prose-headings:font-bold prose-headings:text-white
+                //     prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
+                //     prose-p:text-white prose-p:leading-relaxed
+                //     prose-a:text-emerald-600 prose-a:no-underline hover:prose-a:underline
+                //     prose-strong:text-gray-300 prose-strong:font-semibold
+                //     prose-code:text-neutral-200 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
+                //     prose-pre:bg-neutral-600 prose-pre:text-gray-100
+                //     prose-img:rounded-lg prose-img:shadow-lg
+                //     prose-blockquote:border-l-4 prose-blockquote:border-emerald-500 prose-blockquote:pl-4 prose-blockquote:italic
+                //     prose-ul:list-disc prose-ol:list-decimal
+                //     prose-li:text-gray-700`
+                // )}
                 className={twMerge(
                     CalSans.className,
                     `prose prose-lg prose-gray max-w-none
@@ -250,16 +268,55 @@ export default async function BlogPostPage({ params }: Props) {
                     prose-p:text-white prose-p:leading-relaxed
                     prose-a:text-emerald-600 prose-a:no-underline hover:prose-a:underline
                     prose-strong:text-gray-300 prose-strong:font-semibold
-                    prose-code:text-neutral-200 prose-code:px-1 prose-code:py-0.5 prose-code:rounded
-                    prose-pre:bg-neutral-600 prose-pre:text-gray-100
                     prose-img:rounded-lg prose-img:shadow-lg
                     prose-blockquote:border-l-4 prose-blockquote:border-emerald-500 prose-blockquote:pl-4 prose-blockquote:italic
                     prose-ul:list-disc prose-ol:list-decimal
                     prose-li:text-gray-700`
-                )}
+                  )}
                 dangerouslySetInnerHTML={{ __html: blog.content }}
             />
+        )} */}
+
+        {/* {blog.content && (
+            <PrismHighlighter
+              content={blog.content}
+              className={twMerge(
+                CalSans.className,
+                `prose prose-lg prose-gray max-w-none
+                prose-headings:font-bold prose-headings:text-white
+                prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
+                prose-p:text-white prose-p:leading-relaxed
+                prose-a:text-emerald-600 prose-a:no-underline hover:prose-a:underline
+                prose-strong:text-gray-300 prose-strong:font-semibold
+                prose-img:rounded-lg prose-img:shadow-lg
+                prose-blockquote:border-l-4 prose-blockquote:border-emerald-500 prose-blockquote:pl-4 prose-blockquote:italic
+                prose-ul:list-disc prose-ol:list-decimal
+                prose-li:text-gray-700`
+              )}
+            />
+        )} */}
+        {blog.content && (
+            <PrismHighlighter
+              content={blog.content}
+              className={twMerge(
+                CalSans.className,
+                `prose prose-lg prose-gray max-w-5xl mx-auto sm:px-6
+                prose-headings:font-bold prose-headings:text-white
+                prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
+                prose-p:text-white prose-p:leading-relaxed
+                prose-a:text-emerald-600 prose-a:no-underline hover:prose-a:underline
+                prose-strong:text-gray-300 prose-strong:font-semibold
+                prose-img:rounded-lg prose-img:shadow-lg
+                prose-blockquote:border-l-4 prose-blockquote:border-emerald-500 prose-blockquote:pl-4 prose-blockquote:italic
+                prose-ul:list-disc prose-ol:list-decimal
+                prose-li:text-white
+                [&_pre]:w-full [&_pre]:md:h-auto [&_pre]:md:max-h-96  [&_pre]:text-[10px] [&_pre]:overflow-x-auto
+                
+                sm:border-l-2 sm:border-r-2 sm:border-dashed sm:border-neutral-800`
+              )}
+            />
         )}
+        {/* <div className="col-start-4 row-span-5 row-start-1 border-x border-x-(--pattern-fg) bg-[image:repeating-linear-gradient(315deg,_var(--pattern-fg)_0,_var(--pattern-fg)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px] bg-fixed [--pattern-fg:var(--color-gray-950)]/5 max-lg:hidden dark:[--pattern-fg:var(--color-white)]/10"></div> */}
 
           <Separator className="my-12" />
 

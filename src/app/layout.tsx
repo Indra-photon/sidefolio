@@ -6,6 +6,7 @@ import { twMerge } from "tailwind-merge";
 import { Footer } from "@/components/Footer";
 import { GoogleTagManager } from '@next/third-parties/google'
 import { Toaster } from "@/components/ui/sonner"
+import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -90,6 +91,7 @@ export default function RootLayout({
         <div className="lg:pl-2 lg:pt-2 bg-black flex-1 overflow-y-auto">
           <div className="flex-1 bg-black min-h-screen lg:rounded-tl-xl overflow-y-auto">
             {children}
+            <Analytics />
           </div>
         </div>
         <GoogleTagManager gtmId="GTM-PHTQSD64" />

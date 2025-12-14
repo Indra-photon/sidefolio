@@ -263,7 +263,7 @@ export default async function BlogPostPage({ params }: Props) {
               />
           )} */}
           {blog.content && (
-              <div className="relative">
+              <div className="relative ">
                 {/* Left Border Pattern */}
                 <div className="absolute left-0 top-0 bottom-0 w-8 border-x border-neutral-800 bg-[image:repeating-linear-gradient(315deg,_rgb(38_38_38)_0,_rgb(38_38_38)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px] bg-fixed hidden md:block"></div>
                 
@@ -284,7 +284,8 @@ export default async function BlogPostPage({ params }: Props) {
                     prose-blockquote:border-l-4 prose-blockquote:border-emerald-500 prose-blockquote:pl-4 prose-blockquote:italic
                     prose-ul:list-disc prose-ol:list-decimal
                     prose-li:text-white
-                    [&_pre]:w-full [&_pre]:md:h-auto [&_pre]:md:max-h-96 [&_pre]:text-[10px] [&_pre]:overflow-x-auto`
+                    [&_pre]:w-full [&_pre]:md:h-auto [&_pre]:md:max-h-96 [&_pre]:overflow-x-auto [&_pre]:text-[1px]
+                    [&_pre_code]:!text-sm [&_pre_code]:!leading-relaxed`
                   )}
                 />
               </div>

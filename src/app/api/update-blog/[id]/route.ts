@@ -1,15 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import BlogModel from '../../models/Blog';
+import BlogCategoryModel from '../../models/BlogCategory';
 import { calculateReadingTime, sanitizeSlug, formatTags, findRemovedUrls, cleanupRemovedFiles, extractImageKitUrls, extractFileIdFromUrl } from '@/lib/blogHelpers';
 import { uploadImage, deleteImage } from '@/lib/imagekit';
+import mongoose, { Document, Schema } from 'mongoose';
+
 
 export async function PUT(request: NextRequest) {
     await dbConnect();
 
     try {
-        const formData = await request.formData();
-        
+        const formData = await request.formData();        
         const blogId = formData.get('blogId') as string;
         const title = formData.get('title') as string;
         const slug = formData.get('slug') as string;
@@ -18,7 +20,7 @@ export async function PUT(request: NextRequest) {
         const tagsString = formData.get('tags') as string;
         const isPublished = formData.get('isPublished') === 'true';
         const isFeatured = formData.get('isFeatured') === 'true';
-
+        const newCategory = formData.get('categoryId') as string;
         // SEO fields
         const metaTitle = formData.get('metaTitle') as string;
         const metaDescription = formData.get('metaDescription') as string;
@@ -46,7 +48,6 @@ export async function PUT(request: NextRequest) {
             );
         }
 
-        // NEW: Handle thumbnail replacement and cleanup
         let thumbnailUrl = existingBlog.thumbnail;
         let thumbnailFileId = existingBlog.thumbnailFileId;
         
@@ -66,20 +67,23 @@ export async function PUT(request: NextRequest) {
             thumbnailUrl = thumbnailUpload.url;
             thumbnailFileId = thumbnailUpload.fileId;
         }
-
-        // NEW: Cleanup removed images/videos from content
         const removedUrls = findRemovedUrls(existingBlog.content, content);
         await cleanupRemovedFiles(removedUrls);
-
-        // NEW: Extract new content file IDs
         const contentUrls = extractImageKitUrls(content);
         const contentFileIds = contentUrls.map(url => extractFileIdFromUrl(url)).filter(id => id !== null) as string[];
-
-        // Calculate reading time
         const readingTime = calculateReadingTime(content);
 
         // Update blog
         existingBlog.title = title;
+        // convert categoryId to ObjectId if valid; cast to any to satisfy TS typing
+        if (newCategory && mongoose.Types.ObjectId.isValid(newCategory)) {
+            existingBlog.categoryId = new mongoose.Types.ObjectId(newCategory) as any;
+        } else {
+            // keep existing category if newCategory is not provided or invalid
+            existingBlog.categoryId = existingBlog.categoryId;
+            console.log('Invalid or missing categoryId, keeping existing category.');
+            
+        }
         existingBlog.slug = sanitizeSlug(slug);
         existingBlog.content = content;
         existingBlog.thumbnail = thumbnailUrl;

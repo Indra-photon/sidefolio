@@ -145,7 +145,7 @@ const BlogSchema: Schema<Blog> = new Schema({
     slug: { type: String, required: true, unique: true },
     description: { type: String, required: true },
     content: { type: String, required: true },
-    categoryId: { type: mongoose.Schema.Types.ObjectId, ref: 'BlogCategory', required: true },
+    categoryId: { type: mongoose.Types.ObjectId, ref: 'BlogCategory', required: true },
     author: { type: String, required: true },
     thumbnail: { type: String, required: true },
     thumbnailFileId: { type: String, required: true },

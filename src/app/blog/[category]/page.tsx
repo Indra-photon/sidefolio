@@ -240,13 +240,13 @@ export default async function CategoryBlogsPage({ params, searchParams }: Props)
               >
                 <Card className="h-full transition-shadow hover:shadow-lg overflow-hidden">
                   {/* Blog Thumbnail */}
-                  <div className="relative w-full h-56 overflow-hidden">
+                  <div className="relative w-full h-48 sm:h-56 md:h-80 overflow-hidden rounded-t-lg">
                     <Image
                       src={getOptimizedImageUrl(blog.thumbnail, 800)}
                       alt={blog.title}
                       fill
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px"
+                      className="object-contain sm:object-cover"
                     />
                     {blog.isFeatured && (
                       <Badge className="absolute top-4 right-4 bg-yellow-500">
@@ -256,7 +256,7 @@ export default async function CategoryBlogsPage({ params, searchParams }: Props)
                   </div>
 
                   <CardHeader>
-                    <CardTitle className="group-hover:text-emerald-600 transition-colors line-clamp-2">
+                    <CardTitle className="">
                       {blog.title}
                     </CardTitle>
                     <CardDescription className="line-clamp-3 mt-2">

@@ -16,6 +16,7 @@ export async function POST(request: NextRequest) {
         const slug = formData.get('slug') as string;
         const description = formData.get('description') as string;
         const content = formData.get('content') as string; // TinyMCE HTML content with code snippets
+        const contentType = ((formData.get('contentType') as string) || 'html') as 'html' | 'mdx';
         const categoryId = formData.get('categoryId') as string;
         const author = formData.get('author') as string;
         const thumbnailFile = formData.get('thumbnail') as File;
@@ -92,6 +93,7 @@ export async function POST(request: NextRequest) {
             slug: sanitizedSlug,
             description,
             content, // Contains HTML with code snippets from TinyMCE
+            contentType, 
             categoryId,
             author,
             thumbnail: thumbnailUpload.url,

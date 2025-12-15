@@ -19,11 +19,14 @@ export default function CreateBlogPage() {
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState<any[]>([]);
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
+  const [contentType, setContentType] = useState<'html' | 'mdx'>('html');
   
   const [formData, setFormData] = useState({
     title: '',
     slug: '',
     description: '',
+    content: '',
+    contentType: 'html' as 'html' | 'mdx',
     categoryId: '',
     author: 'Indranil Maiti',
     tags: '',
@@ -72,54 +75,115 @@ export default function CreateBlogPage() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
     
+  //   if (!editorRef.current) {
+  //     alert('Editor not initialized');
+  //     return;
+  //   }
+
+  //   const content = editorRef.current.getContent();
+    
+  //   if (!thumbnailFile) {
+  //     alert('Please upload a thumbnail');
+  //     return;
+  //   }
+
+  //   setLoading(true);
+
+  //   try {
+  //     const formDataToSend = new FormData();
+      
+  //     // Append all form fields
+  //     Object.entries(formData).forEach(([key, value]) => {
+  //       formDataToSend.append(key, value.toString());
+  //     });
+      
+  //     formDataToSend.append('content', content);
+  //     formDataToSend.append('thumbnail', thumbnailFile);
+
+  //     const res = await fetch('/api/upload-blog', {
+  //       method: 'POST',
+  //       body: formDataToSend
+  //     });
+
+  //     const data = await res.json();
+
+  //     if (data.success) {
+  //       alert('Blog created successfully!');
+  //       router.push('/admin-panel/blogs');
+  //     } else {
+  //       alert(data.message || 'Failed to create blog');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error creating blog:', error);
+  //     alert('An error occurred while creating the blog');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  
+  // Get content based on contentType
+  let content = '';
+  if (contentType === 'html') {
     if (!editorRef.current) {
       alert('Editor not initialized');
       return;
     }
+    content = editorRef.current.getContent();
+  } else {
+    // For MDX, content is already in formData
+    content = formData.content;
+  }
+  
+  if (!content || content.trim() === '') {
+    alert('Please add some content');
+    return;
+  }
+  
+  if (!thumbnailFile) {
+    alert('Please upload a thumbnail');
+    return;
+  }
 
-    const content = editorRef.current.getContent();
+  setLoading(true);
+
+  try {
+    const formDataToSend = new FormData();
     
-    if (!thumbnailFile) {
-      alert('Please upload a thumbnail');
-      return;
+    // Append all form fields (this includes contentType automatically)
+    Object.entries(formData).forEach(([key, value]) => {
+      formDataToSend.append(key, value.toString());
+    });
+    
+    // Override content with the correct content (from editor or textarea)
+    formDataToSend.set('content', content);
+    formDataToSend.append('thumbnail', thumbnailFile);
+
+    const res = await fetch('/api/upload-blog', {
+      method: 'POST',
+      body: formDataToSend
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      alert('Blog created successfully!');
+      router.push('/admin-panel/blogs');
+    } else {
+      alert(data.message || 'Failed to create blog');
     }
-
-    setLoading(true);
-
-    try {
-      const formDataToSend = new FormData();
-      
-      // Append all form fields
-      Object.entries(formData).forEach(([key, value]) => {
-        formDataToSend.append(key, value.toString());
-      });
-      
-      formDataToSend.append('content', content);
-      formDataToSend.append('thumbnail', thumbnailFile);
-
-      const res = await fetch('/api/upload-blog', {
-        method: 'POST',
-        body: formDataToSend
-      });
-
-      const data = await res.json();
-
-      if (data.success) {
-        alert('Blog created successfully!');
-        router.push('/admin-panel/blogs');
-      } else {
-        alert(data.message || 'Failed to create blog');
-      }
-    } catch (error) {
-      console.error('Error creating blog:', error);
-      alert('An error occurred while creating the blog');
-    } finally {
-      setLoading(false);
-    }
-  };
+  } catch (error) {
+    console.error('Error creating blog:', error);
+    alert('An error occurred while creating the blog');
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="max-w-5xl mx-auto space-y-8">
@@ -247,6 +311,7 @@ export default function CreateBlogPage() {
               </div>
             </div>
           </CardContent>
+
         </Card>
 
         {/* Content Editor */}
@@ -256,6 +321,41 @@ export default function CreateBlogPage() {
             <CardDescription>Write your blog content with rich formatting and code snippets</CardDescription>
           </CardHeader>
           <CardContent>
+            <div className="mb-6">
+              <Label htmlFor="contentType">Content Type *</Label>
+              <Select 
+                value={contentType} 
+                onValueChange={(value: 'html' | 'mdx') => {
+                  setContentType(value);
+                  setFormData(prev => ({ ...prev, contentType: value }));
+                }}
+              >
+                <SelectTrigger id="contentType">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="html">
+                    <div className="flex flex-col">
+                      <span className="font-medium">Rich Text Editor (TinyMCE)</span>
+                      <span className="text-xs text-gray-500">For standard blog posts</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="mdx">
+                    <div className="flex flex-col">
+                      <span className="font-medium">MDX Editor (Interactive)</span>
+                      <span className="text-xs text-gray-500">For interactive demos and components</span>
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+              <p className="text-sm text-gray-500 mt-2">
+                {contentType === 'html' 
+                  ? '📝 Use the visual editor for standard blog posts with images and formatting'
+                  : '⚡ Use MDX for interactive demos, live code examples, and custom components'
+                }
+              </p>
+            </div>
+            {contentType === 'html' ? (
             <Editor
               apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
               onInit={(evt, editor) => (editorRef.current = editor)}
@@ -344,8 +444,38 @@ export default function CreateBlogPage() {
                 ]
               }}
             />
-          </CardContent>
-        </Card>
+            ) : (
+              <div>
+                <textarea
+                  value={formData.content}
+                  onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
+                  className="w-full h-[500px] p-4 font-mono text-sm border rounded-md focus:ring-2 focus:ring-blue-500"
+                  placeholder="# Your MDX content here
+
+                  Write in markdown with React components!
+
+                  Example:
+                  ## Interactive Color Picker
+                  <ColorPicker initialColor='#3b82f6' />
+
+                  ## Regular Content
+                  You can mix regular markdown with interactive components."
+                      />
+                      <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-md">
+                        <h4 className="font-semibold text-blue-900 mb-2">📚 Available Interactive Components (Coming Soon):</h4>
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm text-blue-800 font-mono">
+                          <span>&lt;ColorPicker /&gt;</span>
+                          <span>&lt;MarginDemo /&gt;</span>
+                          <span>&lt;PaddingVisualizer /&gt;</span>
+                          <span>&lt;FlexboxPlayground /&gt;</span>
+                          <span>&lt;GridGenerator /&gt;</span>
+                          <span>&lt;CSSAnimator /&gt;</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
 
         {/* SEO Settings */}
         <Card>

@@ -11,6 +11,8 @@ import { Clock, Eye, Calendar, User, ArrowLeft, Tag } from 'lucide-react';
 import { twMerge } from "tailwind-merge";
 import localFont from "next/font/local";
 import PrismHighlighter from '@/components/PrismHighlighter';
+import { BlogContentRenderer } from '../../components/BlogContentRenderer';
+import { MDXContentRenderer } from '../../components/MDXContentRenderer';
 
 
 const CalSans = localFont({
@@ -241,33 +243,13 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
 
           <Separator className="my-8" />
+
           {/* {blog.content && (
-              <PrismHighlighter
-                content={blog.content}
-                className={twMerge(
-                  CalSans.className,
-                  `prose prose-lg prose-gray max-w-5xl mx-auto sm:px-6
-                  prose-headings:font-bold prose-headings:text-white
-                  prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
-                  prose-p:text-white prose-p:leading-relaxed
-                  prose-a:text-emerald-600 prose-a:no-underline hover:prose-a:underline
-                  prose-strong:text-gray-300 prose-strong:font-semibold
-                  prose-img:rounded-lg prose-img:shadow-lg
-                  prose-blockquote:border-l-4 prose-blockquote:border-emerald-500 prose-blockquote:pl-4 prose-blockquote:italic
-                  prose-ul:list-disc prose-ol:list-decimal
-                  prose-li:text-white
-                  [&_pre]:w-full [&_pre]:md:h-auto [&_pre]:md:max-h-96  [&_pre]:text-[10px] [&_pre]:overflow-x-auto
-                  
-                  sm:border-l-2 sm:border-r-2 sm:border-dashed sm:border-neutral-800`
-                )}
-              />
-          )} */}
-          {blog.content && (
               <div className="relative ">
-                {/* Left Border Pattern */}
+                
                 <div className="absolute left-0 top-0 bottom-0 w-8 border-x border-neutral-800 bg-[image:repeating-linear-gradient(315deg,_rgb(38_38_38)_0,_rgb(38_38_38)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px] bg-fixed hidden md:block"></div>
                 
-                {/* Right Border Pattern */}
+            
                 <div className="absolute right-0 top-0 bottom-0 w-8 border-x border-neutral-800 bg-[image:repeating-linear-gradient(315deg,_rgb(38_38_38)_0,_rgb(38_38_38)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px] bg-fixed hidden md:block"></div>
                 
                 <PrismHighlighter
@@ -289,6 +271,19 @@ export default async function BlogPostPage({ params }: Props) {
                   )}
                 />
               </div>
+          )} */}
+
+          {blog.content && (
+            <>
+              {blog.contentType === 'mdx' ? (
+                <MDXContentRenderer content={blog.content} />
+              ) : (
+                <BlogContentRenderer 
+                  content={blog.content}
+                  contentType="html"
+                />
+              )}
+            </>
           )}
 
           <Separator className="my-12" />

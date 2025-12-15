@@ -16,6 +16,7 @@ export async function PUT(request: NextRequest) {
         const title = formData.get('title') as string;
         const slug = formData.get('slug') as string;
         const content = formData.get('content') as string;
+        const contentType = ((formData.get('contentType') as string) || 'html') as 'html' | 'mdx';
         const thumbnailFile = formData.get('thumbnail') as File | null;
         const tagsString = formData.get('tags') as string;
         const isPublished = formData.get('isPublished') === 'true';
@@ -86,6 +87,7 @@ export async function PUT(request: NextRequest) {
         }
         existingBlog.slug = sanitizeSlug(slug);
         existingBlog.content = content;
+        existingBlog.contentType = contentType;
         existingBlog.thumbnail = thumbnailUrl;
         existingBlog.thumbnailFileId = thumbnailFileId;
         existingBlog.contentFileIds = contentFileIds;

@@ -64,6 +64,9 @@ export interface Blog extends Document {
     slug: string;
     description: string;
     content: string;
+    contentType: 'html' | 'mdx';
+    compiledContent?: string;  
+    mdxComponents?: string[]; 
     categoryId: mongoose.Schema.Types.ObjectId;
     author: string;
     thumbnail: string;
@@ -144,7 +147,10 @@ const BlogSchema: Schema<Blog> = new Schema({
     title: { type: String, required: true },
     slug: { type: String, required: true, unique: true },
     description: { type: String, required: true },
+    contentType: { type: String, enum: ['html', 'mdx'], required: true, default: 'html' },
     content: { type: String, required: true },
+    compiledContent: { type: String },  
+    mdxComponents: [{ type: String }],   
     categoryId: { type: mongoose.Types.ObjectId, ref: 'BlogCategory', required: true },
     author: { type: String, required: true },
     thumbnail: { type: String, required: true },

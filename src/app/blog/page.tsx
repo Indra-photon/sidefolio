@@ -5,26 +5,53 @@ import { Paragraph } from '@/components/Paragraph';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BlogCategoryLink } from '@/components/BlogCategoryLink';
+import dbConnect from '@/lib/dbConnect';
+import BlogCategoryModel from '@/app/api/models/BlogCategory';
+
+// async function getAllCategories() {
+//   try {
+//     const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/get-all-blog-category?activeOnly=true`, {
+//       cache: 'no-store'
+//     });
+    
+//     if (!res.ok) {
+//       throw new Error('Failed to fetch categories');
+//     }
+    
+//     const data = await res.json();
+//     return data.success ? data.categories : [];
+//   } catch (error) {
+//     console.error('Error fetching categories:', error);
+//     return [];
+//   }
+// }
+
+// Helper to get optimized ImageKit URL
 
 async function getAllCategories() {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/get-all-blog-category?activeOnly=true`, {
-      cache: 'no-store'
-    });
+    await dbConnect();
     
-    if (!res.ok) {
-      throw new Error('Failed to fetch categories');
-    }
+    const categories = await BlogCategoryModel.find({ isActive: true })
+      .sort({ displayOrder: 1, createdAt: -1 })
+      .lean();
     
-    const data = await res.json();
-    return data.success ? data.categories : [];
+    console.log(`✅ Fetched ${categories.length} categories (direct DB)`);
+    return categories;
   } catch (error) {
     console.error('Error fetching categories:', error);
     return [];
   }
 }
 
-// Helper to get optimized ImageKit URL
+
+
+
+
+
+
+
+
 function getOptimizedImageUrl(url: string, width: number) {
   if (!url) return '';
   

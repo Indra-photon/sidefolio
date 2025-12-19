@@ -10,6 +10,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Clock, Eye, Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
 import { BlogLink } from '@/components/BlogLink';
+import { buildApiUrl } from '@/lib/getBaseUrl';
 
 type Props = {
   params: Promise<{ category: string }>;
@@ -28,11 +29,48 @@ function getOptimizedImageUrl(url: string, width: number) {
   return url;
 }
 
+// async function getCategoryBySlug(slug: string) {
+//   try {
+//     const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/get-all-blog-category`, {
+//       cache: 'no-store'
+//     });
+//     const data = await res.json();
+//     if (data.success) {
+//       return data.categories.find((cat: any) => cat.slug === slug);
+//     }
+//     return null;
+//   } catch (error) {
+//     console.error('Error fetching category:', error);
+//     return null;
+//   }
+// }
+
+// async function getBlogsByCategory(categoryId: string, page: number = 1) {
+//   try {
+//     const res = await fetch(
+//       `${process.env.NEXT_PUBLIC_SITE_URL}/api/get-all-blogs?categoryId=${categoryId}&page=${page}&limit=5&isPublished=true`,
+//       { cache: 'no-store' }
+//     );
+//     const data = await res.json();
+//     return data.success ? data : { blogs: [], pagination: { currentPage: 1, totalPages: 1, totalBlogs: 0 } };
+//   } catch (error) {
+//     console.error('Error fetching blogs:', error);
+//     return { blogs: [], pagination: { currentPage: 1, totalPages: 1, totalBlogs: 0 } };
+//   }
+// }
+
 async function getCategoryBySlug(slug: string) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/get-all-blog-category`, {
-      cache: 'no-store'
+    const res = await fetch(buildApiUrl('/api/get-all-blog-category'), {
+      cache: 'no-store',
+      next: { revalidate: 300 } // Revalidate every 5 minutes
     });
+    
+    if (!res.ok) {
+      console.error(`Failed to fetch categories: ${res.status}`);
+      return null;
+    }
+    
     const data = await res.json();
     if (data.success) {
       return data.categories.find((cat: any) => cat.slug === slug);
@@ -47,9 +85,18 @@ async function getCategoryBySlug(slug: string) {
 async function getBlogsByCategory(categoryId: string, page: number = 1) {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SITE_URL}/api/get-all-blogs?categoryId=${categoryId}&page=${page}&limit=5&isPublished=true`,
-      { cache: 'no-store' }
+      buildApiUrl(`/api/get-all-blogs?categoryId=${categoryId}&page=${page}&limit=5&isPublished=true`),
+      { 
+        cache: 'no-store',
+        next: { revalidate: 60 } // Revalidate every 60 seconds
+      }
     );
+    
+    if (!res.ok) {
+      console.error(`Failed to fetch blogs: ${res.status}`);
+      return { blogs: [], pagination: { currentPage: 1, totalPages: 1, totalBlogs: 0 } };
+    }
+    
     const data = await res.json();
     return data.success ? data : { blogs: [], pagination: { currentPage: 1, totalPages: 1, totalBlogs: 0 } };
   } catch (error) {

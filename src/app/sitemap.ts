@@ -125,6 +125,7 @@ import fs from "fs";
 import { MetadataRoute } from "next";
 import path from "path";
 import { products } from '@/constants/products'
+import { buildApiUrl } from '@/lib/getBaseUrl';
 
 const baseUrl = "https://www.indrabuildswebsites.com";
 const baseDir = "src/app";
@@ -133,12 +134,60 @@ const excludeDirs = ["api", "admin-panel", "fonts"]; // Exclude these from sitem
 export const revalidate = 60; // Revalidate every 60 seconds (you can change to 3600 for 1 hour)
 
 // Fetch all published blogs from your API
+// async function getBlogs() {
+//   try {
+//     const response = await fetch(
+//       `${baseUrl}/api/get-all-blogs?isPublished=true&limit=1000`,
+//       { 
+//         cache: 'no-store',
+//       }
+//     );
+    
+//     if (!response.ok) {
+//       console.error('Failed to fetch blogs for sitemap:', response.status);
+//       return [];
+//     }
+    
+//     const data = await response.json();
+//     console.log(`✅ Fetched ${data.blogs?.length || 0} blogs for sitemap`);
+//     return data.blogs || [];
+//   } catch (error) {
+//     console.error('Error fetching blogs for sitemap:', error);
+//     return [];
+//   }
+// }
+
+// Fetch all active categories
+// async function getCategories() {
+//   try {
+//     const response = await fetch(
+//       `${baseUrl}/api/get-all-blog-category?activeOnly=true`,
+//       { 
+//         cache: 'no-store',
+//       }
+//     );
+    
+//     if (!response.ok) {
+//       console.error('Failed to fetch categories for sitemap:', response.status);
+//       return [];
+//     }
+    
+//     const data = await response.json();
+//     console.log(`✅ Fetched ${data.categories?.length || 0} categories for sitemap`);
+//     return data.categories || [];
+//   } catch (error) {
+//     console.error('Error fetching categories for sitemap:', error);
+//     return [];
+//   }
+// }
+
 async function getBlogs() {
   try {
     const response = await fetch(
-      `${baseUrl}/api/get-all-blogs?isPublished=true&limit=1000`,
+      buildApiUrl('/api/get-all-blogs?isPublished=true&limit=1000'),
       { 
         cache: 'no-store',
+        next: { revalidate: 3600 } // Revalidate sitemap every hour
       }
     );
     
@@ -156,13 +205,13 @@ async function getBlogs() {
   }
 }
 
-// Fetch all active categories
 async function getCategories() {
   try {
     const response = await fetch(
-      `${baseUrl}/api/get-all-blog-category?activeOnly=true`,
+      buildApiUrl('/api/get-all-blog-category?activeOnly=true'),
       { 
         cache: 'no-store',
+        next: { revalidate: 3600 } // Revalidate sitemap every hour
       }
     );
     

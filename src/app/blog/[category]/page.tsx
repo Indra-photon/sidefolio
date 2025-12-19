@@ -11,6 +11,11 @@ import { notFound } from 'next/navigation';
 import { Clock, Eye, Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
 import { BlogLink } from '@/components/BlogLink';
 import { buildApiUrl } from '@/lib/getBaseUrl';
+import dbConnect from '@/lib/dbConnect';
+import BlogCategoryModel from '@/app/api/models/BlogCategory';
+import BlogModel from '@/app/api/models/Blog';
+import mongoose from 'mongoose';
+
 
 type Props = {
   params: Promise<{ category: string }>;
@@ -61,21 +66,18 @@ function getOptimizedImageUrl(url: string, width: number) {
 
 async function getCategoryBySlug(slug: string) {
   try {
-    const res = await fetch(buildApiUrl('/api/get-all-blog-category'), {
-      cache: 'no-store',
-      next: { revalidate: 300 } // Revalidate every 5 minutes
-    });
+    await dbConnect();
     
-    if (!res.ok) {
-      console.error(`Failed to fetch categories: ${res.status}`);
+    const category = await BlogCategoryModel.findOne({ slug, isActive: true })
+      .lean();
+    
+    if (!category) {
+      console.log(`Category not found: ${slug}`);
       return null;
     }
     
-    const data = await res.json();
-    if (data.success) {
-      return data.categories.find((cat: any) => cat.slug === slug);
-    }
-    return null;
+    console.log(`✅ Category fetched: ${category.name}`);
+    return category;
   } catch (error) {
     console.error('Error fetching category:', error);
     return null;
@@ -84,21 +86,40 @@ async function getCategoryBySlug(slug: string) {
 
 async function getBlogsByCategory(categoryId: string, page: number = 1) {
   try {
-    const res = await fetch(
-      buildApiUrl(`/api/get-all-blogs?categoryId=${categoryId}&page=${page}&limit=5&isPublished=true`),
-      { 
-        cache: 'no-store',
-        next: { revalidate: 60 } // Revalidate every 60 seconds
+    await dbConnect();
+    
+    const limit = 5;
+    const skip = (page - 1) * limit;
+    
+    const blogs = await BlogModel.find({ 
+      categoryId: categoryId as any, // Let Mongoose handle the conversion
+      isPublished: true 
+    })
+      .populate('categoryId', 'name slug')
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .select('-content -contentFileIds')
+      .lean();
+    
+    const totalBlogs = await BlogModel.countDocuments({ 
+      categoryId: categoryId as any,
+      isPublished: true 
+    });
+    
+    const totalPages = Math.ceil(totalBlogs / limit);
+    
+    console.log(`✅ Fetched ${blogs.length} blogs for category (Total: ${totalBlogs})`);
+    
+    return {
+      blogs,
+      pagination: {
+        currentPage: page,
+        totalPages,
+        totalBlogs,
+        hasMore: page < totalPages
       }
-    );
-    
-    if (!res.ok) {
-      console.error(`Failed to fetch blogs: ${res.status}`);
-      return { blogs: [], pagination: { currentPage: 1, totalPages: 1, totalBlogs: 0 } };
-    }
-    
-    const data = await res.json();
-    return data.success ? data : { blogs: [], pagination: { currentPage: 1, totalPages: 1, totalBlogs: 0 } };
+    };
   } catch (error) {
     console.error('Error fetching blogs:', error);
     return { blogs: [], pagination: { currentPage: 1, totalPages: 1, totalBlogs: 0 } };
@@ -176,7 +197,8 @@ export default async function CategoryBlogsPage({ params, searchParams }: Props)
     notFound();
   }
 
-  const { blogs, pagination } = await getBlogsByCategory(categoryData._id, currentPage);
+  // const { blogs, pagination } = await getBlogsByCategory(categoryData._id, currentPage);
+  const { blogs, pagination } = await getBlogsByCategory(categoryData._id.toString(), currentPage);
 
   return (
     <Container className="max-w-7xl">

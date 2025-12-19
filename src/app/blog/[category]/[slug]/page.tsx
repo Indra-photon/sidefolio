@@ -14,6 +14,8 @@ import PrismHighlighter from '@/components/PrismHighlighter';
 import { BlogContentRenderer } from '../../components/BlogContentRenderer';
 import { MDXContentRenderer } from '../../components/MDXContentRenderer';
 import { buildApiUrl } from '@/lib/getBaseUrl';
+import dbConnect from '@/lib/dbConnect';
+import BlogModel from '@/app/api/models/Blog';
 
 
 const CalSans = localFont({
@@ -53,7 +55,6 @@ function getOptimizedImageUrl(url: string, width: number) {
 async function getBlogBySlug(slug: string) {
   try {
     const res = await fetch(buildApiUrl(`/api/get-one-blog/${slug}`), {
-      cache: 'no-store',
       next: { revalidate: 60 } // Revalidate every 60 seconds
     });
     
@@ -73,22 +74,14 @@ async function getBlogBySlug(slug: string) {
 // Generate static paths for all published blogs at build time
 export async function generateStaticParams() {
   try {
-    const res = await fetch(
-      buildApiUrl('/api/get-all-blogs?isPublished=true&limit=1000'),
-      { 
-        cache: 'no-store'
-      }
-    );
+    await dbConnect();
+    const blogs = await BlogModel.find({ isPublished: true })
+      .populate('categoryId', 'slug')
+      .select('slug categoryId')
+      .limit(1000)
+      .lean();
     
-    if (!res.ok) {
-      console.error('Failed to fetch blogs for static generation');
-      return [];
-    }
-    
-    const data = await res.json();
-    const blogs = data.blogs || [];
-    
-    console.log(`🚀 Generating static params for ${blogs.length} blogs`);
+    console.log(`🚀 Generating static params for ${blogs.length} blogs (direct DB)`);
     
     return blogs.map((blog: any) => ({
       category: blog.categoryId.slug,

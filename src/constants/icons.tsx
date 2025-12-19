@@ -2,35 +2,28 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-export const TrashSvg: React.FC<{ deleteState: 'idle' | 'deleting' | 'deleted' }> = ({ deleteState }) => {
-    const closedLid = "M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3";
-    const openLid = "M9 3v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3";
-
-    return (
-        <motion.svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            width="24" 
-            height="24" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="2" 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            className="icon icon-tabler icons-tabler-outline icon-tabler-trash"
+export const TrashIcon: React.FC<{ rotation: number }> = ({ rotation }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="-2 -6 28 32" fill="none" 
+    stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" 
+    className="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+        <g
+        style = {{
+            overflow: 'visible',
+            transformOrigin: 'right bottom',
+            transformBox: 'fill-box',
+            transform: `rotate(${rotation}deg)`,
+            transition: 'transform 0.3s ease-out'
+        }}
         >
             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
             <path d="M4 7l16 0" />
-            <path d="M10 11l0 6" />
-            <path d="M14 11l0 6" />
-            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-            <motion.path 
-                animate={{ d: deleteState === 'deleting' ? openLid : closedLid }}
-                transition={{ duration: 0.3 }}
-            />
-        </motion.svg>
-    )
-}
+        </g>
+        <path d="M10 11l0 6" />
+        <path d="M14 11l0 6" />
+        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+    </svg>
+)
 
 export const DownloadSvg: React.FC<{ downloadState: 'idle' | 'downloading' | 'downloaded' }> = ({ downloadState }) => {
     return (

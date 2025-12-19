@@ -13,6 +13,7 @@ import localFont from "next/font/local";
 import PrismHighlighter from '@/components/PrismHighlighter';
 import { BlogContentRenderer } from '../../components/BlogContentRenderer';
 import { MDXContentRenderer } from '../../components/MDXContentRenderer';
+import { buildApiUrl } from '@/lib/getBaseUrl';
 
 
 const CalSans = localFont({
@@ -36,16 +37,66 @@ function getOptimizedImageUrl(url: string, width: number) {
   return url;
 }
 
+// async function getBlogBySlug(slug: string) {
+//   try {
+//     const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/get-one-blog/${slug}`, {
+//       cache: 'no-store'
+//     });
+//     const data = await res.json();
+//     return data.success ? data.blog : null;
+//   } catch (error) {
+//     console.error('Error fetching blog:', error);
+//     return null;
+//   }
+// }
+
 async function getBlogBySlug(slug: string) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/get-one-blog/${slug}`, {
-      cache: 'no-store'
+    const res = await fetch(buildApiUrl(`/api/get-one-blog/${slug}`), {
+      cache: 'no-store',
+      next: { revalidate: 60 } // Revalidate every 60 seconds
     });
+    
+    if (!res.ok) {
+      console.error(`Failed to fetch blog: ${res.status} ${res.statusText}`);
+      return null;
+    }
+    
     const data = await res.json();
     return data.success ? data.blog : null;
   } catch (error) {
     console.error('Error fetching blog:', error);
     return null;
+  }
+}
+
+// Generate static paths for all published blogs at build time
+export async function generateStaticParams() {
+  try {
+    const res = await fetch(
+      buildApiUrl('/api/get-all-blogs?isPublished=true&limit=1000'),
+      { 
+        cache: 'no-store'
+      }
+    );
+    
+    if (!res.ok) {
+      console.error('Failed to fetch blogs for static generation');
+      return [];
+    }
+    
+    const data = await res.json();
+    const blogs = data.blogs || [];
+    
+    console.log(`🚀 Generating static params for ${blogs.length} blogs`);
+    
+    return blogs.map((blog: any) => ({
+      category: blog.categoryId.slug,
+      slug: blog.slug,
+    }));
+  } catch (error) {
+    console.error('Error generating static params:', error);
+    return [];
   }
 }
 

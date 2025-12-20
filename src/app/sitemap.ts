@@ -256,8 +256,8 @@ import { MetadataRoute } from "next";
 import path from "path";
 import { products } from '@/constants/products'
 import dbConnect from '@/lib/dbConnect';
-import BlogModel from '@/app/api/models/Blog';
 import BlogCategoryModel from '@/app/api/models/BlogCategory';
+import BlogModel from '@/app/api/models/Blog';
 
 const baseUrl = "https://www.indrabuildswebsites.com";
 const baseDir = "src/app";

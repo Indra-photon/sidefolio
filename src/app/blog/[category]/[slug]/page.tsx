@@ -55,6 +55,8 @@ function getOptimizedImageUrl(url: string, width: number) {
 //   }
 // }
 
+export const revalidate = 3600;
+
 async function getBlogBySlug(slug: string) {
   try {
     await dbConnect();

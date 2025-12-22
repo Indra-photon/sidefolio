@@ -3,6 +3,7 @@ import { twMerge } from 'tailwind-merge';
 import localFont from 'next/font/local';
 import ReactMarkdown from 'react-markdown';
 import { ColorPicker } from './interactive';
+import { AnimatedDeleteButton } from './interactive';
 
 const CalSans = localFont({
   src: [{ path: "../../../../fonts/CalSans-SemiBold.woff2" }],
@@ -16,6 +17,7 @@ interface MDXContentRendererProps {
 // Component registry - add new components here
 const componentMap: Record<string, any> = {
   ColorPicker,
+  AnimatedDeleteButton,
 };
 
 // Custom parser to extract components from markdown

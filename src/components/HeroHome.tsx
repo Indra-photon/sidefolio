@@ -180,7 +180,7 @@ function HeroHome() {
                 <FeaturedProject />
                 <FeaturedBlog />
                 <div className='hidden md:hidden lg:block mt-10'>
-                  <h1 className={twMerge(CalSans.className, 'text-white text-2xl sm:text-3xl lg:text-4xl mb-4')}>What I bring to the table</h1>
+                  <h1 className={twMerge(CalSans.className, 'text-white text-2xl sm:text-3xl lg:text-4xl mb-4')}></h1>
                   <BentoGridThirdDemo />
                 </div>
             </div>

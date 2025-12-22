@@ -54,22 +54,9 @@ const handleCTAClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     page_location: window.location.href,
   };
   
-  // Detailed log
-  console.log('=== CTA CLICK EVENT ===');
-  console.log('Button Text:', buttonText);
-  console.log('Event Data:', eventData);
-  console.log('DataLayer Before:', window.dataLayer);
-  
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push(eventData);
-  
-  console.log('DataLayer After:', window.dataLayer);
-  console.log('Last Event:', window.dataLayer[window.dataLayer.length - 1]);
-  console.log('======================');
-  
-//   setTimeout(() => {
-//     window.location.href = buttonLink;
-//   }, 300);
+  setTimeout(() => {
+    window.location.href = buttonLink;
+  }, 300);
 };
 
   return (

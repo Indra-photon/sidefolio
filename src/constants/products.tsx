@@ -9,6 +9,7 @@ export const products = [
     images: ["/images/toonytalesworld.webp"],
     stack: ["Reactjs", "Tailwindcss", "MongoDB", "Nodejs"],
     slug: "toonytalesworld-create-storybooks-for-kids-using-ai",
+    isFeatured: true,
     content: (
       <div>
         <p>
@@ -31,6 +32,7 @@ export const products = [
     images: ["/images/fraterny.webp"],
     stack: ["Nextjs", "Tailwindcss", "Typescript", "Supabase"],
     slug: "fraterny",
+    isFeatured: true,
     content: (
       <div>
         <p>
@@ -52,6 +54,7 @@ export const products = [
     images: ["/images/avoron.webp"],
     stack: ["Reactjs", "Tailwindcss", "Appwrite", "Nodejs"],
     slug: "avoron-ecommerce-website-for-deity-products",
+    isFeatured: true,
     content: (
       <div>
         <p>

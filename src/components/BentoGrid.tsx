@@ -14,6 +14,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { IconMapPins, IconClockHour10, IconEyeCode } from '@tabler/icons-react';
 import { IconCalendar, IconFlame, IconPhone } from '@tabler/icons-react'
 import { TrashIcon, DownloadSvg, CartSvg, CartIconSvg, ResetSvg } from "@/constants/icons";
+import MagicBento from "./MagicBento";
 
 
 export function BentoGridThirdDemo() {
@@ -360,7 +361,7 @@ const SkeletonOne = () => {
         </div>
       </motion.div> */}
 
-      <motion.button onClick={handleReset} className="text-black dark:text-white mt-4 underline text-sm absolute bottom-0 right-0 h-3 w-3">
+      <motion.button onClick={handleReset} className="text-white dark:text-white mt-4 underline text-sm absolute bottom-0 right-0 h-3 w-3">
         <ResetSvg />
       </motion.button>
 
@@ -634,94 +635,75 @@ const SkeletonThree = () => {
   );
 };
 const SkeletonFour = () => {
-  const first = {
-    initial: {
-      x: 20,
-      rotate: -5,
-    },
-    hover: {
-      x: 0,
-      rotate: 0,
-    },
-  };
-  const second = {
-    initial: {
-      x: -20,
-      rotate: 5,
-    },
-    hover: {
-      x: 0,
-      rotate: 0,
-    },
-  };
   return (
-    <motion.div
-      initial="initial"
-      animate="animate"
-      whileHover="hover"
-      className="flex flex-1 w-full h-full min-h-[6rem] dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex-row space-x-2"
-    >
-      <motion.div
-        variants={first}
-        className="h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center"
-      >
-        <img
-          src="https://pbs.twimg.com/profile_images/1417752099488636931/cs2R59eW_400x400.jpg"
-          alt="avatar"
-          height="100"
-          width="100"
-          className="rounded-full h-10 w-10"
-        />
-        <p className="sm:text-sm text-xs text-center font-semibold text-neutral-500 mt-4">
-          Just code in Vanilla Javascript
-        </p>
-        <p className="border border-red-500 bg-red-100 dark:bg-red-900/20 text-red-600 text-xs rounded-full px-2 py-0.5 mt-4">
-          Delusional
-        </p>
-      </motion.div>
-      <motion.div className="h-full relative z-20 w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center">
-        <img
-          src="https://pbs.twimg.com/profile_images/1417752099488636931/cs2R59eW_400x400.jpg"
-          alt="avatar"
-          height="100"
-          width="100"
-          className="rounded-full h-10 w-10"
-        />
-        <p className="sm:text-sm text-xs text-center font-semibold text-neutral-500 mt-4">
-          Tailwind CSS is cool, you know
-        </p>
-        <p className="border border-green-500 bg-green-100 dark:bg-green-900/20 text-green-600 text-xs rounded-full px-2 py-0.5 mt-4">
-          Sensible
-        </p>
-      </motion.div>
-      <motion.div
-        variants={second}
-        className="h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center"
-      >
-        <img
-          src="https://pbs.twimg.com/profile_images/1417752099488636931/cs2R59eW_400x400.jpg"
-          alt="avatar"
-          height="100"
-          width="100"
-          className="rounded-full h-10 w-10"
-        />
-        <p className="sm:text-sm text-xs text-center font-semibold text-neutral-500 mt-4">
-          I love angular, RSC, and Redux.
-        </p>
-        <p className="border border-orange-500 bg-orange-100 dark:bg-orange-900/20 text-orange-600 text-xs rounded-full px-2 py-0.5 mt-4">
-          Helpless
-        </p>
-      </motion.div>
-    </motion.div>
+    // <motion.div
+    //   initial="initial"
+    //   animate="animate"
+    //   whileHover="hover"
+    //   className="flex flex-1 w-full h-full min-h-[6rem] dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex-row space-x-2"
+    // >
+    //   <motion.div
+    //     variants={first}
+    //     className="h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center"
+    //   >
+    //     <img
+    //       src="https://pbs.twimg.com/profile_images/1417752099488636931/cs2R59eW_400x400.jpg"
+    //       alt="avatar"
+    //       height="100"
+    //       width="100"
+    //       className="rounded-full h-10 w-10"
+    //     />
+    //     <p className="sm:text-sm text-xs text-center font-semibold text-neutral-500 mt-4">
+    //       Just code in Vanilla Javascript
+    //     </p>
+    //     <p className="border border-red-500 bg-red-100 dark:bg-red-900/20 text-red-600 text-xs rounded-full px-2 py-0.5 mt-4">
+    //       Delusional
+    //     </p>
+    //   </motion.div>
+    //   <motion.div className="h-full relative z-20 w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center">
+    //     <img
+    //       src="https://pbs.twimg.com/profile_images/1417752099488636931/cs2R59eW_400x400.jpg"
+    //       alt="avatar"
+    //       height="100"
+    //       width="100"
+    //       className="rounded-full h-10 w-10"
+    //     />
+    //     <p className="sm:text-sm text-xs text-center font-semibold text-neutral-500 mt-4">
+    //       Tailwind CSS is cool, you know
+    //     </p>
+    //     <p className="border border-green-500 bg-green-100 dark:bg-green-900/20 text-green-600 text-xs rounded-full px-2 py-0.5 mt-4">
+    //       Sensible
+    //     </p>
+    //   </motion.div>
+    //   <motion.div
+    //     variants={second}
+    //     className="h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center"
+    //   >
+    //     <img
+    //       src="https://pbs.twimg.com/profile_images/1417752099488636931/cs2R59eW_400x400.jpg"
+    //       alt="avatar"
+    //       height="100"
+    //       width="100"
+    //       className="rounded-full h-10 w-10"
+    //     />
+    //     <p className="sm:text-sm text-xs text-center font-semibold text-neutral-500 mt-4">
+    //       I love angular, RSC, and Redux.
+    //     </p>
+    //     <p className="border border-orange-500 bg-orange-100 dark:bg-orange-900/20 text-orange-600 text-xs rounded-full px-2 py-0.5 mt-4">
+    //       Helpless
+    //     </p>
+    //   </motion.div>
+    // </motion.div>
+    <MagicBento />
   );
 };
 
 const items = [
   {
-    title: <Paragraph className="text-lg text-neutral-600 dark:text-neutral-200">Microinteractions on Buttons make your UI come alive</Paragraph>,
+    title: <Paragraph className="text-lg text-neutral-100 dark:text-neutral-200">Microinteractions help users engage with the UI</Paragraph>,
     description: (
-      <Paragraph className="text-sm text-neutral-400 dark:text-neutral-200">
-          Experience microinteractions on clicking the buttons.
+      <Paragraph className="text-sm text-neutral-300 dark:text-neutral-200">
+          user engagement is key for conversion!
         </Paragraph>
     ),
     header: <SkeletonOne />,
@@ -729,9 +711,9 @@ const items = [
     icon: <></>,
   },
   {
-    title: <Paragraph className="text-lg text-neutral-600 dark:text-neutral-200">Infinite Scroll Testimonials</Paragraph>,
+    title: <Paragraph className="text-lg text-neutral-100 dark:text-neutral-200">Testimonials</Paragraph>,
     description: (
-        <Paragraph className="text-sm text-neutral-400 dark:text-neutral-200">
+        <Paragraph className="text-sm text-neutral-300 dark:text-neutral-200">
           People love what I build! 
         </Paragraph>
     ),
@@ -740,9 +722,9 @@ const items = [
     icon: <></>,
   },
   {
-    title: <Paragraph className="text-lg text-neutral-600 dark:text-neutral-200">A travel card for one of my recent client</Paragraph>,
+    title: <Paragraph className="text-lg text-neutral-100 dark:text-neutral-200">A travel card for one of my recent client</Paragraph>,
     description: (
-      <Paragraph className="text-sm text-neutral-400 dark:text-neutral-200">
+      <Paragraph className="text-sm text-neutral-300 dark:text-neutral-200">
           This one is one of my favorites!
         </Paragraph>
     ),
@@ -751,15 +733,16 @@ const items = [
     icon: <IconSignature className="h-4 w-4 text-neutral-500" />,
   },
   {
-    title: "Sentiment Analysis",
+    // title: <Paragraph className="text-lg text-neutral-600 dark:text-neutral-200">Sentiment Analysis with AI</Paragraph>"",
     description: (
-      <span className="text-sm">
-        Understand the sentiment of your text with AI analysis.
-      </span>
+      // <span className="text-sm">
+      //   Understand the sentiment of your text with AI analysis.
+      // </span>
+      <span></span>
     ),
     header: <SkeletonFour />,
     className: "md:col-span-2",
-    icon: <IconTableColumn className="h-4 w-4 text-neutral-500" />,
+    // icon: <IconTableColumn className="h-4 w-4 text-neutral-500" />,
   },
 
   // {

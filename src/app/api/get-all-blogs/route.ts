@@ -66,12 +66,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import BlogModel from '../models/Blog';
+import BlogCategoryModel from '../models/BlogCategory';
 
 // GET - Fetch all blogs with filters
 export async function GET(request: NextRequest) {
     try {
         // Connect to database with error handling
         await dbConnect();
+        const ismodelLoaded = BlogCategoryModel;
+        if (!ismodelLoaded) {
+            throw new Error('BlogCategoryModel failed to load');
+        } else {
+            console.log('BlogCategoryModel loaded successfully');
+        }
+        console.log('✅ Database connected successfully');
     } catch (dbError) {
         console.error('Database connection failed:', dbError);
         return NextResponse.json(

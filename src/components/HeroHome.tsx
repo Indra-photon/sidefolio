@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion';
 import { Paragraph } from './Paragraph';
@@ -14,6 +16,8 @@ import Link from 'next/link';
 import { BentoGridThirdDemo } from '../components/BentoGrid';
 import { sendGTMEvent } from '@next/third-parties/google'
 import { twMerge } from "tailwind-merge";
+import FeaturedBlog from './FeaturedBlog';
+import FeaturedProject from './Featuredproject';
 
 const CalSans = localFont({
   src: [{ path: "../../fonts/CalSans-SemiBold.woff2" }],
@@ -133,7 +137,8 @@ function HeroHome() {
                             </motion.div>
                         </motion.div>
 
-                        <motion.div className='pt-10 pr-2'>
+                        {/* Service Section */}
+                        {/* <motion.div className='pt-10 pr-2'>
                             <motion.div>
                                 <p className={twMerge(CalSans.className, 'text-white text-2xl sm:text-3xl lg:text-4xl')}>What I can do</p>
                             </motion.div>
@@ -163,7 +168,7 @@ function HeroHome() {
                                 ))}
                               </motion.div>
                             </motion.div>
-                        </motion.div>
+                        </motion.div> */}
                 
                     </motion.div>
 
@@ -172,6 +177,12 @@ function HeroHome() {
                 {/* <motion.div className='mt-10'>
                   <BentoGridThirdDemo />
                 </motion.div> */}
+                <FeaturedProject />
+                <FeaturedBlog />
+                <div className='hidden md:hidden lg:block mt-10'>
+                  <h1 className={twMerge(CalSans.className, 'text-white text-2xl sm:text-3xl lg:text-4xl mb-4')}>What I bring to the table</h1>
+                  <BentoGridThirdDemo />
+                </div>
             </div>
           </div>
         </motion.section>

@@ -1,4 +1,4 @@
-'use client';
+
 
 import Link from 'next/link';
 import { Paragraph } from './Paragraph';
@@ -13,8 +13,7 @@ export default function FeaturedProject() {
   if (featuredProjects.length === 0) return null;
 
   return (
-    <section className="py-10">
-      <Container className="">
+      <Container className="py-10 px-0 sm:px-8">
         <div className="flex items-center justify-between mb-4">
           <Paragraph className="text-xl md:text-2xl font-bold">Projects</Paragraph>
           <Link href="/projects" className="text-sm text-neutral-400 hover:text-neutral-300 transition-colors">
@@ -56,6 +55,5 @@ export default function FeaturedProject() {
           })}
         </div>
       </Container>
-    </section>
   );
 }

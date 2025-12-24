@@ -33,8 +33,7 @@ export default function FeaturedBlog() {
   const displayDate = `${date.toLocaleString('en-US', { month: 'short' }).toUpperCase()} ${date.getDate()}, ${date.getFullYear().toString().slice(-2)}`;
 
   return (
-    <section className="py-4">
-      <Container className="">
+      <Container className="py-4 px-0 sm:px-8">
         <div className="flex items-center justify-between mb-4">
           <Paragraph className="text-xl md:text-2xl font-bold ">Blog</Paragraph>
           <Link href="/blog" className="text-sm text-neutral-400 hover:text-neutral-300 transition-colors">
@@ -56,6 +55,5 @@ export default function FeaturedBlog() {
           </div>
         </BlogLink>
       </Container>
-    </section>
   );
 }

@@ -18,6 +18,7 @@ import { sendGTMEvent } from '@next/third-parties/google'
 import { twMerge } from "tailwind-merge";
 import FeaturedBlog from './FeaturedBlog';
 import FeaturedProject from './Featuredproject';
+import { Container } from './Container';
 
 const CalSans = localFont({
   src: [{ path: "../../fonts/CalSans-SemiBold.woff2" }],
@@ -34,29 +35,23 @@ function HeroHome() {
     setOpenId(openId === id ? null : id);
   };
   return (
-    <div>
-        <motion.section 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          className="flex-1 flex items-center group/paaji"
-        >
+        <Container
+          className=" group/paaji">
+
           <div className=" w-full">
-            <div className="flex flex-col justify-center">
+            <div className="flex flex-col">
                 <motion.div className='flex flex-row justify-between gap-6'>
                     <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
                     className="space-y-2 w-full"
                     >
                         <motion.div>
                           
                           <Paragraph className={twMerge(CalSans.className, 'text-neutral-400 text-sm sm:text-md lg:text-[18px] font-extralight')}> 
-                            <span className='hidden sm:hidden md:block'>I am a freelance full stack web developer. I build <span>modern, responsive, and dynamic websites</span> that bring your ideas to life. {" "}</span> I use modern technologies like <span className='text-neutral-200'>React, NextJS</span> for frontend development <span className='text-neutral-200'> NodeJS, ExpressJS</span> for backend development,
+                            {/* <span className=''>{" "}</span>  */}
+                            I use modern technologies like <span className='text-neutral-200'>React, NextJS</span> for frontend development <span className='text-neutral-200'> NodeJS, ExpressJS</span> for backend development,
                             and <span className='text-neutral-200'>MongoDB, PostgreSQL, Supabase</span> for database management, <span className='text-neutral-200'>Vercel, AWS, Linode, DigitalOcean</span> for deployment and hosting with CI/CD pipeline, load balancing, and scalability.
                           </Paragraph>
-                          <Paragraph className={twMerge(CalSans.className, 'text-neutral-400 text-sm sm:text-md lg:text-[18px] font-extralight pt-4')}>
+                          {/* <Paragraph className={twMerge(CalSans.className, 'text-neutral-400 text-sm sm:text-md lg:text-[18px] font-extralight pt-4')}>
                             I built
                              <Link href="https://www.toonytalesworld.com/" onClick={() => {
                             window.dataLayer = window.dataLayer || [];
@@ -91,13 +86,13 @@ function HeroHome() {
                               project_name: 'Quest_from hero_section'
                             });
                           }} className='text-neutral-200 underline underline-offset-2'>Quest</Link>.
-                          </Paragraph>
+                          </Paragraph> */}
 
-                          <Paragraph className={twMerge(CalSans.className, 'text-neutral-400 text-sm sm:text-md lg:text-[18px] font-extralight pt-4')}>
+                          {/* <Paragraph className={twMerge(CalSans.className, 'text-neutral-400 text-sm sm:text-md lg:text-[18px] font-extralight pt-4')}>
                             I share my knowledge on technologies <Link href={"/blog"} className='text-neutral-200 underline underline-offset-2'>here</Link>,
                             publish videos and case studies, projects on my Youtube Channel <Link href={"https://www.youtube.com/@indranilmaiti842"} className='text-neutral-200 underline underline-offset-2'>Indranil's Org.</Link> and 
                             remains active on X (Twitter) <Link href={"https://x.com/Nil_phy_dreamer"} className='text-neutral-200 underline underline-offset-2'>@Nil_phy_dreamer</Link>.
-                          </Paragraph>
+                          </Paragraph> */}
                         </motion.div>
 
                         <motion.div className='pt-2'>
@@ -174,19 +169,15 @@ function HeroHome() {
 
                 </motion.div>
 
-                {/* <motion.div className='mt-10'>
-                  <BentoGridThirdDemo />
-                </motion.div> */}
                 <FeaturedProject />
                 <FeaturedBlog />
-                <div className='hidden md:hidden lg:block mt-10'>
+                {/* <div className='hidden md:hidden lg:block mt-10'>
                   <h1 className={twMerge(CalSans.className, 'text-white text-2xl sm:text-3xl lg:text-4xl mb-4')}></h1>
                   <BentoGridThirdDemo />
-                </div>
+                </div> */}
             </div>
           </div>
-        </motion.section>
-    </div>
+        </Container>
   )
 }
 

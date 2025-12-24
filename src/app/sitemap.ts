@@ -258,6 +258,7 @@ import { products } from '@/constants/products'
 import dbConnect from '@/lib/dbConnect';
 import BlogCategoryModel from '@/app/api/models/BlogCategory';
 import BlogModel from '@/app/api/models/Blog';
+import CraftVideoModel from '@/app/api/models/CraftVideo';
 
 const baseUrl = "https://www.indrabuildswebsites.com";
 const baseDir = "src/app";
@@ -349,13 +350,47 @@ async function getRoutes(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  routes = [...routes, ...projectRoutes, ...categoryRoutes, ...blogRoutes];
+  async function getCraftVideos() {
+  try {
+    await dbConnect();
+    const videos = await CraftVideoModel.find({ isPublished: true })
+      .select('slug updatedAt')
+      .limit(1000)
+      .lean();
+    
+    console.log(`✅ Fetched ${videos.length} craft videos for sitemap (direct DB)`);
+    return videos;
+  } catch (error) {
+    console.error('Error fetching craft videos for sitemap:', error);
+    return [];
+  }
+}
+
+// 5. CRAFT VIDEO PAGES
+const craftVideos = await getCraftVideos();
+const craftRoutes: MetadataRoute.Sitemap = craftVideos.map((video: any) => ({
+  url: `${baseUrl}/craft/${video.slug}`,
+  lastModified: new Date(video.updatedAt),
+  changeFrequency: "monthly",
+  priority: 0.7,
+}));
+
+// Add craft index page
+routes.push({
+  url: `${baseUrl}/craft`,
+  lastModified: new Date(),
+  changeFrequency: "weekly",
+  priority: 0.9,
+});
+
+  routes = [...routes, ...projectRoutes, ...categoryRoutes, ...blogRoutes, ...craftRoutes];
 
   console.log(`✅ Total sitemap URLs: ${routes.length}`);
   console.log(`   - Static pages: ${entries.length + 1}`);
   console.log(`   - Projects: ${projectRoutes.length}`);
   console.log(`   - Categories: ${categoryRoutes.length}`);
   console.log(`   - Blog posts: ${blogRoutes.length}`);
+  console.log(`   - Craft videos: ${craftRoutes.length}`);
 
   return routes;
 }

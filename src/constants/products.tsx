@@ -1,6 +1,28 @@
 
 export const products = [
   {
+    href: "https://www.fraterny.com/quest",
+    title: "Quest",
+    description:
+      "An AI powered platform for a psychological assessment and therapy.",
+    thumbnail: "/images/quest-hero.webp",
+    images: ["/images/quest-hero.webp"],
+    stack: ["Reactjs", "Tailwindcss", "MongoDB", "Nodejs"],
+    slug: "quest-ai-powered-therapy-platform",
+    isFeatured: true,
+    content: (
+      <div>
+        <p>
+          <strong>Quest</strong> is an AI powered platform for a psychological assessment and therapy.
+        </p>
+        <p>
+          <strong>Quest</strong> is built with a modern tech stack including
+          <code>NextJS</code>, <code>Tailwindcss</code>, <code>Supabase</code>, and <code>Nodejs</code>.
+        </p>{" "}
+      </div>
+    ),
+  },
+  {
     href: "https://www.toonytalesworld.com/",
     title: "ToonyTalesWorld",
     description:

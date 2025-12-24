@@ -32,18 +32,18 @@ export const socials = [
      bgColor: 'hover:bg-sky-50',
       label: 'X (Twitter)'
    },
-   { 
-     name: 'Peerlist', 
-     icon: IconUser, 
-     url: 'https://peerlist.io/indranil/resume',
-     color: 'text-green-600 hover:text-green-700',
-     bgColor: 'hover:bg-green-50',
-      label: 'Peerlist'
-   },
+  //  { 
+  //    name: 'Peerlist', 
+  //    icon: IconUser, 
+  //    url: 'https://peerlist.io/indranil/resume',
+  //    color: 'text-green-600 hover:text-green-700',
+  //    bgColor: 'hover:bg-green-50',
+  //     label: 'Peerlist'
+  //  },
    { 
      name: 'Blog', 
      icon: IconBookFilled, 
-     url: 'https://dev.to/indraphoton',
+     url: '/blog',
      color: 'text-sky-600 hover:text-sky-700',
      bgColor: 'hover:bg-sky-50',
      label: 'Blog'

@@ -1,6 +1,7 @@
 import Link from 'next/link';
-import { LayoutDashboard, FileText, FolderOpen, Settings } from 'lucide-react';
+import { LayoutDashboard, FileText, FolderOpen, Settings, Video } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
+
 
 export default function AdminLayout({
   children,
@@ -48,6 +49,14 @@ export default function AdminLayout({
           >
             <FolderOpen className="w-5 h-5" />
             <span>Categories</span>
+          </Link>
+
+          <Link
+            href="/admin-panel/craft-videos"
+            className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+          >
+            <Video className="w-5 h-5" />
+            <span>Craft Videos</span>
           </Link>
         </nav>
         

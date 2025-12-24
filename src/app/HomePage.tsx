@@ -18,9 +18,7 @@ const CalSans = localFont({
   src: [{ path: "../../fonts/CalSans-SemiBold.woff2" }],
   display: "swap",
 });
-// import { MiniProjects } from "@/components/MiniProjects";
 
-// Progressive loading hook
 function useProgressiveLoading() {
   const [isLoaded, setIsLoaded] = useState(false);
   
@@ -55,16 +53,13 @@ export default function HomePage() {
       <div className="absolute right-0 top-0 w-px h-full bg-gradient-to-b from-neutral-700 via-neutral-50 to-neutral-700"></div> */}
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
           className=" relative"
         >
           <Heading as="h1" className="text-white text-3xl sm:text-4xl lg:text-5xl font-bold">
               I make <span className="line-through">boring</span> <span className="">Websites</span>
           </Heading>
           <Paragraph className={twMerge(CalSans.className, 'text-neutral-400 text-sm sm:text-lg lg:text-2xl font-extralight')}>
-            I build modern, responsive fast, scalable websites...
+            I build responsive, scalable websites that focuses on conversion...
           </Paragraph>
           <div className="flex mt-4 space-x-2 mb-2">
             <button className="btn rounded-2xl bg-white/90 backdrop-blur-md border border-neutral-400 px-3 py-1">Working as a freelance developer</button>

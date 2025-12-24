@@ -25,6 +25,30 @@ export const miniProjects = [
   },
   {
     id: 2,
+    title: "Toonytalesworld",
+    subtitle: "AI powered SaaS for Kids",
+    description: "An innovative AI-powered storytelling platform designed specifically for children, featuring interactive narratives, character generation, and educational content delivery through engaging multimedia experiences.",
+    image: "/images/toonytalesworld.webp",
+    liveUrl: "https://www.toonytalesworld.com/",
+    githubUrl: "", // Add if available
+    technologies: ["React", "Next.js", "OpenAI", "Tailwind CSS", "Node.js"],
+    category: "AI/SaaS",
+    featured: true,
+    metrics: {
+      users: "2.5K+",
+      stories: "10K+",
+      satisfaction: "98%"
+    },
+    features: [
+      "AI-powered story generation",
+      "Interactive character creation",
+      "Educational content integration",
+      "Parental controls and monitoring",
+      "Multi-language support"
+    ]
+  },
+  {
+    id: 3,
     title: "Fraterny",
     subtitle: "An exclusive Villa for your family",
     description: "A premium villa booking platform that connects families with exclusive luxury accommodations, featuring advanced search filters, virtual tours, and seamless booking experiences.",
@@ -48,7 +72,7 @@ export const miniProjects = [
     ]
   },
   {
-    id: 3,
+    id: 4,
     title: "Fitness Tracker",
     subtitle: "Personal Health Dashboard",
     description: "A comprehensive fitness tracking dashboard that monitors workouts, nutrition, and health metrics with real-time analytics, goal setting, and personalized recommendations.",

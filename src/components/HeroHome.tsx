@@ -35,10 +35,7 @@ function HeroHome() {
     setOpenId(openId === id ? null : id);
   };
   return (
-        <Container
-          className=" group/paaji">
-
-          <div className=" w-full">
+          <Container className=" w-full">
             <div className="flex flex-col">
                 <motion.div className='flex flex-row justify-between gap-6'>
                     <motion.div
@@ -176,8 +173,7 @@ function HeroHome() {
                   <BentoGridThirdDemo />
                 </div> */}
             </div>
-          </div>
-        </Container>
+          </Container>
   )
 }
 

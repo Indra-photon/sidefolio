@@ -13,7 +13,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { IconLayoutSidebarRightCollapse } from "@tabler/icons-react";
 // import { isMobile } from "@/lib/utils";
 import { isMobile } from "@/lib/mobutils";
-import img from "../../public/images/Indranil.png";
+import img from "../../public/images/profilepic.webp";
 
 export const Sidebar = () => {
   const [open, setOpen] = useState(isMobile() ? false : true);
@@ -123,13 +123,14 @@ export const Navigation = ({
 const SidebarHeader = () => {
   return (
     <div className="flex space-x-2">
-      <Image
-        src={img}
-        alt="Avatar"
-        height="40"
-        width="40"
-        className="object-cover object-top rounded-full flex-shrink-0"
-      />
+      <div className="relative w-14 h-14">
+        <Image
+          src={img}
+          alt="Avatar"
+          fill
+          className="object-cover object-top rounded-full flex-shrink-0"
+        />
+      </div>
       <div className="flex text-sm flex-col">
         <p className="font-bold text-secondary">Hi,</p>
         <p className="font-light text-secondary">Nice to meet you</p>

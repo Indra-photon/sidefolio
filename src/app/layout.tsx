@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     description: "I am a Full Stack Developer and Gen AI specialist with expertise in React, Next.js, Node.js, and AI integration for scalable web applications. I build modern, responsive, and fast websites that drive results. I focus on microinteractions, animations , and user-centric design to create engaging digital experiences.",
     images: [
       {
-        url: "/images/Indranil_2.jpg",
+        url: "/images/profileOG.jpeg",
         width: 1200,
         height: 630,
         alt: "Indranil Maiti - Full Stack Developer and GenAI Specialist"
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Indranil Maiti | Full Stack & GenAI Developer",
     description: "Building scalable web applications and AI-driven solutions with modern technologies.",
-    images: ["/images/Indranil_2.jpg"],
+    images: ["/images/profileOG.jpeg"],
     creator: "@Nil_phy_dreamer"
   },
   robots: {

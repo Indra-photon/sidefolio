@@ -200,3 +200,14 @@
     @apply bg-background text-foreground;
   }
 }
+
+.masonry-grid {
+  display: flex;
+  gap: 1rem;
+}
+
+.masonry-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

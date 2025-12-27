@@ -41,9 +41,19 @@ export default function FeaturedProject() {
               >
                 <div className="flex items-center justify-between py-4 border-b border-neutral-800 hover:border-neutral-700 transition-colors">
                   <div className="flex items-center flex-1 min-w-0">
-                    <Paragraph className="text-sm sm:text-md lg:text-[18px] font-extralight text-neutral-400 group-hover:text-neutral-300 transition-colors truncate pr-4">
+                    <div className="flex flex-col gap-4 md:gap-2">
+                    <Paragraph className="text-md sm:text-lg lg:text-[18px] font-extralight text-neutral-200 group-hover:text-neutral-300 transition-colors truncate pr-4">
                       {project.title}
                     </Paragraph>
+                    <Paragraph className="text-sm text-neutral-400">
+                      {project.description}
+                    </Paragraph>
+                    <Link href={`/projects/${project.slug}`} className="inline-block mt-2">
+                      <button className="text-xs md:text-sm px-2 py-1 text-neutral-200 bg-white/20 transition-colors rounded-lg w-max">
+                        View Details...
+                      </button>
+                    </Link>
+                    </div>
                     <div className="hidden md:flex flex-1 mx-4 border-b border-dotted border-neutral-800" />
                   </div>
                   <span className="text-sm md:text-base text-neutral-500 whitespace-nowrap ml-4">

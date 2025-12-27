@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { Loader2, Play } from 'lucide-react';
 import { getOptimizedVideoUrl } from '@/lib/imagekit';
+import Masonry from 'react-masonry-css'
 
 // Helper function for clustered pattern
 const getCardSize = (index: number): 'large' | 'small' => {
@@ -163,12 +164,12 @@ const VideoCard = ({ video, index }: { video: any; index: number }) => {
       </div>
 
       {/* Hover Overlay */}
-      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+      {/* <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
         <div className="text-white text-center">
           <Play className="w-12 h-12 md:w-16 md:h-16 mx-auto mb-2" />
           <p className="text-sm md:text-base font-medium">View Details</p>
         </div>
-      </div>
+      </div> */}
     </Link>
   );
 };
@@ -276,11 +277,26 @@ export default function CraftPage() {
           </div>
         ) : (
           // Video Grid
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 auto-rows-[250px] md:auto-rows-[300px]">
-            {videos.map((video, index) => (
-              <VideoCard key={video._id} video={video} index={index} />
-            ))}
-          </div>
+          // <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 auto-rows-[250px] md:auto-rows-[130px]">
+          //   {videos.map((video, index) => (
+          //     <VideoCard key={video._id} video={video} index={index} />
+          //   ))}
+          // </div>
+          // Video Grid - MASONRY
+<Masonry
+  breakpointCols={{
+    default: 4,
+    1536: 3,
+    1024: 2,
+    640: 1
+  }}
+  className="masonry-grid"
+  columnClassName="masonry-column"
+>
+  {videos.map((video, index) => (
+    <VideoCard key={video._id} video={video} index={index} />
+  ))}
+</Masonry>
         )}
 
         {/* Infinite Scroll Sentinel */}

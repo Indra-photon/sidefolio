@@ -56,7 +56,8 @@ export default function HomePage() {
           className=" relative"
         >
           <Heading as="h1" className="text-white text-3xl sm:text-4xl lg:text-5xl font-bold">
-              I make <span className="line-through">boring</span> <span className="">Websites</span>
+              {/* I make <span className="line-through">boring</span> <span className="">Websites</span> */}
+              Full Stack Web Developer
           </Heading>
           <Paragraph className={twMerge(CalSans.className, 'text-neutral-400 text-sm sm:text-lg lg:text-2xl font-extralight')}>
             I build responsive, scalable websites that focuses on conversion...

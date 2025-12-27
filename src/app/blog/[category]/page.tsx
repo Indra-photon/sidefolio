@@ -203,7 +203,7 @@ export default async function CategoryBlogsPage({ params, searchParams }: Props)
   const { blogs, pagination } = await getBlogsByCategory(categoryData._id.toString(), currentPage);
 
   return (
-    <Container className="max-w-7xl">
+    <Container className="max-w-7xl mx-auto">
       {/* Breadcrumb */}
       <div className="mb-6">
         <Link href="/blog" className="text-sm text-gray-500 hover:text-gray-700">

@@ -7,7 +7,7 @@ import Image from "next/image";
 
 export default function Projects() {
   return (
-    <Container className="max-w-7xl">
+    <Container className="max-w-7xl mx-auto">
       <span className="text-4xl">⚡</span>
       <Heading className="font-black mb-10">
         {" "}

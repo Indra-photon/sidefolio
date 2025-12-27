@@ -49,7 +49,7 @@ export default function FeaturedBlog() {
               </Paragraph>
               <div className="hidden md:flex flex-1 mx-4 border-b border-dotted border-neutral-800" />
             </div>
-            <time className="text-sm md:text-base text-neutral-500 whitespace-nowrap ml-4">
+            <time className="text-sm md:text-base text-neutral-500 whitespace-nowrap">
               {displayDate}
             </time>
           </div>

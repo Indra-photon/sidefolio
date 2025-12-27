@@ -122,8 +122,8 @@ export const Navigation = ({
 
 const SidebarHeader = () => {
   return (
-    <div className="flex space-x-2">
-      <div className="relative w-14 h-14">
+    <div className="flex space-x-1 flex-col">
+      <div className="relative w-14 h-14 pb-5">
         <Image
           src={img}
           alt="Avatar"
@@ -131,9 +131,9 @@ const SidebarHeader = () => {
           className="object-cover object-top rounded-full flex-shrink-0"
         />
       </div>
-      <div className="flex text-sm flex-col">
-        <p className="font-bold text-secondary">Hi,</p>
-        <p className="font-light text-secondary">Nice to meet you</p>
+      <div className="flex text-sm flex-col pt-2">
+        <p className="font-bold text-secondary">Welcome,</p>
+        <p className="font-light text-secondary">to my portfolio</p>
       </div>
     </div>
   );

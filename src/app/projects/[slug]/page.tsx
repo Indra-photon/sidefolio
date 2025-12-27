@@ -43,7 +43,7 @@ export default async function SingleProjectPage({
     redirect("/projects");
   }
   return (
-    <Container className="max-w-7xl">
+    <Container className="max-w-7xl mx-auto">
       <SingleProduct product={product} />
     </Container>
   );

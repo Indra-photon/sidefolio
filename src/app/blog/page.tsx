@@ -70,7 +70,7 @@ export default async function BlogPage() {
   const categories = await getAllCategories();
 
   return (
-    <Container className="max-w-7xl">
+    <Container className="max-w-7xl mx-auto">
       <div className="mb-12">
         <span className="text-4xl">📝</span>
         <Heading className="font-black pb-4">I write about...</Heading>

@@ -17,7 +17,7 @@ export default function FeaturedProject() {
   return (
       <Container className="py-10 px-0 sm:px-8">
         <div className="flex items-center justify-between mb-4">
-          <Paragraph className="text-xl md:text-2xl font-bold">Projects</Paragraph>
+          <Paragraph className="text-2xl md:text-3xl font-bold text-neutral-50">Projects</Paragraph>
           <Link href="/projects" className="text-sm text-neutral-400 hover:text-neutral-300 transition-colors">
             (view all)
           </Link>
@@ -32,8 +32,8 @@ export default function FeaturedProject() {
                 key={project.slug || project.href}
                 className="flex items-center justify-between py-4 border-b border-neutral-800 hover:border-neutral-700 transition-colors">
                   <div className="flex items-center flex-1 min-w-0">
-                    <div className="flex flex-col gap-4 md:gap-2">
-                    <Paragraph className="text-md sm:text-lg lg:text-[18px] font-extralight text-neutral-200 group-hover:text-neutral-300 transition-colors truncate pr-4">
+                    <div className="flex flex-col">
+                    <Paragraph className="text-lg sm:text-xl lg:text-2xl font-extralight text-neutral-100 group-hover:text-neutral-300 transition-colors truncate pr-4">
                       {project.title}
                     </Paragraph>
                     <Paragraph className="text-sm text-neutral-400">
@@ -52,12 +52,12 @@ export default function FeaturedProject() {
                           });
                         }}
                       >
-                      <div className="inline-block mt-2">
+                      <div className="inline-block mt-6">
                         <button className="text-xs md:text-sm px-2 py-1 text-neutral-200 bg-white/20 transition-colors rounded-lg w-max">
-                          View Details...
+                          Know More...
                         </button>
                       </div>
-                      </Link>
+                    </Link>
                     </div>
                     <div className="hidden md:flex flex-1 mx-4 border-b border-dotted border-neutral-800" />
                   </div>

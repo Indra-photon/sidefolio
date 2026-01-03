@@ -13,6 +13,7 @@ import HeroHome from "@/components/HeroHome";
 import Head from "next/head";
 import { twMerge } from "tailwind-merge";
 import localFont from "next/font/local";
+import { Footer } from "@/components/Footer";
 
 const CalSans = localFont({
   src: [{ path: "../../fonts/CalSans-SemiBold.woff2" }],
@@ -63,14 +64,25 @@ export default function HomePage() {
             I build responsive, scalable websites that focuses on conversion...
           </Paragraph>
           <div className="flex mt-4 space-x-2 mb-2">
-            <button className="btn rounded-2xl bg-white/90 backdrop-blur-md border border-neutral-400 px-3 py-1">Working as a freelance developer</button>
+            <div className="btn rounded-2xl bg-white/90 backdrop-blur-md border border-neutral-400 px-3 py-1 flex flex-row items-center justify-center gap-2">
+            <span className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-600"></span>
+            </span>
+            Available for work
+            </div>
           </div>
 
           <div className="absolute right-0 bottom-0 h-px w-full bg-gradient-to-r from-neutral-700 via-neutral-50 to-neutral-700"></div>
         </motion.div>
+        
 
         {/* Hero section */}
         <HeroHome />
+
+        <div className="mt-24">
+        <Footer />
+        </div>
         
       </div>
     </Container>

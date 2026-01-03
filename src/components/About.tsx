@@ -3,6 +3,7 @@ import { Paragraph } from "@/components/Paragraph";
 import Image from "next/image";
 
 import { motion } from "framer-motion";
+import { Footer } from "./Footer";
 
 export default function About() {
   const images = [
@@ -85,7 +86,7 @@ export default function About() {
           perspectives to everything I build.
         </Paragraph>
 
-        <Paragraph className=" mt-4 text-neutral-400 text-sm sm:text-md lg:text-[18px]">
+        <Paragraph className=" mt-4 text-neutral-400 text-sm sm:text-md lg:text-[18px] mb-24">
           What truly sets me apart is my love for the finer things in life. 
           Whether I'm experimenting with new flavors in the kitchen, crafting 
           the perfect dish that brings people together, or getting lost in the 
@@ -94,6 +95,8 @@ export default function About() {
           into my development work, ensuring every project is seasoned with care 
           and precision.
         </Paragraph>
+
+        <Footer />
 
         {/* <Paragraph className=" mt-4 text-neutral-400 text-sm sm:text-md lg:text-[18px]">
           Join me on this journey of algorithms and adventures, logic and 

@@ -19,6 +19,7 @@ import dbConnect from '@/lib/dbConnect';
 import BlogModel from '@/app/api/models/Blog';
 import mongoose from 'mongoose';
 import CTASection from '@/components/CTASection'
+import { Footer } from '@/components/Footer';
 
 
 const CalSans = localFont({
@@ -373,24 +374,9 @@ export default async function BlogPostPage({ params }: Props) {
             </div>
           )} */}
 
-          <CTASection />
+          {/* <CTASection /> */}
 
-          {/* <CTASection 
-              title="Want a professional, extraordinary website perfect for your business?"
-              buttonText="Contact Me"
-              buttonLink="/your-link"
-              testimonialAuthor="John Doe"
-              testimonialRole="CEO - Company"
-            /> */}
-
-          {/* Back to Category */}
-          {/* <Link 
-            href={`/blog/${category}`}
-            className="inline-flex items-center gap-2 text-emerald-600 hover:text-emerald-700 font-medium"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to {blog.categoryId.name}
-          </Link> */}
+          <Footer />
         </article>
       </Container>
     </>

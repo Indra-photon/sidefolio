@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { Loader2, Play } from 'lucide-react';
 import { getOptimizedVideoUrl } from '@/lib/imagekit';
 import Masonry from 'react-masonry-css'
+import { Container } from '@/components/Container';
+import { Heading } from '@/components/Heading';
 
 // Helper function for clustered pattern
 const getCardSize = (index: number): 'large' | 'small' => {
@@ -133,10 +135,12 @@ const VideoCard = ({ video, index }: { video: any; index: number }) => {
       )}
 
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+      {/* <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" /> */}
 
       {/* Content */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 text-white">
+
+      {/* <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 text-white">
         <h3 className={`font-semibold mb-2 line-clamp-2 ${
           cardSize === 'large' ? 'text-xl md:text-2xl' : 'text-lg'
         }`}>
@@ -161,7 +165,7 @@ const VideoCard = ({ video, index }: { video: any; index: number }) => {
             ))}
           </div>
         )}
-      </div>
+      </div> */}
 
       {/* Hover Overlay */}
       {/* <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
@@ -233,18 +237,12 @@ export default function CraftPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <div className="container mx-auto px-4 py-8 md:py-12">
-        <div className="max-w-3xl">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            Craft
-          </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-400">
-            A showcase of design experiments, motion graphics, and creative explorations.
-          </p>
-        </div>
-      </div>
+    <Container className="max-w-7xl mx-auto">
+      <span className="text-4xl">💬</span>
+      <Heading className="">My design works..</Heading>
+       <p className="text-lg text-gray-200 dark:text-gray-400 pb-10">
+          A showcase of design experiments, motion graphics, and thoughtful designs for websites...
+      </p>
 
       {/* Grid Container */}
       <div className="container mx-auto px-4 pb-12">
@@ -283,21 +281,21 @@ export default function CraftPage() {
           //   ))}
           // </div>
           // Video Grid - MASONRY
-<Masonry
-  breakpointCols={{
-    default: 4,
-    1536: 3,
-    1024: 2,
-    640: 1
-  }}
-  className="masonry-grid"
-  columnClassName="masonry-column"
->
-  {videos.map((video, index) => (
-    <VideoCard key={video._id} video={video} index={index} />
-  ))}
-</Masonry>
-        )}
+          <Masonry
+            breakpointCols={{
+              default: 4,
+              1536: 3,
+              1024: 2,
+              640: 1
+            }}
+            className="masonry-grid"
+            columnClassName="masonry-column"
+          >
+            {videos.map((video, index) => (
+              <VideoCard key={video._id} video={video} index={index} />
+            ))}
+          </Masonry>
+          )}
 
         {/* Infinite Scroll Sentinel */}
         {hasMore && !loading && (
@@ -315,6 +313,6 @@ export default function CraftPage() {
           </div>
         )}
       </div>
-    </div>
+    </Container>
   );
 }

@@ -6,6 +6,7 @@ import { Container } from './Container';
 import { products } from '@/constants/products';
 import { IconExternalLink } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
+import { IconFolderCode } from '@tabler/icons-react';
 
 export default function FeaturedProject() {
   // Get all featured projects
@@ -16,14 +17,21 @@ export default function FeaturedProject() {
 
   return (
       <Container className="py-10 px-0 sm:px-8">
-        <div className="flex items-center justify-between mb-4">
-          <Paragraph className="text-2xl md:text-3xl font-bold text-neutral-50">Projects</Paragraph>
+        <div className="flex items-center justify-between mb-4 relative">
+          <div className="absolute left-0 top-0 w-full h-px bg-gradient-to-r from-neutral-100 via-neutral-700 to-transparent"></div>
+          <div className="absolute left-0 bottom-0 w-full h-px bg-gradient-to-r from-neutral-100 via-neutral-700 to-transparent"></div>
+          <Paragraph className="text-2xl md:text-3xl font-bold text-neutral-50 pb-2">
+            <span className="flex items-center">
+              
+              Projects
+            </span>
+          </Paragraph>
           <Link href="/projects" className="text-sm text-neutral-400 hover:text-neutral-300 transition-colors">
             (view all)
           </Link>
         </div>
 
-        <div className="space-y-0">
+        <div className="space-y-0 py-10">
           {featuredProjects.map((project) => {
             const projectUrl = project.slug ? `/projects/${project.slug}` : project.href;
             

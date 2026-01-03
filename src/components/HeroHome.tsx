@@ -19,6 +19,7 @@ import { twMerge } from "tailwind-merge";
 import FeaturedBlog from './FeaturedBlog';
 import FeaturedProject from './Featuredproject';
 import { Container } from './Container';
+import { ArrowRight } from 'lucide-react';
 
 const CalSans = localFont({
   src: [{ path: "../../fonts/CalSans-SemiBold.woff2" }],
@@ -34,6 +35,25 @@ function HeroHome() {
   const toggleDescription = (id: number) => {
     setOpenId(openId === id ? null : id);
   };
+
+  const handleCTAClick = (e: React.MouseEvent<HTMLButtonElement>, buttontext: string) => {
+    const buttonText = buttontext;
+    const buttonLink = "/contact";
+    e.preventDefault();
+    
+    const eventData = {
+      event: 'contact_button_click',
+      button_text: buttonText?.toLowerCase() || 'unknown',
+      page_location: window.location.href,
+    };
+    if (typeof window !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push(eventData);
+    }
+    window.location.href = buttonLink;
+  };
+
+
   return (
           <Container className=" w-full">
             <div className="flex flex-col">
@@ -94,7 +114,7 @@ function HeroHome() {
 
                         <motion.div className='pt-2'>
                             <motion.div className='flex flex-row items-center justify-start gap-6'>
-                                <div className={twMerge(CalSans.className, 'text-white text-md sm:text-lg lg:text-xl hidden sm:hidden md:inline-block')}>Find me here :</div>
+                                {/* <div className={twMerge(CalSans.className, 'text-white text-md sm:text-lg lg:text-xl hidden sm:hidden md:inline-block')}>Find me here :</div> */}
                                 <div className='flex justify-start items-start gap-4'>
                                   {SocialLinks.map((social, idx) => (
                                   <Link
@@ -129,44 +149,48 @@ function HeroHome() {
                             </motion.div>
                         </motion.div>
 
-                        {/* Service Section */}
-                        {/* <motion.div className='pt-10 pr-2'>
-                            <motion.div>
-                                <p className={twMerge(CalSans.className, 'text-white text-2xl sm:text-3xl lg:text-4xl')}>What I can do</p>
-                            </motion.div>
+                        <div className='pt-4 flex flex-row gap-4'>
+                        <div className="relative overflow-hidden inline-flex items-center justify-center rounded-full cursor-default mb-4">
+                          <div
+                            className="absolute inset-0 z-0 scale-110"
+                            style={{
+                              background: "linear-gradient(-45deg, #1a1a1a, #ffffff, #6b7280, #d1d5db, #1a1a1a)",
+                              backgroundSize: "400% 400%",
+                              animation: "gradient 6s ease infinite",
+                            }}
+                          />
+                          <div className="bg-neutral-900 rounded-full flex items-center justify-center m-[1.5px] px-3 sm:px-6 py-2 relative z-10">
+                            <button onClick={(e) => handleCTAClick(e, "Contact Me")} className={twMerge(CalSans.className, 'text-gray-300 text-sm md:text-base tracking-widest uppercase')}>
+                              CONTACT ME
+                            </button>
+                          </div>
+                        </div>
 
-                            <motion.div>
-                              <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-6">
-                                {servicesData.map((service) => (
-                                  <div
-                                    key={service.id}
-                                    className="border bg-neutral-800 backdrop-blur-3xl shadow-2xl rounded-lg p-4 border-neutral-400 hover:shadow-md transition-shadow"
-                                  >
-                                    
-                                    <div className="flex items-start justify-between mb-4">
-                                      <div className="flex flex-col items-left gap-3">
-                                        <h3 className={twMerge(CalSans.className, "text-xl font-semibold px-4 py-2 bg-white/90 rounded-3xl")}>{service.title}</h3>
-                                        <motion.div
-                                          initial={{ opacity: 0, y: 10 }}
-                                          animate={{ opacity: 1, y: 0 }}
-                                          transition={{ duration: 0.3 }}
-                                        >
-                                        <Paragraph className={twMerge(CalSans.className, "text-neutral-400 text-sm sm:text-md lg:text-[18px] px-4")}>{service.description}</Paragraph>
-                                        </motion.div>
-                                      </div>
-                                      
-                                    </div>
-                                  </div>
-                                ))}
-                              </motion.div>
-                            </motion.div>
-                        </motion.div> */}
+                        <div className="relative overflow-hidden inline-flex items-center justify-center rounded-full cursor-default mb-4">
+                          <Link href="https://topmate.io/indranil_dev" target="_blank" rel="noopener noreferrer">
+                          <div
+                            className="absolute inset-0 z-0 scale-110"
+                            style={{
+                              background: "linear-gradient(-45deg, #1a1a1a, #ffffff, #6b7280, #d1d5db, #1a1a1a)",
+                              backgroundSize: "400% 400%",
+                              animation: "gradient 6s ease infinite",
+                            }}
+                          />
+                          <div className="bg-neutral-600 rounded-full flex items-center justify-center m-[1.5px] px-6 py-2 relative z-10">
+                            <div className={twMerge(CalSans.className, 'text-neutral-100 text-sm md:text-base tracking-widest uppercase')}>
+                              Book a Free Call
+                            </div>
+                          </div>
+                          </Link>
+                        </div>
+                        </div>
                 
                     </motion.div>
 
                 </motion.div>
 
                 <FeaturedProject />
+                
                 <FeaturedBlog />
                 {/* <div className='hidden md:hidden lg:block mt-10'>
                   <h1 className={twMerge(CalSans.className, 'text-white text-2xl sm:text-3xl lg:text-4xl mb-4')}></h1>

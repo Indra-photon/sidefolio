@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { Loader2, Calendar, Eye, ExternalLink, FileText } from "lucide-react";
 import { Heading } from "@/components/Heading";
 import { getOptimizedVideoUrl } from "@/lib/imagekit";
+import { Container } from "@/components/Container";
 
 export default function CraftVideoDetailPage() {
   const params = useParams();
@@ -61,7 +62,7 @@ export default function CraftVideoDetailPage() {
   const videoUrl = getOptimizedVideoUrl(video.videoLink, 1200, 85);
 
   return (
-    <div className="py-10 px-4 max-w-6xl mx-auto">
+    <Container className="max-w-7xl mx-auto">
       {/* Video Player */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -206,7 +207,7 @@ export default function CraftVideoDetailPage() {
           Back to Gallery
         </Link>
       </div>
-    </div>
+    </Container>
   );
 }
 

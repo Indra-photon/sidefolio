@@ -53,6 +53,10 @@ const handleCTAClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     button_text: buttonText?.toLowerCase() || 'unknown',
     page_location: window.location.href,
   };
+  if (typeof window !== 'undefined') {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(eventData);
+  }
   
   setTimeout(() => {
     window.location.href = buttonLink;

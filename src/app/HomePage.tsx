@@ -14,6 +14,7 @@ import Head from "next/head";
 import { twMerge } from "tailwind-merge";
 import localFont from "next/font/local";
 import { Footer } from "@/components/Footer";
+import VariantDeleteButton from "./blog/components/interactive/VariantDeleteButton";
 
 const CalSans = localFont({
   src: [{ path: "../../fonts/CalSans-SemiBold.woff2" }],

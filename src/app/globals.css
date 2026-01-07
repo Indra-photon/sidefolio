@@ -211,3 +211,49 @@
   flex-direction: column;
   gap: 1rem;
 }
+
+
+/* ::view-transition-old(root) {
+  animation: none;
+}
+
+::view-transition-new(root) {
+  animation: wipe-in 0.9s ease-out forwards;
+}
+
+@keyframes wipe-in {
+  from {
+    clip-path: inset(0 0 0 100%);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+} */
+
+/* Old page: fades out and slides up */
+::view-transition-old(root) {
+  animation: fade-slide-out 0.6s ease-in forwards;
+}
+
+/* New page: fades in and slides down into place */
+::view-transition-new(root) {
+  animation: fade-slide-in 0.6s ease-out forwards;
+}
+
+@keyframes fade-slide-out {
+  to {
+    transform: translateZ(-30px);
+    opacity: 0;
+  }
+}
+
+@keyframes fade-slide-in {
+  from {
+    transform: translateZ(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateZ(0);
+    opacity: 1;
+  }
+}

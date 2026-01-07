@@ -8,6 +8,7 @@ import { GoogleTagManager } from '@next/third-parties/google'
 import { Toaster } from "@/components/ui/sonner"
 import { Analytics } from "@vercel/analytics/next"
 import { Container } from "@/components/Container";
+import { ViewTransitions } from 'next-view-transitions'
 
 const inter = Inter({
   subsets: ["latin"],
@@ -81,23 +82,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body
-        className={twMerge(
-          inter.className,
-          "flex antialiased h-screen overflow-hidden bg-gray-100"
-        )}
-      >
-        <Sidebar />
-        <Container className="lg:pl-2 lg:pt-2 bg-black flex-1 overflow-y-auto">
-          <div className="flex-1 bg-black min-h-screen lg:rounded-tl-xl overflow-y-auto">
-            {children}
-            <Analytics />
-          </div>
-        </Container>
-        <GoogleTagManager gtmId="GTM-PHTQSD64" />
-        <Toaster position="top-right" />
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="en">
+        <body
+          className={twMerge(
+            inter.className,
+            "flex antialiased h-screen overflow-hidden bg-gray-100"
+          )}
+        >
+          <Sidebar />
+          <Container className="lg:pl-2 lg:pt-2 bg-black flex-1 overflow-y-auto">
+            <div className="flex-1 bg-black min-h-screen lg:rounded-tl-xl overflow-y-auto">
+              {children}
+              <Analytics />
+            </div>
+          </Container>
+          <GoogleTagManager gtmId="GTM-PHTQSD64" />
+          <Toaster position="top-right" />
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }

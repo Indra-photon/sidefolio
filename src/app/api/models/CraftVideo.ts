@@ -7,6 +7,7 @@ export interface CraftVideo extends Document {
     videoFileId: string;
     productionLink?: string;
     blogLink?: string;
+    codeblock?: string;
     designDetails: string;
     slug: string;
     thumbnail?: string;
@@ -27,6 +28,7 @@ const CraftVideoSchema: Schema<CraftVideo> = new Schema({
     videoFileId: { type: String, required: true },
     productionLink: { type: String },
     blogLink: { type: String },
+    codeblock: { type: String, required: false },
     designDetails: { type: String, required: true },
     slug: { type: String, required: true, unique: true },
     thumbnail: { type: String },

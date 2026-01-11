@@ -8,6 +8,17 @@ import { Loader2, Calendar, Eye, ExternalLink, FileText } from "lucide-react";
 import { Heading } from "@/components/Heading";
 import { getOptimizedVideoUrl } from "@/lib/imagekit";
 import { Container } from "@/components/Container";
+import { CodeWindow } from '@/components/CodeWindow';
+import { twMerge } from "tailwind-merge";
+import localFont from "next/font/local";
+import { Footer } from "@/components/Footer";
+
+const CalSans = localFont({
+  src: [{ path: "../../../../fonts/CalSans-SemiBold.woff2" }],
+  display: "swap",
+});
+
+
 
 export default function CraftVideoDetailPage() {
   const params = useParams();
@@ -62,14 +73,14 @@ export default function CraftVideoDetailPage() {
   const videoUrl = getOptimizedVideoUrl(video.videoLink, 1200, 85);
 
   return (
-    <Container className="max-w-7xl mx-auto">
+    <Container className={twMerge(CalSans.className,"max-w-7xl", "mx-auto")}>
       {/* Video Player */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         key={video.slug}
-        className="relative"
+        className="relative pt-10 sm:pt-20 flex items-center justify-center rounded-md overflow-hidden shadow-lg pb-10"
       >
         {!videoLoaded && (
           <div className="absolute inset-0 bg-gray-200 dark:bg-gray-800 rounded-md animate-pulse flex items-center justify-center z-10">
@@ -81,14 +92,14 @@ export default function CraftVideoDetailPage() {
           src={videoUrl}
           controls
           className={`
-            rounded-md w-full h-auto transition-opacity duration-500
+            rounded-md w-[400px] h-96 transition-opacity duration-500
             ${videoLoaded ? 'opacity-100' : 'opacity-0'}
           `}
           poster={video.thumbnail || undefined}
           onLoadedMetadata={() => setVideoLoaded(true)}
         />
         
-        <div className="absolute bottom-0 bg-gradient-to-t from-white dark:from-gray-900 h-40 w-full [mask-image:linear-gradient(to_bottom,transparent,white)]" />
+        {/* <div className="absolute bottom-0 bg-gradient-to-t from-white dark:from-gray-900 h-40 w-full [mask-image:linear-gradient(to_bottom,transparent,white)]" /> */}
       </motion.div>
 
       {/* Title and Tags */}
@@ -98,7 +109,7 @@ export default function CraftVideoDetailPage() {
           {video.tags && video.tags.length > 0 && video.tags.map((tag: string) => (
             <span
               key={tag}
-              className="text-xs md:text-xs lg:text-xs bg-gray-400 dark:bg-gray-700 px-2 py-1 rounded-sm text-white"
+              className="text-xs md:text-xs lg:text-xs bg-neutral-600 dark:bg-gray-700 px-2 py-1 rounded-sm text-white"
             >
               {tag}
             </span>
@@ -107,36 +118,63 @@ export default function CraftVideoDetailPage() {
       </div>
 
       {/* Meta Information */}
-      <div className="flex flex-wrap gap-4 mt-4 text-sm text-gray-600 dark:text-gray-400">
+      <div className="flex flex-wrap gap-4 mt-4 text-sm text-neutral-300 dark:text-gray-400">
         <div className="flex items-center gap-2">
           <Calendar className="w-4 h-4" />
           <span>{formatDate(video.creationDate)}</span>
         </div>
-        <div className="flex items-center gap-2">
-          <Eye className="w-4 h-4" />
-          <span>{video.views} views</span>
-        </div>
       </div>
 
+      {/* Codeblock */}
+      {/* Code Block */}
+      {video.codeblock && (
+        <div className="mt-8 max-w-5xl mx-auto">
+          <h2 className="text-2xl font-bold text-neutral-300 dark:text-white mb-4">
+            Code
+          </h2>
+          <CodeWindow title="Code">
+            <pre>
+              <code>{video.codeblock}</code>
+            </pre>
+          </CodeWindow>
+        </div>
+      )}
+
       {/* Design Details */}
-      <div className="mt-8">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-          Design Details
+      {/* <div className="mt-8 max-w-5xl mx-auto">
+        <h2 className="text-4xl font-bold text-neutral-100 dark:text-white mb-4">
+          Understanding the Design
         </h2>
         <div
-          className="prose prose-sm md:prose-base max-w-none dark:prose-invert prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-700 dark:prose-p:text-gray-300"
+          className="prose prose-sm md:prose-base max-w-none dark:prose-invert prose-headings:text-neutral-200 dark:prose-headings:text-white prose-text:text-neutral-300 prose-p:text-neutral-400 dark:prose-p:text-gray-300"
+          dangerouslySetInnerHTML={{ __html: video.designDetails }}
+        />
+      </div> */}
+
+      <div className="mt-8 max-w-5xl mx-auto">
+        <h2 className="text-4xl font-bold text-neutral-100 dark:text-white mb-4">
+          Understanding the Design
+        </h2>
+        <div
+          className="prose prose-sm md:prose-base max-w-none dark:prose-invert 
+          prose-headings:text-neutral-200 dark:prose-headings:text-white 
+          prose-p:text-neutral-300 dark:prose-p:text-gray-300
+          prose-li:text-neutral-300 dark:prose-li:text-gray-300 dark:prose-strong:text-gray-200
+          prose-ul:text-neutral-300 dark:prose-ul:text-gray-300
+          prose-ol:text-neutral-300 dark:prose-ol:text-gray-300
+          prose-code:text-emerald-400 prose-code:bg-neutral-800"
           dangerouslySetInnerHTML={{ __html: video.designDetails }}
         />
       </div>
 
       {/* Action Buttons */}
-      <div className="flex flex-wrap gap-4 mt-10">
+      <div className="flex flex-wrap gap-4 mt-10 mb-20 max-w-5xl mx-auto">
         {video.productionLink && (
           <Link
             href={video.productionLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 group/button rounded-full hover:scale-105 focus:outline-none transition ring-offset-gray-900 bg-gray-800 text-white shadow-lg shadow-black/20 sm:backdrop-blur-sm group-hover/button:bg-gray-700 focus-visible:ring-1 focus-visible:ring-offset-2 ring-gray-50/60 text-sm font-medium px-4 py-2"
+            className="inline-flex items-center gap-2 group/button rounded-full hover:scale-105 focus:outline-none transition ring-offset-gray-900 bg-neutral-200 text-white shadow-lg shadow-black/20 sm:backdrop-blur-sm group-hover/button:bg-gray-700 focus-visible:ring-1 focus-visible:ring-offset-2 ring-gray-50/60 text-sm font-medium px-4 py-2"
           >
             <ExternalLink className="w-4 h-4" />
             View Production
@@ -187,7 +225,7 @@ export default function CraftVideoDetailPage() {
 
         <Link
           href="/craft"
-          className="inline-flex items-center gap-2 group/button rounded-full hover:scale-105 focus:outline-none transition ring-offset-gray-900 border-2 border-gray-800 dark:border-gray-600 text-gray-800 dark:text-gray-300 shadow-lg shadow-black/20 sm:backdrop-blur-sm group-hover/button:bg-gray-100 dark:group-hover/button:bg-gray-800 focus-visible:ring-1 focus-visible:ring-offset-2 ring-gray-50/60 text-sm font-medium px-4 py-2"
+          className="inline-flex items-center gap-2 group/button rounded-full hover:scale-105 focus:outline-none transition ring-offset-gray-900 border-2 border-neutral-400 bg-neutral-200 dark:border-gray-600 text-gray-800 dark:text-gray-300 shadow-lg shadow-black/20 sm:backdrop-blur-sm group-hover/button:bg-gray-100 dark:group-hover/button:bg-gray-800 focus-visible:ring-1 focus-visible:ring-offset-2 ring-gray-50/60 text-sm font-medium px-4 py-2"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -206,7 +244,53 @@ export default function CraftVideoDetailPage() {
           </svg>
           Back to Gallery
         </Link>
+
+        <Link
+          href="/projects"
+          className="inline-flex items-center gap-2 group/button rounded-full hover:scale-105 focus:outline-none transition ring-offset-gray-900 border-2 border-neutral-400 bg-neutral-200 dark:border-gray-600 text-gray-800 dark:text-gray-300 shadow-lg shadow-black/20 sm:backdrop-blur-sm group-hover/button:bg-gray-100 dark:group-hover/button:bg-gray-800 focus-visible:ring-1 focus-visible:ring-offset-2 ring-gray-50/60 text-sm font-medium px-4 py-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            className="w-3.5 h-3.5 group-hover/button:-translate-x-0.5 transition-transform"
+          >
+            <path d="M19 12l-14 0"></path>
+            <path d="M11 18l-6 -6"></path>
+            <path d="M11 6l-6 6"></path>
+          </svg>
+          My Projects
+        </Link>
+
+        <Link
+          href="/blogs"
+          className="inline-flex items-center gap-2 group/button rounded-full hover:scale-105 focus:outline-none transition ring-offset-gray-900 border-2 border-neutral-400 bg-neutral-200 dark:border-gray-600 text-gray-800 dark:text-gray-300 shadow-lg shadow-black/20 sm:backdrop-blur-sm group-hover/button:bg-gray-100 dark:group-hover/button:bg-gray-800 focus-visible:ring-1 focus-visible:ring-offset-2 ring-gray-50/60 text-sm font-medium px-4 py-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            className="w-3.5 h-3.5 group-hover/button:-translate-x-0.5 transition-transform"
+          >
+            <path d="M19 12l-14 0"></path>
+            <path d="M11 18l-6 -6"></path>
+            <path d="M11 6l-6 6"></path>
+          </svg>
+          My Blogs
+        </Link>
       </div>
+
+      <Footer />
     </Container>
   );
 }

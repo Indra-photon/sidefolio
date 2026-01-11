@@ -21,6 +21,7 @@ export async function PUT(
         const thumbnailFile = formData.get('thumbnail') as File | null;
         const productionLink = formData.get('productionLink') as string;
         const blogLink = formData.get('blogLink') as string;
+        const codeblock = formData.get('codeblock') as string;
         const designDetails = formData.get('designDetails') as string;
         const tagsString = formData.get('tags') as string;
         const isFeatured = formData.get('isFeatured') === 'true';
@@ -138,6 +139,7 @@ export async function PUT(
         existingVideo.productionLink = productionLink || undefined;
         existingVideo.blogLink = blogLink || undefined;
         existingVideo.designDetails = designDetails || existingVideo.designDetails;
+        existingVideo.codeblock = codeblock || undefined;
         existingVideo.thumbnail = thumbnailUrl || undefined;
         existingVideo.thumbnailFileId = thumbnailFileId || undefined;
         existingVideo.tags = formatTags(tagsString ? tagsString.split(',') : []);
@@ -145,6 +147,11 @@ export async function PUT(
         existingVideo.isPublished = isPublished;
         existingVideo.displayOrder = displayOrder;
         existingVideo.updatedAt = new Date();
+
+        console.log('=== BEFORE SAVE DEBUG ===');
+console.log('existingVideo.codeblock:', existingVideo.codeblock);
+console.log('existingVideo.codeblock length:', existingVideo.codeblock?.length);
+console.log('========================');
 
         await existingVideo.save();
 

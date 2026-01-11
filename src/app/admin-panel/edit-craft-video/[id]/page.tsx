@@ -31,6 +31,7 @@ export default function EditCraftVideoPage() {
     productionLink: '',
     blogLink: '',
     designDetails: '',
+    codeblock: '',
     tags: '',
     isFeatured: false,
     isPublished: false,
@@ -56,6 +57,7 @@ export default function EditCraftVideoPage() {
           productionLink: video.productionLink || '',
           blogLink: video.blogLink || '',
           designDetails: video.designDetails,
+          codeblock: video.codeblock || '',
           tags: video.tags.join(', '),
           isFeatured: video.isFeatured,
           isPublished: video.isPublished,
@@ -128,11 +130,14 @@ export default function EditCraftVideoPage() {
       
       // Append all form fields
       Object.entries(formData).forEach(([key, value]) => {
-        formDataToSend.append(key, value.toString());
-      });
+  if (key !== 'designDetails' && key !== 'codeblock') {
+    formDataToSend.append(key, value.toString());
+  }
+});
       
       // Override designDetails with editor content
       formDataToSend.set('designDetails', designDetails);
+      formDataToSend.append('codeblock', formData.codeblock);
       
       if (videoFile) {
         formDataToSend.append('video', videoFile);
@@ -141,6 +146,7 @@ export default function EditCraftVideoPage() {
       if (thumbnailFile) {
         formDataToSend.append('thumbnail', thumbnailFile);
       }
+
 
       const res = await fetch(`/api/craft/update-craft-video/${videoId}`, {
         method: 'PUT',
@@ -367,6 +373,25 @@ export default function EditCraftVideoPage() {
                   'removeformat | help',
                 content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
               }}
+            />
+          </CardContent>
+        </Card>
+
+        {/* Code Block */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Code Block (Optional)</CardTitle>
+            <CardDescription>Add code snippet related to this craft video</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <textarea
+              id="codeblock"
+              name="codeblock"
+              value={formData.codeblock}
+              onChange={(e) => setFormData(prev => ({ ...prev, codeblock: e.target.value }))}
+              placeholder="Paste your code here (HTML, CSS, JavaScript, etc.)"
+              rows={12}
+              className="w-full p-3 border rounded-md font-mono text-sm"
             />
           </CardContent>
         </Card>

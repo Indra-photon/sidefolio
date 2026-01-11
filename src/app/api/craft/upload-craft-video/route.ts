@@ -17,6 +17,7 @@ export async function POST(request: NextRequest) {
         const thumbnailFile = formData.get('thumbnail') as File | null;
         const productionLink = formData.get('productionLink') as string;
         const blogLink = formData.get('blogLink') as string;
+        const codeblock = formData.get('codeblock') as string;
         const designDetails = formData.get('designDetails') as string;
         const tagsString = formData.get('tags') as string;
         const isFeatured = formData.get('isFeatured') === 'true';
@@ -75,6 +76,7 @@ export async function POST(request: NextRequest) {
         let thumbnailUrl = '';
         let thumbnailFileId = '';
         
+        
         if (thumbnailFile) {
             const thumbnailBuffer = Buffer.from(await thumbnailFile.arrayBuffer());
             const thumbnailUpload = await uploadImage(
@@ -99,6 +101,7 @@ export async function POST(request: NextRequest) {
             videoFileId: videoUpload.fileId,
             productionLink: productionLink || undefined,
             blogLink: blogLink || undefined,
+            codeblock: codeblock || undefined,
             designDetails,
             thumbnail: thumbnailUrl || undefined,
             thumbnailFileId: thumbnailFileId || undefined,

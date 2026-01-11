@@ -1,28 +1,44 @@
+
 "use client";
 
-import React, { useEffect, Children, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import Prism from 'prismjs';
+import 'prismjs/themes/prism-okaidia.css';
+import 'prismjs/components/prism-markup';
+import 'prismjs/components/prism-css';
+import 'prismjs/components/prism-clike';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-jsx';
+import 'prismjs/components/prism-tsx';
+import 'prismjs/components/prism-bash';
 
-// import "prism-theme-night-owl";
-import clsx from "clsx";
+interface CodeWindowProps {
+  title?: string;
+  children: React.ReactNode;
+  language?: string;
+}
 
-export const CodeWindow = ({ title, children }: any) => {
+export const CodeWindow = ({ title = "Code", children, language = "javascript" }: CodeWindowProps) => {
   const [isClient, setIsClient] = useState(false);
+  const [buttonText, setButtonText] = useState("Copy");
+  const codeRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
+
+  // Apply Prism syntax highlighting
   useEffect(() => {
-    // Prism.highlightAll();
-  }, []);
+    if (codeRef.current && isClient) {
+      Prism.highlightElement(codeRef.current);
+    }
+  }, [isClient, children]);
 
-  let child = Children.only(children);
-
-  const [buttonText, setButtonText] = useState("Copy");
-  const childRef = useRef<any>(null);
-
-  const handleClick = (e: any) => {
-    if (childRef.current) {
-      const textToCopy = childRef.current.innerText;
+  const handleCopy = () => {
+    if (codeRef.current) {
+      const textToCopy = codeRef.current.innerText;
 
       navigator.clipboard
         .writeText(textToCopy)
@@ -30,7 +46,7 @@ export const CodeWindow = ({ title, children }: any) => {
           setButtonText("Copied!");
           setTimeout(() => {
             setButtonText("Copy");
-          }, 1000);
+          }, 1500);
         })
         .catch((err) => {
           console.error("Error copying text to clipboard:", err);
@@ -38,47 +54,49 @@ export const CodeWindow = ({ title, children }: any) => {
     }
   };
 
+  if (!isClient) return null;
+
   return (
-    isClient && (
-      <div
-        className={clsx(
-          "bg-slate-900 rounded-md w-auto overflow-hidden flex flex-col my-10 prose prose-sm ",
-          "prose prose-slate max-w-none dark:prose-invert dark:text-slate-400",
-          // headings
-          "prose-headings:scroll-mt-28  prose-headings:font-display prose-headings:font-normal lg:prose-headings:scroll-mt-[8.5rem]",
-          // lead
-          "prose-lead:text-slate-500 dark:prose-lead:text-slate-400",
-          // links
-          "prose-a:font-semibold dark:prose-a:text-sky-400",
-          // link underline
-          "prose-a:no-underline prose-a:shadow-[inset_0_-2px_0_0_var(--tw-prose-background,#fff),inset_0_calc(-1*(var(--tw-prose-underline-size,4px)+2px))_0_0_var(--tw-prose-underline,theme(colors.sky.300))] hover:prose-a:[--tw-prose-underline-size:6px] dark:[--tw-prose-background:theme(colors.slate.900)] dark:prose-a:shadow-[inset_0_calc(-1*var(--tw-prose-underline-size,2px))_0_0_var(--tw-prose-underline,theme(colors.sky.800))] dark:hover:prose-a:[--tw-prose-underline-size:6px]",
-          // pre
-          "prose-pre:rounded-xl prose-pre:bg-slate-900 prose-pre:shadow-lg dark:prose-pre:bg-slate-800/60 dark:prose-pre:shadow-none dark:prose-pre:ring-1 dark:prose-pre:ring-slate-300/10",
-          // hr
-          "dark:prose-hr:border-slate-800"
-        )}
-      >
-        <div className="flex justify-between items-center bg-slate-800 py-2  px-4">
-          <p className=" text-emerald-500 text-sm font-medium bg-emerald-600/[0.3] px-2 !my-0 shadow-sm">
-            {title}
-          </p>
+    <div className="bg-neutral-900 border border-neutral-800 rounded-lg overflow-hidden my-6">
+      {/* Header with title and copy button */}
+      <div className="flex justify-between items-center bg-neutral-800/50 px-4 py-2 border-b border-neutral-700">
+        <span className="text-emerald-400 text-sm font-medium bg-emerald-600/10 px-3 py-1 rounded">
+          {title}
+        </span>
 
-          <button
-            onClick={handleClick}
-            className="group cursor-pointer relative rounded-full p-px text-xs font-semibold leading-6 shadow-xl shadow-zinc-950 text-white"
-          >
-            <span className="absolute inset-0 overflow-hidden rounded-full">
-              <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
-            </span>
-            <div className="relative z-10 rounded-full bg-zinc-950 py-0.5 px-4 ring-1 ring-white/10">
-              {buttonText}
-            </div>
-            <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-emerald-400/0 via-emerald-400/90 to-emerald-400/0 transition-opacity duration-500 group-hover:opacity-40"></span>
-          </button>
-        </div>
-
-        <div ref={childRef}>{children}</div>
+        <button
+          onClick={handleCopy}
+          className="group relative text-xs font-medium text-gray-300 hover:text-white transition-colors"
+        >
+          <span className="flex items-center gap-2 bg-neutral-700/50 hover:bg-neutral-700 px-3 py-1 rounded transition-colors">
+            {buttonText === "Copied!" ? (
+              <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            ) : (
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              </svg>
+            )}
+            {buttonText}
+          </span>
+        </button>
       </div>
-    )
+
+      {/* Code content with scroll */}
+      <div 
+        ref={containerRef}
+        className="overflow-x-auto overflow-y-auto max-h-96"
+      >
+        <pre className="!bg-transparent !border-0 !my-0 !p-4">
+          <code 
+            ref={codeRef}
+            className={`language-${language} !text-sm`}
+          >
+            {children}
+          </code>
+        </pre>
+      </div>
+    </div>
   );
 };

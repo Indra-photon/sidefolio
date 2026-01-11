@@ -52,8 +52,6 @@ export async function GET(
             );
         }
 
-        console.log(`Craft video found: ${video.videoTitle}`);
-
         return NextResponse.json(
             {
                 success: true,

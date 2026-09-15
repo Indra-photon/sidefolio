@@ -23,19 +23,18 @@ const CalSans = localFont({
 
 function useProgressiveLoading() {
   const [isLoaded, setIsLoaded] = useState(false);
-  
+
   useEffect(() => {
     const timer = setTimeout(() => setIsLoaded(true), 100);
     return () => clearTimeout(timer);
   }, []);
-  
+
   return isLoaded;
 }
 
-
 export default function HomePage() {
   const isLoaded = useProgressiveLoading();
-  
+
   if (!isLoaded) {
     return (
       <div className="h-screen flex items-center justify-center">
@@ -47,44 +46,48 @@ export default function HomePage() {
       </div>
     );
   }
-  
+
   return (
     <Container className="bg-black">
       <div className="flex flex-col py-4 px-4 sm:py-6 gap-4 sm:gap-6 bg-black rounded-lg relative max-w-7xl mx-auto">
         {/* <div className="absolute left-0 top-0 w-px h-full bg-linear-to-b from-neutral-700 via-neutral-50 to-neutral-700"></div>
       <div className="absolute right-0 top-0 w-px h-full bg-linear-to-b from-neutral-700 via-neutral-50 to-neutral-700"></div> */}
 
-        <motion.div
-          className=" relative"
-        >
-          <Heading as="h1" className="text-white text-3xl sm:text-4xl lg:text-5xl font-bold">
-              {/* I make <span className="line-through">boring</span> <span className="">Websites</span> */}
-              Full Stack Web Developer
+        <motion.div className=" relative">
+          <Heading
+            as="h1"
+            className="text-white text-3xl sm:text-4xl lg:text-5xl"
+          >
+            {/* I make <span className="line-through">boring</span> <span className="">Websites</span> */}
+            Full Stack Web Developer
           </Heading>
-          <Paragraph className={twMerge(CalSans.className, 'text-neutral-400 text-sm sm:text-lg lg:text-2xl font-extralight')}>
+          <Paragraph
+            className={twMerge(
+              CalSans.className,
+              "text-neutral-400 text-sm sm:text-lg lg:text-2xl font-extralight",
+            )}
+          >
             I build responsive, scalable websites that focuses on conversion...
           </Paragraph>
           <div className="flex mt-4 space-x-2 mb-2">
             <div className="btn rounded-2xl bg-white/90 backdrop-blur-md border border-neutral-400 px-3 py-1 flex flex-row items-center justify-center gap-2">
-            <span className="relative flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-600"></span>
-            </span>
-            Available for work
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-600"></span>
+              </span>
+              Available for work
             </div>
           </div>
 
           <div className="absolute right-0 bottom-0 h-px w-full bg-linear-to-r from-neutral-700 via-neutral-50 to-neutral-700"></div>
         </motion.div>
-        
 
         {/* Hero section */}
         <HeroHome />
 
         <div className="mt-24">
-        <Footer />
+          <Footer />
         </div>
-        
       </div>
     </Container>
   );

@@ -98,8 +98,8 @@ export default function RootLayout({
             disableTransitionOnChange
           >
           <Sidebar />
-          <Container className="lg:pl-2 lg:pt-2 bg-black flex-1 overflow-y-auto">
-            <div className="flex-1 bg-black min-h-screen lg:rounded-tl-xl overflow-y-auto">
+          <Container className="lg:pl-2 lg:pt-2 bg-sidebar flex-1 overflow-y-auto">
+            <div className="flex-1 bg-background min-h-screen lg:rounded-tl-xl overflow-y-auto">
               {children}
               <Analytics />
             </div>

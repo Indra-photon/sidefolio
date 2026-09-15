@@ -19,7 +19,7 @@ export function ThemeToggle({ className }: { className?: string }) {
       aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
       onClick={() => setTheme(isDark ? "light" : "dark")}
       className={twMerge(
-        "text-secondary hover:text-primary transition duration-200 flex items-center space-x-2 py-2 px-2 rounded-md text-sm",
+        "w-full text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent transition duration-200 flex items-center space-x-2 py-2 px-2 rounded-md text-sm",
         className
       )}
     >

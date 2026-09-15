@@ -112,7 +112,7 @@ const VideoCard = ({ video, index }: { video: any; index: number }) => {
     >
       {/* Loading Skeleton */}
       {!videoLoaded && (
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-300 animate-pulse flex items-center justify-center">
+        <div className="absolute inset-0 bg-linear-to-br from-gray-200 to-gray-300 animate-pulse flex items-center justify-center">
           <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
         </div>
       )}
@@ -136,7 +136,7 @@ const VideoCard = ({ video, index }: { video: any; index: number }) => {
 
       {/* Gradient Overlay */}
 
-      {/* <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" /> */}
+      {/* <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" /> */}
 
       {/* Content */}
 

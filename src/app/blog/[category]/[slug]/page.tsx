@@ -316,10 +316,10 @@ export default async function BlogPostPage({ params }: Props) {
           {/* {blog.content && (
               <div className="relative ">
                 
-                <div className="absolute left-0 top-0 bottom-0 w-8 border-x border-neutral-800 bg-[image:repeating-linear-gradient(315deg,_rgb(38_38_38)_0,_rgb(38_38_38)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px] bg-fixed hidden md:block"></div>
+                <div className="absolute left-0 top-0 bottom-0 w-8 border-x border-neutral-800 bg-[repeating-linear-gradient(315deg,rgb(38_38_38)_0,rgb(38_38_38)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px] bg-fixed hidden md:block"></div>
                 
             
-                <div className="absolute right-0 top-0 bottom-0 w-8 border-x border-neutral-800 bg-[image:repeating-linear-gradient(315deg,_rgb(38_38_38)_0,_rgb(38_38_38)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px] bg-fixed hidden md:block"></div>
+                <div className="absolute right-0 top-0 bottom-0 w-8 border-x border-neutral-800 bg-[repeating-linear-gradient(315deg,rgb(38_38_38)_0,rgb(38_38_38)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px] bg-fixed hidden md:block"></div>
                 
                 <PrismHighlighter
                   content={blog.content}
@@ -336,7 +336,7 @@ export default async function BlogPostPage({ params }: Props) {
                     prose-ul:list-disc prose-ol:list-decimal
                     prose-li:text-white
                     [&_pre]:w-full [&_pre]:md:h-auto [&_pre]:md:max-h-96 [&_pre]:overflow-x-auto [&_pre]:text-[1px]
-                    [&_pre_code]:!text-sm [&_pre_code]:!leading-relaxed`
+                    [&_pre_code]:text-sm! [&_pre_code]:leading-relaxed!`
                   )}
                 />
               </div>

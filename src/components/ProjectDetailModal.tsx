@@ -47,7 +47,7 @@ export default function ProjectDetailModal({
               className="object-cover"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
             
             {/* Project Title Overlay */}
             <div className="absolute bottom-0 left-0 right-0 p-6">
@@ -135,7 +135,7 @@ export default function ProjectDetailModal({
               rel="noopener noreferrer"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="px-8 py-2.5 bg-gradient-to-r from-primary to-primary/90 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
+              className="px-8 py-2.5 bg-linear-to-r from-primary to-primary/90 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
             >
               <span>Visit Project</span>
               <ExternalLink className="w-4 h-4" />

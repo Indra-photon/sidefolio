@@ -27,7 +27,7 @@ export const Sidebar = () => {
             animate={{ x: 0 }}
             transition={{ duration: 0.2, ease: "linear" }}
             exit={{ x: -200 }}
-            className="px-6  z-[100] py-10 bg-neutral-900 max-w-[14rem] lg:w-fit  fixed lg:relative  h-screen left-0 flex flex-col justify-between"
+            className="px-6  z-[100] py-10 bg-neutral-900 max-w-56 lg:w-fit  fixed lg:relative  h-screen left-0 flex flex-col justify-between"
           >
             <div className="flex-1 overflow-auto">
               <SidebarHeader />
@@ -80,7 +80,7 @@ export const Navigation = ({
         >
           <link.icon
             className={twMerge(
-              "h-4 w-4 flex-shrink-0",
+              "h-4 w-4 shrink-0",
               isActive(link.url) && "text-sky-500"
             )}
           />
@@ -109,7 +109,7 @@ export const Navigation = ({
         >
           <link.icon
             className={twMerge(
-              "h-4 w-4 flex-shrink-0",
+              "h-4 w-4 shrink-0",
               isActive(link.url) && "text-sky-500"
             )}
           />
@@ -128,7 +128,7 @@ const SidebarHeader = () => {
           src={img}
           alt="Avatar"
           fill
-          className="object-cover object-top rounded-full flex-shrink-0"
+          className="object-cover object-top rounded-full shrink-0"
         />
       </div>
       <div className="flex text-sm flex-col pt-2">

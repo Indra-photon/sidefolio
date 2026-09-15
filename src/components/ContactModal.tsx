@@ -71,7 +71,7 @@ export default function ContactModal({
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-              className="w-16 h-16 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center mx-auto mb-4"
+              className="w-16 h-16 bg-linear-to-br from-primary to-primary/80 rounded-full flex items-center justify-center mx-auto mb-4"
             >
               <Send className="w-8 h-8 text-white" />
             </motion.div>
@@ -205,7 +205,7 @@ export default function ContactModal({
               onClick={handleSubmit}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="px-8 py-2.5 bg-gradient-to-r from-primary to-primary/90 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
+              className="px-8 py-2.5 bg-linear-to-r from-primary to-primary/90 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
             >
               <span>Send Message</span>
               <Send className="w-4 h-4" />

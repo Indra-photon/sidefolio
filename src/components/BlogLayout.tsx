@@ -58,7 +58,7 @@ export function BlogLayout({
               alt="thumbnail"
               height="800"
               width="800"
-              className={`object-cover object-left-top w-full max-h-96`}
+              className={`object-cover object-top-left w-full max-h-96`}
             />
           </div>
         </header>

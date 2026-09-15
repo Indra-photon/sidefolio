@@ -19,7 +19,7 @@ import MagicBento from "./MagicBento";
 
 export function BentoGridThirdDemo() {
   return (
-    <BentoGrid className="max-w-7xl mx-auto md:auto-rows-[28rem]">
+    <BentoGrid className="max-w-7xl mx-auto md:auto-rows-112">
       {items.map((item, i) => (
         <BentoGridItem
           key={i}
@@ -103,7 +103,7 @@ const SkeletonOne = () => {
 
   return (
     <motion.div
-      className="flex flex-1 w-full h-full min-h-[6rem] dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex-col space-y-2 relative"
+      className="flex flex-1 w-full h-full min-h-24 dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex-col space-y-2 relative"
     >
       <motion.button
           onClick={handleDelete}
@@ -411,10 +411,10 @@ const SkeletonTwo = () => {
     <motion.div
       initial="initial"
       whileHover="animate"
-      className="flex flex-1 w-full h-full min-h-[6rem] dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex-col space-y-2"
+      className="flex flex-1 w-full h-full min-h-24 dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex-col space-y-2"
     >
       <motion.div
-        className="relative overflow-hidden [mask-image:linear-gradient(to_bottom,black_0%,black_70%,transparent_100%)] h-full flex flex-col rounded-2xl border border-neutral-100 dark:border-white/[0.2] p-2  items-start space-x-2 bg-neutral-300 dark:bg-black"
+        className="relative overflow-hidden mask-[linear-gradient(to_bottom,black_0%,black_70%,transparent_100%)] h-full flex flex-col rounded-2xl border border-neutral-100 dark:border-white/20 p-2  items-start space-x-2 bg-neutral-300 dark:bg-black"
       >
       <motion.div
       initial={{ y: 0 }}
@@ -426,7 +426,7 @@ const SkeletonTwo = () => {
         }} 
         className="flex flex-col p-1 space-y-4">
         {/* {...Testimonials.map((item, index) => (
-          <div key={"testimonial"+index} className={`flex-shrink-0 flex flex-row items-start space-x-4 ${index%2 === 0 ? 'bg-neutral-200 ml-7 dark:bg-white/[0.05] p-2 rounded-lg' : ''}`}>
+          <div key={"testimonial"+index} className={`shrink-0 flex flex-row items-start space-x-4 ${index%2 === 0 ? 'bg-neutral-200 ml-7 dark:bg-white/5 p-2 rounded-lg' : ''}`}>
             <img
               src={item.imgLink}
               alt="avatar"
@@ -444,9 +444,9 @@ const SkeletonTwo = () => {
               {Testimonials.map((item, index) => (
                 <div
                   key={`testimonial-${arrayIndex}-${index}`}
-                  className={`flex-shrink-0 flex flex-row items-start space-x-4 ${
+                  className={`shrink-0 flex flex-row items-start space-x-4 ${
                     index % 2 === 0
-                      ? "bg-neutral-50 ml-7 dark:bg-white/[0.05] p-2 rounded-lg"
+                      ? "bg-neutral-50 ml-7 dark:bg-white/5 p-2 rounded-lg"
                       : ""
                   }`}
                 >
@@ -554,7 +554,7 @@ const SkeletonThree = () => {
           </div>
           
           {/* Savings Badge */}
-          {/* <div className='mt-2 inline-flex items-center gap-1.5 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 text-green-700 text-sm font-medium px-3 py-1.5 rounded-full'>
+          {/* <div className='mt-2 inline-flex items-center gap-1.5 bg-linear-to-r from-green-50 to-emerald-50 border border-green-200 text-green-700 text-sm font-medium px-3 py-1.5 rounded-full'>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
@@ -640,11 +640,11 @@ const SkeletonFour = () => {
     //   initial="initial"
     //   animate="animate"
     //   whileHover="hover"
-    //   className="flex flex-1 w-full h-full min-h-[6rem] dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex-row space-x-2"
+    //   className="flex flex-1 w-full h-full min-h-24 dark:bg-dot-white/[0.2] bg-dot-black/[0.2] flex-row space-x-2"
     // >
     //   <motion.div
     //     variants={first}
-    //     className="h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center"
+    //     className="h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/10 border border-neutral-200 flex flex-col items-center justify-center"
     //   >
     //     <img
     //       src="https://pbs.twimg.com/profile_images/1417752099488636931/cs2R59eW_400x400.jpg"
@@ -660,7 +660,7 @@ const SkeletonFour = () => {
     //       Delusional
     //     </p>
     //   </motion.div>
-    //   <motion.div className="h-full relative z-20 w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center">
+    //   <motion.div className="h-full relative z-20 w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/10 border border-neutral-200 flex flex-col items-center justify-center">
     //     <img
     //       src="https://pbs.twimg.com/profile_images/1417752099488636931/cs2R59eW_400x400.jpg"
     //       alt="avatar"
@@ -677,7 +677,7 @@ const SkeletonFour = () => {
     //   </motion.div>
     //   <motion.div
     //     variants={second}
-    //     className="h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/[0.1] border border-neutral-200 flex flex-col items-center justify-center"
+    //     className="h-full w-1/3 rounded-2xl bg-white p-4 dark:bg-black dark:border-white/10 border border-neutral-200 flex flex-col items-center justify-center"
     //   >
     //     <img
     //       src="https://pbs.twimg.com/profile_images/1417752099488636931/cs2R59eW_400x400.jpg"

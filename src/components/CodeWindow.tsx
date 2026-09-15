@@ -88,10 +88,10 @@ export const CodeWindow = ({ title = "Code", children, language = "javascript" }
         ref={containerRef}
         className="overflow-x-auto overflow-y-auto max-h-96"
       >
-        <pre className="!bg-transparent !border-0 !my-0 !p-4">
+        <pre className="bg-transparent! border-0! my-0! p-4!">
           <code 
             ref={codeRef}
-            className={`language-${language} !text-sm`}
+            className={`language-${language} text-sm!`}
           >
             {children}
           </code>

@@ -35,8 +35,8 @@ export default function FeaturedBlog() {
   return (
       <Container className="py-4 px-0 sm:px-8">
         <div className="flex items-center justify-between mb-4 relative">
-          <div className="absolute left-0 top-0 w-full h-px bg-gradient-to-r from-neutral-100 via-neutral-700 to-transparent"></div>
-          <div className="absolute left-0 bottom-0 w-full h-px bg-gradient-to-r from-neutral-100 via-neutral-700 to-transparent"></div>
+          <div className="absolute left-0 top-0 w-full h-px bg-linear-to-r from-neutral-100 via-neutral-700 to-transparent"></div>
+          <div className="absolute left-0 bottom-0 w-full h-px bg-linear-to-r from-neutral-100 via-neutral-700 to-transparent"></div>
           <Paragraph className="text-2xl md:text-3xl font-bold mb-2">Blog</Paragraph>
           <Link href="/blog" className="text-sm text-neutral-400 hover:text-neutral-300 transition-colors">
             (view all)

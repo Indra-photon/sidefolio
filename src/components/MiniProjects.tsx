@@ -15,7 +15,7 @@ export const MiniProjects = () => {
 
   return (
     // VIVID BACKGROUND SECTION - This is the highlighted section
-    <div className="relative py-20 my-20 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 overflow-hidden">
+    <div className="relative py-20 my-20 bg-linear-to-br from-purple-900 via-blue-900 to-indigo-900 overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.3),rgba(255,255,255,0))]" />
       <div className="absolute top-0 left-0 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse" />
@@ -57,7 +57,7 @@ export const MiniProjects = () => {
                       height={240}
                       className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     
                     {/* Live indicator */}
                     <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
@@ -113,7 +113,7 @@ export const MiniProjects = () => {
                         target="_blank"
                         variant="primary"
                         size="sm"
-                        className="flex-1 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white border-none"
+                        className="flex-1 bg-linear-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white border-none"
                       />
                       {project.githubUrl && (
                         <AnimatedButton
@@ -147,7 +147,7 @@ export const MiniProjects = () => {
               <div className="space-y-4">
                 {miniProjectsShowcase.highlights.map((highlight, index) => (
                   <div key={index} className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center mt-1">
+                    <div className="shrink-0 w-8 h-8 bg-linear-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center mt-1">
                       {index === 0 && <Sparkles className="w-4 h-4 text-white" />}
                       {index === 1 && <Code className="w-4 h-4 text-white" />}
                       {index === 2 && <Shield className="w-4 h-4 text-white" />}
@@ -186,7 +186,7 @@ export const MiniProjects = () => {
                     text="View All Projects"
                     icon={Play}
                     href="/projects"
-                    className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white border-none"
+                    className="bg-linear-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white border-none"
                   />
                   <AnimatedButton
                     text="Get In Touch"

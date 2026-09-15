@@ -51,8 +51,8 @@ export default function HomePage() {
   return (
     <Container className="bg-black">
       <div className="flex flex-col py-4 px-4 sm:py-6 gap-4 sm:gap-6 bg-black rounded-lg relative max-w-7xl mx-auto">
-        {/* <div className="absolute left-0 top-0 w-px h-full bg-gradient-to-b from-neutral-700 via-neutral-50 to-neutral-700"></div>
-      <div className="absolute right-0 top-0 w-px h-full bg-gradient-to-b from-neutral-700 via-neutral-50 to-neutral-700"></div> */}
+        {/* <div className="absolute left-0 top-0 w-px h-full bg-linear-to-b from-neutral-700 via-neutral-50 to-neutral-700"></div>
+      <div className="absolute right-0 top-0 w-px h-full bg-linear-to-b from-neutral-700 via-neutral-50 to-neutral-700"></div> */}
 
         <motion.div
           className=" relative"
@@ -74,7 +74,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="absolute right-0 bottom-0 h-px w-full bg-gradient-to-r from-neutral-700 via-neutral-50 to-neutral-700"></div>
+          <div className="absolute right-0 bottom-0 h-px w-full bg-linear-to-r from-neutral-700 via-neutral-50 to-neutral-700"></div>
         </motion.div>
         
 

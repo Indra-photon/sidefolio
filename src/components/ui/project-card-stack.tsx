@@ -88,15 +88,15 @@ export const ProjectCardStack = ({
           >
             {/* Card with gradient border and backdrop filter */}
             <div className="relative w-full h-full rounded-xl overflow-hidden shadow-xl 
-                          border border-gray-200/40 dark:border-white/[0.1] 
-                          bg-gradient-to-br from-white to-gray-50/50 
+                          border border-gray-200/40 dark:border-white/10 
+                          bg-linear-to-br from-white to-gray-50/50 
                           backdrop-blur-sm
                           flex flex-col
                           transition-all duration-300
                           hover:shadow-2xl">
               
               {/* Stylish gradient background effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-100/30 via-white to-blue-100/30 opacity-70"></div>
+              <div className="absolute inset-0 bg-linear-to-br from-purple-100/30 via-white to-blue-100/30 opacity-70"></div>
               
               {/* Card content */}
               <div className="relative z-10 flex flex-col h-full">
@@ -109,12 +109,12 @@ export const ProjectCardStack = ({
                   />
                   
                   {/* Gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 bg-linear-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 
                 </div>
                 
                 {/* Card Footer with subtle gradient */}
-                <div className="p-2 sm:p-4 h-[25%] sm:h-[20%] flex items-center bg-gradient-to-r from-white/80 to-gray-50/80">
+                <div className="p-2 sm:p-4 h-[25%] sm:h-[20%] flex items-center bg-linear-to-r from-white/80 to-gray-50/80">
                   
                   <div className="ml-auto flex gap-2">
                   <Link href = {project.liveUrl || ""}>

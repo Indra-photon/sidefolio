@@ -13,10 +13,10 @@ import Image from "next/image";
 export const SaasShowcase = () => {
   return (
     // VIVID BACKGROUND SECTION - This is the highlighted section
-    <section className="relative py-10 my-10 bg-gradient-to-br rounded-3xl border border-gradient-to-r from-blue-200/30 to-purple-200/30 backdrop-blur-sm shadow-lg">
+    <section className="relative py-10 my-10 bg-linear-to-br rounded-3xl border border-gradient-to-r from-blue-200/30 to-purple-200/30 backdrop-blur-sm shadow-lg">
       
       {/* Background effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl"></div>
+      <div className="absolute inset-0 bg-linear-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.1),transparent)] rounded-3xl"></div>
       
       <Container className="relative z-10">
@@ -53,7 +53,7 @@ export const SaasShowcase = () => {
                 height={500}
                 className="w-full h-auto object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+              <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"></div>
             </div>
           </motion.div>
 

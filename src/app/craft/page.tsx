@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { Loader2, Play } from 'lucide-react';
-import { getOptimizedVideoUrl } from '@/lib/imagekit';
+import { getOptimizedVideoUrl } from '@/lib/imagekit-url';
 import Masonry from 'react-masonry-css'
 import { Container } from '@/components/Container';
 import { Heading } from '@/components/Heading';

@@ -2,7 +2,6 @@ import { Sidebar } from "@/components/Sidebar";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { twMerge } from "tailwind-merge";
 import { Footer } from "@/components/Footer";
 import { GoogleTagManager } from '@next/third-parties/google'
 import { Toaster } from "@/components/ui/sonner"
@@ -13,8 +12,10 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-sans",
+  display: "swap",
 });
+
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.indrabuildswebsites.com/"),
@@ -84,13 +85,12 @@ export default function RootLayout({
 }) {
   return (
     <ViewTransitions>
-      <html lang="en" suppressHydrationWarning>
-        <body
-          className={twMerge(
-            inter.className,
-            "flex antialiased h-screen overflow-hidden bg-gray-100"
-          )}
-        >
+      <html
+        lang="en"
+        suppressHydrationWarning
+        className={inter.variable}
+      >
+        <body className="flex antialiased h-screen overflow-hidden bg-background text-foreground">
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"

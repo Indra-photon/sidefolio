@@ -36,12 +36,12 @@
     "eslint-config-next": "13.4.19",
     "framer-motion": "^10.16.1",
     "gsap": "^3.14.2",
-    "imagekit": "^6.0.0",
+    "imagekit": "^1.5.0",
     "lucide-react": "^0.523.0",
     "mongoose": "^9.0.0",
     "motion": "^12.19.2",
-    "next": "16.0.10",
-    "next-mdx-remote": "^5.0.0",
+    "next": "^16.3.5",
+    "next-mdx-remote": "^6.0.0",
     "next-themes": "^0.4.6",
     "next-view-transitions": "^0.3.5",
     "postcss": "8.4.28",
@@ -60,6 +60,7 @@
     "typescript": "5.1.6"
   },
   "devDependencies": {
-    "@types/prismjs": "^1.26.5"
+    "@types/prismjs": "^1.26.5",
+    "baseline-browser-mapping": "^2.11.23"
   }
 }

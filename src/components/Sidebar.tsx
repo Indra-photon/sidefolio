@@ -14,6 +14,7 @@ import { IconLayoutSidebarRightCollapse } from "@tabler/icons-react";
 // import { isMobile } from "@/lib/utils";
 import { isMobile } from "@/lib/mobutils";
 import img from "../../public/images/profilepic.webp";
+import { ThemeToggle } from "./ThemeToggle";
 
 export const Sidebar = () => {
   const [open, setOpen] = useState(isMobile() ? false : true);
@@ -116,6 +117,11 @@ export const Navigation = ({
           <span>{link.label}</span>
         </Link>
       ))}
+
+      <Heading as="p" className="text-sm md:text-sm lg:text-sm pt-10 px-2">
+        Theme
+      </Heading>
+      <ThemeToggle />
     </div>
   );
 };

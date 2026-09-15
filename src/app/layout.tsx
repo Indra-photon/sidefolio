@@ -9,6 +9,7 @@ import { Toaster } from "@/components/ui/sonner"
 import { Analytics } from "@vercel/analytics/next"
 import { Container } from "@/components/Container";
 import { ViewTransitions } from 'next-view-transitions'
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -83,13 +84,19 @@ export default function RootLayout({
 }) {
   return (
     <ViewTransitions>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <body
           className={twMerge(
             inter.className,
             "flex antialiased h-screen overflow-hidden bg-gray-100"
           )}
         >
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
           <Sidebar />
           <Container className="lg:pl-2 lg:pt-2 bg-black flex-1 overflow-y-auto">
             <div className="flex-1 bg-black min-h-screen lg:rounded-tl-xl overflow-y-auto">
@@ -99,6 +106,7 @@ export default function RootLayout({
           </Container>
           <GoogleTagManager gtmId="GTM-PHTQSD64" />
           <Toaster position="top-right" />
+          </ThemeProvider>
         </body>
       </html>
     </ViewTransitions>

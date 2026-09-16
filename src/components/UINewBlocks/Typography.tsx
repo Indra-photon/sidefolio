@@ -122,13 +122,14 @@ export type TextProps = {
   variant: TextVariant;
   as?: Tag;
   className?: string;
+  style?: React.CSSProperties;
   children: React.ReactNode;
-} & Omit<React.HTMLAttributes<HTMLElement>, "className" | "children">;
+} & Omit<React.HTMLAttributes<HTMLElement>, "className" | "children" | "style">;
 
-export function Text({ variant, as, className, children, ...rest }: TextProps) {
+export function Text({ variant, as, className, style, children, ...rest }: TextProps) {
   const Comp = (as ?? textDefaultTag[variant]) as React.ElementType;
   return (
-    <Comp className={twMerge(textVariants({ variant }), className)} {...rest}>
+    <Comp className={twMerge(textVariants({ variant }), className)} style={style} {...rest}>
       {children}
     </Comp>
   );

@@ -147,6 +147,28 @@
   }
 }
 
+/* Two-strip "bezel" frame: inner ring · gap · outer ring, all shadows.
+   Use `bezel` on widgets/cards, `bezel-sm` on small tiles (icons, keycaps). */
+@utility bezel {
+  box-shadow:
+    0 0 0 1px var(--hairline-strong),
+    0 0 0 5px var(--background),
+    0 0 0 6px var(--hairline);
+}
+@utility bezel-sm {
+  box-shadow:
+    0 0 0 1px var(--hairline-strong),
+    0 0 0 3px var(--background),
+    0 0 0 4px var(--hairline);
+}
+
+/* Lamp prototype: pendulum sway + one-shot bulb flicker (transform/opacity only) */
+@keyframes lamp-sway { from { transform: rotate(-1.6deg) } to { transform: rotate(1.6deg) } }
+@keyframes lamp-flicker { 0%,100% { opacity: 1 } 8% { opacity: 0 } 14% { opacity: 1 } 22% { opacity: .35 } 30% { opacity: 1 } 46% { opacity: .8 } 52% { opacity: 1 } }
+.lamp-sway { animation: lamp-sway 4.2s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate; }
+.lamp-beam, .lamp-bulb { animation: lamp-flicker 0.9s steps(1, end) 0.2s 1 both; }
+@media (prefers-reduced-motion: reduce) { .lamp-sway, .lamp-beam, .lamp-bulb { animation: none; } }
+
 /* Elevated surfaces: cards, buttons, popovers (layered, theme-aware) */
 @utility shadow-border {
   box-shadow: var(--shadow-border);
@@ -499,6 +521,26 @@
   --brand: oklch(0.488 0.243 264.376);
   --brand-hover: oklch(0.424 0.199 265.638);
   --brand-foreground: #fff;
+  /* Pendant lamp (light theme: warm multiply tint + shadow, no glow) */
+  --lamp-light: oklch(0.86 0.12 80);
+  --lamp-blend: multiply;
+  --lamp-beam-opacity: 0.45;
+  --lamp-bulb: oklch(0.95 0.08 85);
+  --lamp-cord: oklch(0 0 0 / 0.45);
+  --lamp-shade-dark: oklch(0.55 0 0);
+  --lamp-shade-light: oklch(0.8 0 0);
+  --lamp-shadow: oklch(0 0 0 / 0.18);
+  --lamp-grain: 0.07;
+  /* Pendant lamp (light theme: warm multiply tint + shadow, no glow) */
+  --lamp-light: oklch(0.86 0.12 80);
+  --lamp-blend: multiply;
+  --lamp-beam-opacity: 0.45;
+  --lamp-bulb: oklch(0.95 0.08 85);
+  --lamp-cord: oklch(0 0 0 / 0.45);
+  --lamp-shade-dark: oklch(0.55 0 0);
+  --lamp-shade-light: oklch(0.8 0 0);
+  --lamp-shadow: oklch(0 0 0 / 0.18);
+  --lamp-grain: 0.07;
   /* Hairlines & shadow-borders (see better-ui/surfaces.md) */
   --hairline: oklch(0 0 0 / 0.08);
   --hairline-strong: oklch(0 0 0 / 0.14);
@@ -554,6 +596,26 @@
   --brand: oklch(0.546 0.245 262.881);
   --brand-hover: oklch(0.623 0.214 259.815);
   --brand-foreground: #fff;
+  /* Pendant lamp (dark theme: additive tungsten beam) */
+  --lamp-light: oklch(0.93 0.06 85);
+  --lamp-blend: plus-lighter;
+  --lamp-beam-opacity: 0.55;
+  --lamp-bulb: oklch(0.93 0.06 85);
+  --lamp-cord: oklch(1 0 0 / 0.5);
+  --lamp-shade-dark: oklch(0.16 0 0);
+  --lamp-shade-light: oklch(0.34 0 0);
+  --lamp-shadow: oklch(0 0 0 / 0.6);
+  --lamp-grain: 0.12;
+  /* Pendant lamp (dark theme: additive tungsten beam) */
+  --lamp-light: oklch(0.93 0.06 85);
+  --lamp-blend: plus-lighter;
+  --lamp-beam-opacity: 0.55;
+  --lamp-bulb: oklch(0.93 0.06 85);
+  --lamp-cord: oklch(1 0 0 / 0.5);
+  --lamp-shade-dark: oklch(0.16 0 0);
+  --lamp-shade-light: oklch(0.34 0 0);
+  --lamp-shadow: oklch(0 0 0 / 0.6);
+  --lamp-grain: 0.12;
   /* Dark: a single white ring — layered depth is invisible on dark */
   --hairline: oklch(1 0 0 / 0.1);
   --hairline-strong: oklch(1 0 0 / 0.18);

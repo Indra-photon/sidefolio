@@ -1,7 +1,6 @@
 import type { IconSvgElement } from "@hugeicons/react";
 import {
   Call02Icon,
-  Clock01Icon,
   Idea01Icon,
   Link04Icon,
   Location01Icon,
@@ -13,7 +12,6 @@ import {
 /**
  * Facts shown under the hero. Edit values here — the component is data-driven.
  * `href` makes the value a link. `meta` is muted trailing text (e.g. "@Company").
- * `kind: "clock"` renders a live local time.
  */
 export type Fact = {
   icon: IconSvgElement;
@@ -22,10 +20,15 @@ export type Fact = {
   href?: string;
   meta?: string;
   metaHref?: string;
-  kind?: "clock";
 };
 
-export const TIMEZONE = "Asia/Kolkata"; // TODO: confirm
+/** Zones for the split-flap clock. First entry is the default (home). */
+export const CLOCK_ZONES = [
+  { city: "Kolkata", timeZone: "Asia/Kolkata" }, // TODO: confirm home zone
+  { city: "London", timeZone: "Europe/London" },
+  { city: "New York", timeZone: "America/New_York" },
+  { city: "Tokyo", timeZone: "Asia/Tokyo" },
+];
 
 export const factsLeft: Fact[] = [
   {
@@ -34,11 +37,6 @@ export const factsLeft: Fact[] = [
     value: "Currently Building",
     meta: "@craftui.space",
     metaHref: "https://craftui.space",
-  },
-  {
-    icon: Location01Icon,
-    label: "Location",
-    value: "Kolkata, India", // TODO: confirm
   },
   {
     icon: Call02Icon,
@@ -56,20 +54,14 @@ export const factsLeft: Fact[] = [
 
 export const factsRight: Fact[] = [
   {
-    icon: Clock01Icon,
-    label: "Local time",
-    value: "", // filled live
-    kind: "clock",
-  },
-  {
     icon: Mail01Icon,
     label: "Email",
-    value: "hello@indrabuildswebsites.com", // TODO: confirm
-    href: "mailto:hello@indrabuildswebsites.com",
+    value: "indranilmaiti16@gmail.com", // TODO: confirm
+    href: "mailto:indranilmaiti16@gmail.com",
   },
   {
     icon: UserCircleIcon,
     label: "Pronouns",
-    value: "your/pronouns", // TODO: set
+    value: "he/him", // TODO: set
   },
 ];

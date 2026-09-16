@@ -57,9 +57,7 @@ export function HomeHero({ index, total }: { index?: number; total?: number }) {
         </div>
 
         <PendantLamp className="hairline-t lg:hairline-t-none">
-          <div className="mb-3 flex min-h-7 items-center">
-            <Text variant="label" className="text-foreground/80">Get in touch</Text>
-          </div>
+          <div className="mb-3 flex min-h-7 items-center"></div>
           <div className="flex flex-col gap-3">
             <Link
               href={CONTACT_HREF}

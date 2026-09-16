@@ -195,7 +195,8 @@ export function TeletypeClock({
   className?: string;
 }) {
   const [active, setActive] = useState(defaultZone);
-  const [now, setNow] = useState(() => new Date());
+  // null on the server and on the first client render → identical markup
+  const [now, setNow] = useState<Date | null>(null);
   const [viewerZone, setViewerZone] = useState(zones[defaultZone].timeZone);
 
   useEffect(() => {
@@ -206,9 +207,12 @@ export function TeletypeClock({
   }, []);
 
   const zone = zones[active];
-  const { hh, mm, ss } = useMemo(() => partsIn(now, zone.timeZone), [now, zone.timeZone]);
+  const { hh, mm, ss } = useMemo(
+    () => (now ? partsIn(now, zone.timeZone) : { hh: "--", mm: "--", ss: "--", day: 0 }),
+    [now, zone.timeZone],
+  );
   const rel = useMemo(
-    () => relativeLabel(now, zone.timeZone, viewerZone),
+    () => (now ? relativeLabel(now, zone.timeZone, viewerZone) : "—"),
     [now, zone.timeZone, viewerZone],
   );
 
@@ -240,7 +244,7 @@ export function TeletypeClock({
       {zones.length > 1 && (
         <div role="tablist" aria-label="Time zones" className="flex gap-6">
           {zones.map((z, i) => {
-            const { hh: zh, mm: zm } = partsIn(now, z.timeZone);
+            const { hh: zh, mm: zm } = now ? partsIn(now, z.timeZone) : { hh: "--", mm: "--" };
             const selected = i === active;
             return (
               <button

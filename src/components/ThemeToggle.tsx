@@ -29,7 +29,9 @@ export function ThemeToggle({
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  const isDark = resolvedTheme === "dark";
+  // Theme is unknown on the server; only branch on it after mount so the
+  // SSR markup and the first client render agree (avoids hydration warnings).
+  const isDark = mounted && resolvedTheme === "dark";
   const Icon = mounted && isDark ? Sun : Moon;
 
   return (

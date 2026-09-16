@@ -146,6 +146,7 @@ export function LocationWidget({
         <motion.div
           className="grid grid-cols-[1.1fr_1fr_1fr] grid-rows-[auto_auto] gap-2 p-2"
           variants={tilesAnim}
+          initial={defaultView === "map" ? "hidden" : "shown"}
           animate={view === "map" ? "hidden" : "shown"}
           transition={t}
           aria-hidden={view === "map"}

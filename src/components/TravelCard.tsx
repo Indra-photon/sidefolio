@@ -89,7 +89,7 @@ function TravelCard() {
           </div>
           
           {/* Savings Badge */}
-          {/* <div className='mt-2 inline-flex items-center gap-1.5 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 text-green-700 text-sm font-medium px-3 py-1.5 rounded-full'>
+          {/* <div className='mt-2 inline-flex items-center gap-1.5 bg-linear-to-r from-green-50 to-emerald-50 border border-green-200 text-green-700 text-sm font-medium px-3 py-1.5 rounded-full'>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>

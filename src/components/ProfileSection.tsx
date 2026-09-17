@@ -140,7 +140,7 @@ const ProfileSection = () => {
                       className='h-24 w-24 rounded-full border-4 border-white/20'
                   />
                 </div>
-                <h1 className='text-5xl tracking-wide font-bold bg-transparent bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400'>Indranil Maiti</h1>
+                <h1 className='text-5xl tracking-wide font-bold bg-transparent bg-clip-text text-transparent bg-linear-to-b from-neutral-50 to-neutral-400'>Indranil Maiti</h1>
                 <div className='w-full flex justify-between items-center mb-8 mt-2'>
                     <p className='text-2xl text-neutral-400 tracking-wider'>Web Developer</p>
                     <motion.button onClick={() => setIsReviewsVisible(!isReviewsVisible)} className=' bg-white/10 backdrop-blur-sm rounded-xl shadow-md text-white font-medium tracking-widest text-xs px-2 py-1 cursor-pointer'>

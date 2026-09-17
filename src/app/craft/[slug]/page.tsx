@@ -6,7 +6,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Loader2, Calendar, Eye, ExternalLink, FileText } from "lucide-react";
 import { Heading } from "@/components/Heading";
-import { getOptimizedVideoUrl } from "@/lib/imagekit";
+import { getOptimizedVideoUrl } from "@/lib/imagekit-url";
 import { Container } from "@/components/Container";
 import { CodeWindow } from '@/components/CodeWindow';
 import { twMerge } from "tailwind-merge";
@@ -99,7 +99,7 @@ export default function CraftVideoDetailPage() {
           onLoadedMetadata={() => setVideoLoaded(true)}
         />
         
-        {/* <div className="absolute bottom-0 bg-gradient-to-t from-white dark:from-gray-900 h-40 w-full [mask-image:linear-gradient(to_bottom,transparent,white)]" /> */}
+        {/* <div className="absolute bottom-0 bg-linear-to-t from-white dark:from-gray-900 h-40 w-full mask-[linear-gradient(to_bottom,transparent,white)]" /> */}
       </motion.div>
 
       {/* Title and Tags */}

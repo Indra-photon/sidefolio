@@ -20,10 +20,10 @@
 //     return (
 //       <div className="relative">
 //         {/* Left Border Pattern - matching your existing design */}
-//         <div className="absolute left-0 top-0 bottom-0 w-8 border-x border-neutral-800 bg-[image:repeating-linear-gradient(315deg,_rgb(38_38_38)_0,_rgb(38_38_38)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px] bg-fixed hidden md:block"></div>
+//         <div className="absolute left-0 top-0 bottom-0 w-8 border-x border-neutral-800 bg-[repeating-linear-gradient(315deg,rgb(38_38_38)_0,rgb(38_38_38)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px] bg-fixed hidden md:block"></div>
         
 //         {/* Right Border Pattern */}
-//         <div className="absolute right-0 top-0 bottom-0 w-8 border-x border-neutral-800 bg-[image:repeating-linear-gradient(315deg,_rgb(38_38_38)_0,_rgb(38_38_38)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px] bg-fixed hidden md:block"></div>
+//         <div className="absolute right-0 top-0 bottom-0 w-8 border-x border-neutral-800 bg-[repeating-linear-gradient(315deg,rgb(38_38_38)_0,rgb(38_38_38)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px] bg-fixed hidden md:block"></div>
         
 //         <PrismHighlighter
 //           content={content}
@@ -40,7 +40,7 @@
 //             prose-ul:list-disc prose-ol:list-decimal
 //             prose-li:text-white
 //             [&_pre]:w-full [&_pre]:md:h-auto [&_pre]:md:max-h-96 [&_pre]:overflow-x-auto [&_pre]:text-[1px]
-//             [&_pre_code]:!text-sm [&_pre_code]:!leading-relaxed`
+//             [&_pre_code]:text-sm! [&_pre_code]:leading-relaxed!`
 //           )}
 //         />
 //       </div>
@@ -51,10 +51,10 @@
 //   return (
 //     <div className="relative">
 //       {/* Left Border Pattern */}
-//       <div className="absolute left-0 top-0 bottom-0 w-8 border-x border-neutral-800 bg-[image:repeating-linear-gradient(315deg,_rgb(38_38_38)_0,_rgb(38_38_38)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px] bg-fixed hidden md:block"></div>
+//       <div className="absolute left-0 top-0 bottom-0 w-8 border-x border-neutral-800 bg-[repeating-linear-gradient(315deg,rgb(38_38_38)_0,rgb(38_38_38)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px] bg-fixed hidden md:block"></div>
       
 //       {/* Right Border Pattern */}
-//       <div className="absolute right-0 top-0 bottom-0 w-8 border-x border-neutral-800 bg-[image:repeating-linear-gradient(315deg,_rgb(38_38_38)_0,_rgb(38_38_38)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px] bg-fixed hidden md:block"></div>
+//       <div className="absolute right-0 top-0 bottom-0 w-8 border-x border-neutral-800 bg-[repeating-linear-gradient(315deg,rgb(38_38_38)_0,rgb(38_38_38)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px] bg-fixed hidden md:block"></div>
       
 //       <div className={twMerge(
 //         CalSans.className,
@@ -104,10 +104,10 @@ export function BlogContentRenderer({ content }: BlogContentRendererProps) {
   return (
     <div className="relative">
       {/* Left Border Pattern - matching your existing design */}
-      <div className="absolute left-0 top-0 bottom-0 w-8 border-x border-neutral-800 bg-[image:repeating-linear-gradient(315deg,_rgb(38_38_38)_0,_rgb(38_38_38)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px] bg-fixed hidden md:block"></div>
+      <div className="absolute left-0 top-0 bottom-0 w-8 border-x border-neutral-800 bg-[repeating-linear-gradient(315deg,rgb(38_38_38)_0,rgb(38_38_38)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px] bg-fixed hidden md:block"></div>
       
       {/* Right Border Pattern */}
-      <div className="absolute right-0 top-0 bottom-0 w-8 border-x border-neutral-800 bg-[image:repeating-linear-gradient(315deg,_rgb(38_38_38)_0,_rgb(38_38_38)_1px,_transparent_0,_transparent_50%)] bg-[size:10px_10px] bg-fixed hidden md:block"></div>
+      <div className="absolute right-0 top-0 bottom-0 w-8 border-x border-neutral-800 bg-[repeating-linear-gradient(315deg,rgb(38_38_38)_0,rgb(38_38_38)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px] bg-fixed hidden md:block"></div>
       
       <PrismHighlighter
         content={content}
@@ -124,7 +124,7 @@ export function BlogContentRenderer({ content }: BlogContentRendererProps) {
           prose-ul:list-disc prose-ol:list-decimal
           prose-li:text-white
           [&_pre]:w-full [&_pre]:md:h-auto [&_pre]:md:max-h-96 [&_pre]:overflow-x-auto [&_pre]:text-[1px]
-          [&_pre_code]:!text-sm [&_pre_code]:!leading-relaxed`
+          [&_pre_code]:text-sm! [&_pre_code]:leading-relaxed!`
         )}
       />
     </div>

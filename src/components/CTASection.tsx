@@ -64,7 +64,7 @@ const handleCTAClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 };
 
   return (
-    <section className={twMerge(CalSans.className,"w-full bg-gradient-to-br from-gray-900 via-gray-800 to-black py-16 px-6 sm:px-8 lg:px-12 rounded-2xl border border-double border-gray-100 shadow-2xl overflow-hidden relative")}>
+    <section className={twMerge(CalSans.className,"w-full bg-linear-to-br from-gray-900 via-gray-800 to-black py-16 px-6 sm:px-8 lg:px-12 rounded-2xl border border-double border-gray-100 shadow-2xl overflow-hidden relative")}>
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
@@ -108,7 +108,7 @@ const handleCTAClick = (e: React.MouseEvent<HTMLButtonElement>) => {
               className="group relative inline-flex items-center gap-3 bg-white hover:bg-gray-100 text-gray-900 font-semibold text-base sm:text-lg px-8 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-2xl hover:scale-105 overflow-hidden"
             >
               {/* Animated background */}
-              <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
+              <span className="absolute inset-0 bg-linear-to-r from-blue-500 to-purple-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
               
               <span className="relative">{buttonText}</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
@@ -122,7 +122,7 @@ const handleCTAClick = (e: React.MouseEvent<HTMLButtonElement>) => {
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
-          className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-dashed border-gray-600 rounded-2xl p-8 lg:p-10 shadow-xl"
+          className="bg-linear-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-dashed border-gray-600 rounded-2xl p-8 lg:p-10 shadow-xl"
         >
           <div className="space-y-6">
             {/* Quote icon */}

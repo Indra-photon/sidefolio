@@ -129,7 +129,7 @@ export const Contact = () => {
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-          className="w-16 h-16 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center mx-auto mb-4"
+          className="w-16 h-16 bg-linear-to-br from-primary to-primary/80 rounded-full flex items-center justify-center mx-auto mb-4"
         >
           <Send className="w-8 h-8 text-white" />
         </motion.div>

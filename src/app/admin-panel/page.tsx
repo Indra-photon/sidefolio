@@ -3,6 +3,9 @@ import { Badge } from '@/components/ui/badge';
 import { FileText, FolderOpen, Eye, Clock } from 'lucide-react';
 import Link from 'next/link';
 
+// Admin dashboard is always live data — never prerender it.
+export const dynamic = 'force-dynamic';
+
 async function getDashboardStats() {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/admin/dashboard-stats`, {

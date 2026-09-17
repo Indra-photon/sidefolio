@@ -14,6 +14,7 @@ import { IconLayoutSidebarRightCollapse } from "@tabler/icons-react";
 // import { isMobile } from "@/lib/utils";
 import { isMobile } from "@/lib/mobutils";
 import img from "../../public/images/profilepic.webp";
+import { ThemeToggle } from "./ThemeToggle";
 
 export const Sidebar = () => {
   const [open, setOpen] = useState(isMobile() ? false : true);
@@ -27,7 +28,7 @@ export const Sidebar = () => {
             animate={{ x: 0 }}
             transition={{ duration: 0.2, ease: "linear" }}
             exit={{ x: -200 }}
-            className="px-6  z-[100] py-10 bg-neutral-900 max-w-[14rem] lg:w-fit  fixed lg:relative  h-screen left-0 flex flex-col justify-between"
+            className="px-6 z-[100] py-10 bg-sidebar text-sidebar-foreground max-w-56 lg:w-fit fixed lg:relative h-screen left-0 flex flex-col justify-between"
           >
             <div className="flex-1 overflow-auto">
               <SidebarHeader />
@@ -40,10 +41,10 @@ export const Sidebar = () => {
         )}
       </AnimatePresence>
       <button
-        className="fixed lg:hidden bottom-4 right-4 h-8 w-8 border border-neutral-200 rounded-full backdrop-blur-sm flex items-center justify-center z-50"
+        className="fixed lg:hidden bottom-4 right-4 h-8 w-8 border border-border bg-background/70 rounded-full backdrop-blur-sm flex items-center justify-center z-50"
         onClick={() => setOpen(!open)}
       >
-        <IconLayoutSidebarRightCollapse className="h-4 w-4 text-secondary" />
+        <IconLayoutSidebarRightCollapse className="h-4 w-4 text-foreground" />
       </button>
     </>
   );
@@ -74,21 +75,16 @@ export const Navigation = ({
             });
           }}
           className={twMerge(
-            "text-secondary transition duration-200 flex items-center space-x-2 py-2 px-2 rounded-md text-sm",
-            isActive(link.url) && "bg-white shadow-lg text-primary"
+            "text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent transition duration-200 flex items-center space-x-2 py-2 px-2 rounded-md text-sm",
+            isActive(link.url) && "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground shadow-lg"
           )}
         >
-          <link.icon
-            className={twMerge(
-              "h-4 w-4 flex-shrink-0",
-              isActive(link.url) && "text-sky-500"
-            )}
-          />
+          <link.icon className="h-4 w-4 shrink-0" />
           <span>{link.label}</span>
         </Link>
       ))}
 
-      <Heading as="p" className="text-sm md:text-sm lg:text-sm pt-10 px-2">
+      <Heading as="p" className="text-xs md:text-xs lg:text-xs font-medium uppercase tracking-wider text-sidebar-foreground/50 pt-10 pb-1 px-2">
         Socials
       </Heading>
       {socials.map((link) => (
@@ -104,18 +100,18 @@ export const Navigation = ({
           });
         }}
           className={twMerge(
-            "text-secondary hover:text-primary transition duration-200 flex items-center space-x-2 py-2 px-2 rounded-md text-sm"
+            "text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent transition duration-200 flex items-center space-x-2 py-2 px-2 rounded-md text-sm"
           )}
         >
-          <link.icon
-            className={twMerge(
-              "h-4 w-4 flex-shrink-0",
-              isActive(link.url) && "text-sky-500"
-            )}
-          />
+          <link.icon className="h-4 w-4 shrink-0" />
           <span>{link.label}</span>
         </Link>
       ))}
+
+      <Heading as="p" className="text-xs md:text-xs lg:text-xs font-medium uppercase tracking-wider text-sidebar-foreground/50 pt-10 pb-1 px-2">
+        Theme
+      </Heading>
+      <ThemeToggle />
     </div>
   );
 };
@@ -128,12 +124,12 @@ const SidebarHeader = () => {
           src={img}
           alt="Avatar"
           fill
-          className="object-cover object-top rounded-full flex-shrink-0"
+          className="object-cover object-top rounded-full shrink-0"
         />
       </div>
       <div className="flex text-sm flex-col pt-2">
-        <p className="font-bold text-secondary">Welcome,</p>
-        <p className="font-light text-secondary">to my portfolio</p>
+        <p className="font-semibold text-sidebar-foreground">Welcome,</p>
+        <p className="text-sidebar-foreground/70">to my portfolio</p>
       </div>
     </div>
   );

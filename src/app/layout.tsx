@@ -1,19 +1,20 @@
-import { Sidebar } from "@/components/Sidebar";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { twMerge } from "tailwind-merge";
-import { Footer } from "@/components/Footer";
 import { GoogleTagManager } from '@next/third-parties/google'
 import { Toaster } from "@/components/ui/sonner"
 import { Analytics } from "@vercel/analytics/next"
-import { Container } from "@/components/Container";
 import { ViewTransitions } from 'next-view-transitions'
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { ThemeHotkey } from "@/components/ThemeHotkey";
+import { Navbar } from "@/components/UINewBlocks/Navbar";
 
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-sans",
+  display: "swap",
 });
+
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.indrabuildswebsites.com/"),
@@ -83,22 +84,27 @@ export default function RootLayout({
 }) {
   return (
     <ViewTransitions>
-      <html lang="en">
-        <body
-          className={twMerge(
-            inter.className,
-            "flex antialiased h-screen overflow-hidden bg-gray-100"
-          )}
-        >
-          <Sidebar />
-          <Container className="lg:pl-2 lg:pt-2 bg-black flex-1 overflow-y-auto">
-            <div className="flex-1 bg-black min-h-screen lg:rounded-tl-xl overflow-y-auto">
+      <html
+        lang="en"
+        suppressHydrationWarning
+        className={inter.variable}
+      >
+        <body className="min-h-screen antialiased bg-background text-foreground">
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <ThemeHotkey />
+            <Navbar />
+            <div className="min-h-screen">
               {children}
-              <Analytics />
             </div>
-          </Container>
-          <GoogleTagManager gtmId="GTM-PHTQSD64" />
-          <Toaster position="top-right" />
+            <Analytics />
+            <GoogleTagManager gtmId="GTM-PHTQSD64" />
+            <Toaster position="top-right" />
+          </ThemeProvider>
         </body>
       </html>
     </ViewTransitions>

@@ -43,3 +43,20 @@ export const fmtDay = (iso: string) =>
   });
 export const fmtCount = (n: number) => `${n} contribution${n === 1 ? "" : "s"}`;
 export const fmtWeek = (iso: string) => `week of ${fmtDay(iso)}`;
+
+export type Granularity = "week" | "day";
+
+/** Points for the line/bar views: one per week (Sunday-aligned) or one per day. */
+export function series(days: import("../data").Day[], granularity: Granularity) {
+  if (granularity === "day") {
+    return days.map((d) => ({ value: d.count, start: d.date, label: fmtDay(d.date) }));
+  }
+  const first = new Date(days[0].date + "T00:00:00Z").getUTCDay();
+  const out: { value: number; start: string; label: string }[] = [];
+  days.forEach((d, i) => {
+    const w = Math.floor((i + first) / 7);
+    if (!out[w]) out[w] = { value: 0, start: d.date, label: fmtWeek(d.date) };
+    out[w].value += d.count;
+  });
+  return out;
+}

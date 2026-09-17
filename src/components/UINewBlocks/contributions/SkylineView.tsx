@@ -2,8 +2,8 @@
 
 import { useMemo } from "react";
 import { Text } from "../Typography";
-import { summarize, type Day } from "../data";
-import { GraphTip, fmtCount, fmtWeek } from "./GraphTip";
+import type { Day } from "../data";
+import { GraphTip, fmtCount, series, type Granularity } from "./GraphTip";
 
 /**
  * Skyline — 52 weekly columns as isometric blocks in one straight row.
@@ -40,21 +40,31 @@ function fills(kind: "current" | "lit" | "zero") {
   };
 }
 
-export function SkylineView({ days }: { days: Day[] }) {
-  const { weekly, starts, months } = useMemo(() => {
-    const { weekly } = summarize(days);
-    const first = new Date(days[0].date + "T00:00:00Z").getUTCDay();
-    const starts = weekly.map((_, w) => days[Math.max(0, w * 7 - first)].date);
+export function SkylineView({ days, granularity = "week" }: { days: Day[]; granularity?: Granularity }) {
+  const { weekly, starts, labels, months } = useMemo(() => {
+    const pts = series(days, granularity);
+    const weekly = pts.map((p) => p.value);
+    const starts = pts.map((p) => p.start);
+    const labels = pts.map((p) => p.label);
     const months: { col: number; label: string }[] = [];
     let last = -1;
     starts.forEach((iso, i) => {
-      const m = new Date(iso + "T00:00:00Z").getUTCMonth();
-      if (m !== last && m % 2 === 0)
-        months.push({ col: i, label: new Date(iso + "T00:00:00Z").toLocaleString("en", { month: "short", timeZone: "UTC" }) });
-      last = m;
+      const dt = new Date(iso + "T00:00:00Z");
+      if (granularity === "week") {
+        const m = dt.getUTCMonth();
+        if (m !== last && m % 2 === 0) months.push({ col: i, label: dt.toLocaleString("en", { month: "short", timeZone: "UTC" }) });
+        last = m;
+      } else {
+        // 30d: a date every 7th day; 7d: weekday initials
+        if (starts.length > 10) {
+          if (i % 7 === 0) months.push({ col: i, label: dt.toLocaleString("en", { day: "numeric", month: "short", timeZone: "UTC" }) });
+        } else {
+          months.push({ col: i, label: dt.toLocaleString("en", { weekday: "short", timeZone: "UTC" }) });
+        }
+      }
     });
-    return { weekly, starts, months };
-  }, [days]);
+    return { weekly, starts, labels, months };
+  }, [days, granularity]);
 
   const max = Math.max(1, ...weekly);
   const n = weekly.length;
@@ -68,8 +78,8 @@ export function SkylineView({ days }: { days: Day[] }) {
   const vbY = -HMAX - BD / 2 - 8, vbH = HMAX + BD + groundY + 16;
 
   return (
-    <div className="w-full">
-      <svg viewBox={`${vbX} ${vbY} ${vbW} ${vbH}`} className="w-full" role="img" aria-label="Weekly contributions as isometric columns">
+    <div className="mx-auto flex h-full w-full flex-col justify-center" style={{ maxWidth: n < 20 ? n * 44 : undefined }}>
+      <svg viewBox={`${vbX} ${vbY} ${vbW} ${vbH}`} className="max-h-[calc(100%-1.5rem)] w-full" role="img" aria-label={`${granularity === "week" ? "Weekly" : "Daily"} contributions as isometric columns`}>
         {/* Ground line: the front edge of the street */}
         <line x1={minX} x2={minX + spanX} y1={groundY} y2={groundY} stroke="var(--hairline-strong)" />
 
@@ -84,7 +94,7 @@ export function SkylineView({ days }: { days: Day[] }) {
           const right = `${pt(x1, y0, h)} ${pt(x1, y1, h)} ${pt(x1, y1, 0)} ${pt(x1, y0, 0)}`;
           const top = `${pt(x0, y0, h)} ${pt(x1, y0, h)} ${pt(x1, y1, h)} ${pt(x0, y1, h)}`;
           return (
-            <GraphTip key={i} label={fmtWeek(starts[i])} value={fmtCount(v)}>
+            <GraphTip key={i} label={labels[i]} value={fmtCount(v)}>
               <g className="cursor-default outline-none transition-opacity duration-150 hover:opacity-70" tabIndex={-1}>
                 <polygon points={left} style={{ fill: f.left }} />
                 <polygon points={right} style={{ fill: f.right }} />
@@ -96,18 +106,22 @@ export function SkylineView({ days }: { days: Day[] }) {
       </svg>
 
       {/* Month labels under their column */}
-      <div className="relative mt-1 h-4" aria-hidden>
-        {months.map((m) => (
+      <div className="relative mt-2 h-4" aria-hidden>
+        {months.map((m) => {
+          const pct = ((m.col * PITCH + BW) / vbW) * 100;
+          return (
           <Text
             key={`${m.label}-${m.col}`}
             variant="labelSm"
             as="span"
-            className="absolute normal-case tracking-normal"
-            style={{ left: `${((m.col * PITCH - vbX) / vbW) * 100}%` }}
+            className="absolute whitespace-nowrap normal-case tracking-normal"
+            // centre each label on its column; keep the first/last inside the box
+            style={{ left: `${pct}%`, transform: pct < 6 ? "none" : pct > 90 ? "translateX(-100%)" : "translateX(-50%)" }}
           >
             {m.label}
           </Text>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

@@ -3,3 +3,5 @@
 export { ColorPicker } from "./color-picker";
 export { AnimatedDeleteButton } from "./animated-delete-button";
 export { VariantDeleteButton } from "./variant-delete-button";
+export { TextBoxTrimDemo } from "./text-box-trim";
+export { TextBoxPlayground } from "./text-box-playground";

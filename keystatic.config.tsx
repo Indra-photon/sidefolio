@@ -97,6 +97,22 @@ const components = {
     label: "Demo: Variant delete button",
     schema: {},
   }),
+  TextBoxPlayground: block({
+    label: "Demo: Text box playground",
+    description: "Dropdowns for text-box-trim / text-box-edge with a live sample and a metrics diagram.",
+    schema: {},
+  }),
+  TextBoxTrimDemo: block({
+    label: "Demo: Text box trim (button + card)",
+    description: "Shows the invisible font space in a button and a card; toggle to the skeleton view.",
+    schema: {
+      fix: fields.checkbox({
+        label: "Include the 'Trimmed' state",
+        description: "Adds a third toggle that applies text-box-trim so readers can compare.",
+        defaultValue: false,
+      }),
+    },
+  }),
 };
 
 // Every subcategory below a category, any depth: value "springs/drag",

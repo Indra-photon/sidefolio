@@ -167,3 +167,12 @@
     transparent
   );
 }
+
+/* Demo: hatched band for "invisible" font space inside a line box. */
+@utility skeleton-hatch {
+  background-image: repeating-linear-gradient(
+    135deg,
+    color-mix(in oklch, var(--color-amber-500) 55%, transparent) 0 1px,
+    transparent 1px 5px
+  );
+}

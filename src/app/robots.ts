@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/api/', '/admin-panel/'],
+      disallow: ['/api/', '/admin-panel/', '/keystatic/'],
     },
     sitemap: 'https://www.indrabuildswebsites.com/sitemap.xml',
     host: 'https://www.indrabuildswebsites.com',

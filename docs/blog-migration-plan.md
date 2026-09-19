@@ -1,6 +1,6 @@
 # Blog migration plan — adopt `gustavo-fior/craft` mechanics, keep sidefolio styling
 
-Date: 2026-09-18. Status: **Phases 0–5 + 8 (editor) done** (⌘K menu deferred). `/blogs-new` is feature-complete on sample content: static pages, animated sidebar, `.md` twins + `Accept: text/markdown` proxy, `/llms.txt`, `/llms-full.txt`, `/og/blog/…` cards, post toolbar (copy Markdown / copy link / view source). Next: Phase 6 (content + media migration — needs Mongo access and Cloudflare details) or restyle of the legacy demos.
+Date: 2026-09-18. Status: **Cutover done (2026-09-19)** — blog lives at `/blog`; old Mongo blog, its APIs, models and legacy components removed; `HomeBlog` + `sitemap.ts` read the MDX collection; 301s for the old URLs. Remaining: ⌘K (deferred), craft videos still on Mongo/ImageKit (§9). `/blogs-new` is feature-complete on sample content: static pages, animated sidebar, `.md` twins + `Accept: text/markdown` proxy, `/llms.txt`, `/llms-full.txt`, `/og/blog/…` cards, post toolbar (copy Markdown / copy link / view source). Next: Phase 6 (content + media migration — needs Mongo access and Cloudflare details) or restyle of the legacy demos.
 
 ---
 

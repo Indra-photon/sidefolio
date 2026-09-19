@@ -2,7 +2,7 @@
 // flip it to "/blog" at cutover and every link, route handler matcher,
 // sitemap entry and llms.txt line follows.
 
-export const BLOG_BASE = "/blogs-new";
+export const BLOG_BASE = "/blog";
 export const BLOG_NAME = "Articles";
 export const BLOG_DESCRIPTION =
   "Notes on motion, design engineering, AI workflows and full-stack work.";

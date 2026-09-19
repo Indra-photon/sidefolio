@@ -1,6 +1,6 @@
 # Blog authoring & maintenance guide
 
-How to add and change things in the MDX blog (`/blogs-new` today, `/blog` after cutover).
+How to add and change things in the MDX blog (`/blog`).
 Everything derives from two places: the **content folder** (`content/blog/`) and the
 **category tree** (`src/lib/blog/categories.ts`). Routes, sidebar, index, `.md` twins,
 `llms.txt`, OG images and metadata all follow automatically.
@@ -35,7 +35,7 @@ src/components/BlogUI/demos/ ← interactive components usable inside MDX
    and every demo (*Demo: Colour picker* …). Images: drop/paste a file or use the Image
    block; the file is saved to `public/blog/…` and referenced as `/blog/…`.
 5. **Save**. The `.mdx` (and images) are written to the repo. Preview at
-   `http://localhost:3000/blogs-new/<category>/<path>` — it's the real page.
+   `http://localhost:3000/blog/<category>/<path>` — it's the real page.
 6. `npm run media:sync` (uploads any new images to R2 and updates
    `content/media-manifest.json`), then commit and push; Vercel deploys and serves the
    images from R2.
@@ -203,12 +203,12 @@ and `HUES` in `src/app/og/blog/[...path]/route.tsx`.
 
 | What | Where |
 |---|---|
-| Blog URL prefix (`/blogs-new` → `/blog`) | `BLOG_BASE` in `src/lib/blog/site.ts` **and** the literal `BLOG_BASE` + `config.matcher` in `src/proxy.ts` |
+| Blog URL prefix (`/blog` → `/blog`) | `BLOG_BASE` in `src/lib/blog/site.ts` **and** the literal `BLOG_BASE` + `config.matcher` in `src/proxy.ts` |
 | Editor (fields, component blocks, collections per category) | `keystatic.config.ts`; UI at `/keystatic` (dev only), linked from `/admin-panel` |
 | Site URL, blog name/description, author | `src/lib/blog/site.ts` |
 | Media host (R2 URL → custom domain later) | `NEXT_PUBLIC_MEDIA_URL`; resolver in `src/lib/blog/media.ts`; `remotePatterns` + cache TTL in `next.config.mjs` |
 | GitHub "View source" links | `GITHUB_REPO` in `site.ts` (repo must be public for links to work) |
-| Code font | `Geist_Mono` in `src/app/blogs-new/layout.tsx`; token scoped in `BlogUI/blog.css` (`.blog-root { --font-mono }`) |
+| Code font | `Geist_Mono` in `src/app/blog/layout.tsx`; token scoped in `BlogUI/blog.css` (`.blog-root { --font-mono }`) |
 | Shiki themes | `themes: { light, dark }` in `BlogUI/mdx/code-block.tsx` **and** `src/lib/blog/rehype-syntax-highlight.ts` (keep both identical) |
 | Prose styling (h2/h3/p/code/quote/table) | `BlogUI/mdx/prose.tsx` — body copy goes through `Text variant="body"`; don't add new type sizes at call sites |
 | Sidebar animation timing | constants at the top of `BlogUI/shell/sidebar-nav.tsx`; keyframes in `BlogUI/blog.css` |
@@ -223,19 +223,12 @@ serialisable props and must not import from `content-collections`.
 
 ---
 
-## 7. Cutover to `/blog` (one-time, after content migration)
+## 7. Old URLs
 
-1. Delete the old tree: `src/app/blog/`, blog/category API routes, `Blog`/`BlogCategory`
-   models, admin blog pages (keep craft-video ones), `PrismHighlighter`, legacy blog
-   components, `mdx-components.tsx`.
-2. `git mv src/app/blogs-new src/app/blog`.
-3. `BLOG_BASE = "/blog"` in `site.ts`; `BLOG_BASE` and `matcher: "/blog/:path*"` in `src/proxy.ts`.
-4. `navlinks.tsx` already points at `/blog`; update `HomeBlog` to read `allPosts` (featured)
-   on the server; add blog entries to `src/app/sitemap.ts` from `availablePosts()`.
-5. Remove unused deps: `@next/mdx`, `@mdx-js/loader`, `next-mdx-remote`, `react-markdown`,
-   `remark-gfm`, `prismjs`, `@types/prismjs`, `@mapbox/rehype-prism`, `tinymce`,
-   `@tinymce/tinymce-react`. Drop `NEXT_PUBLIC_TINYMCE_API_KEY` from `.env.example`.
-6. `npm run build` — every `/blog/*` route must be `○ Static` / `● SSG`.
+The Mongo-era blog is gone. Its indexed URLs are 301-redirected in `next.config.mjs`
+(`redirects()`): the Zustand post maps to its new path, the two Framer Motion posts go to
+`/blog/motion`, and `/blogs-new/*` (the pre-cutover preview base) maps to `/blog/*`. Add a
+redirect there whenever you rename or delete a published post.
 
 ---
 

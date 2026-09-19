@@ -1,14 +1,12 @@
 {
-  "/blog/hello-mdx/Blog01-Profile-avatar-morph@2x.png": {
-    "key": "blog/hello-mdx/Blog01-Profile-avatar-morph@2x.058c99d2.png",
-    "hash": "058c99d2",
+  "/blog/fix-invisible-space-with-text-box-trim/thumbnail.png": {
+    "key": "blog/fix-invisible-space-with-text-box-trim/thumbnail.8bdb9744.png",
+    "hash": "8bdb9744",
     "width": 2400,
     "height": 1260
   },
-  "/blog/motion/hello-mdx-sample.png": {
-    "key": "blog/motion/hello-mdx-sample.96f737bc.png",
-    "hash": "96f737bc",
-    "width": 1200,
-    "height": 630
+  "/blog/state-management-zustand/thumbnail.avif": {
+    "key": "blog/state-management-zustand/thumbnail.a00c189c.avif",
+    "hash": "a00c189c"
   }
 }

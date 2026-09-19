@@ -20,7 +20,7 @@
     {
       "name": "Design Engineering",
       "slug": "design-engineering",
-      "description": "Where design decisions meet implementation details.",
+      "description": "Some of the key decesions to make web or app interfaces more fluid and joyful to use. ",
       "order": 2,
       "color": "orange",
       "icon": "pen-tool",

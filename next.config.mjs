@@ -27,6 +27,23 @@ const nextConfig = {
     qualities: [75],
   },
   turbopack: {},
+  // Old Mongo-era blog URLs that were indexed. Map each to its new home.
+  async redirects() {
+    return [
+      {
+        source: "/blog/state-management-with-zustand/how-to-use-zustand-for-state-management",
+        destination: "/blog/full-stack/state-management-with-zustand/state-management-zustand",
+        permanent: true,
+      },
+      {
+        source: "/blog/framer-motion-animation/:slug",
+        destination: "/blog/motion",
+        permanent: true,
+      },
+      { source: "/blogs-new", destination: "/blog", permanent: true },
+      { source: "/blogs-new/:path*", destination: "/blog/:path*", permanent: true },
+    ];
+  },
 };
 
 export default withContentCollections(nextConfig);

@@ -191,9 +191,9 @@ export function CodeBlockClient({
               id={`${tabId}-panel-${index}`}
               role="tabpanel"
               aria-labelledby={`${tabId}-tab-${index}`}
-              // React 18 types don't know `inert`; the empty string is the
-              // boolean-attribute form the DOM expects.
-              {...({ inert: active ? undefined : "" } as Record<string, unknown>)}
+              // Runtime is React 19 (boolean `inert`); the installed React 18
+              // types don't know the attribute, hence the cast.
+              {...({ inert: !active } as Record<string, unknown>)}
               className={cn(
                 "code-block-panel min-w-0 transition-opacity duration-200",
                 active

@@ -5,6 +5,7 @@ import { allPosts } from "content-collections";
 import { Text } from "@/components/UINewBlocks/Typography";
 import { CATEGORY_TREE, findCategory } from "@/lib/blog/categories";
 import { postId } from "@/lib/blog/posts";
+import { BLOG_BASE } from "@/lib/blog/site";
 import { cn } from "@/lib/utils";
 
 // Keystatic's editor URLs: /keystatic/collection/<top-level category>/item/<file slug>
@@ -91,7 +92,7 @@ export default function AdminDashboard() {
       <section>
         <div className="flex items-center justify-between pb-3 hairline-b">
           <Text variant="labelSm">All posts</Text>
-          <Link href="/blogs-new" className="group inline-flex items-center gap-1">
+          <Link href={BLOG_BASE} className="group inline-flex items-center gap-1">
             <Text variant="labelSm" className="transition-colors group-hover:text-foreground">
               View blog
             </Text>

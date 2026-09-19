@@ -7,7 +7,7 @@ import { NextResponse, type NextRequest } from "next/server";
 // The matcher must be a literal, so it repeats BLOG_BASE from
 // src/lib/blog/site.ts - update both at cutover.
 
-const BLOG_BASE = "/blogs-new";
+const BLOG_BASE = "/blog";
 
 function prefersMarkdown(accept: string | null) {
   if (!accept) return false;
@@ -52,5 +52,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: "/blogs-new/:path*",
+  matcher: "/blog/:path*",
 };

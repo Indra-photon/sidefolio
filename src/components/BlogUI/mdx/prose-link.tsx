@@ -33,7 +33,7 @@ export function ProseLink({ className, children, href, ...props }: ComponentProp
         <img
           aria-hidden="true"
           alt=""
-          className="mr-1 inline-block size-3 rounded-[3px] align-[-1px]"
+          className="mr-1.5 inline-block size-[1em] rounded-[3px] align-[-0.15em]"
           decoding="async"
           height={14}
           loading="lazy"

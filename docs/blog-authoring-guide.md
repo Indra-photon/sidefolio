@@ -16,11 +16,39 @@ src/components/BlogUI/demos/ ← interactive components usable inside MDX
 
 ---
 
-## 1. Add a post
+## 1. Add a post (the editor — recommended)
 
-1. Create `content/blog/<category-path>/<slug>.mdx`. The **folder is the category** —
-   `content/blog/motion/springs/foo.mdx` lands under Motion → Springs. The file name is
-   the URL slug (`kebab-case`, no spaces).
+1. `npm run dev`, open **http://localhost:3000/keystatic** (or `/admin-panel` → **Editor**).
+   Everything here is local-only; on the deployed site these routes are 404s.
+2. Pick the category in the left sidebar (Motion, Design Engineering, …) → **Add**.
+3. Fill the form on the right:
+   - **Title** → the **Slug** is generated; edit it if you like.
+   - **Subcategory** dropdown: top level, or any subcategory of that category (nested ones
+     show as "Springs / Drag"). Changing it later moves the post in the sidebar/URL.
+   - **Description** (one sentence), **Published on**, optional Tags / Order / Featured /
+     Thumbnail (1200×630) / Resources.
+   - **Published** toggle: off = draft (renders locally only), on = live after deploy.
+   (Alternative entry point: `/admin-panel` → **New post** — a category picker that creates
+   the draft and jumps into the same editor.)
+4. Write in the **Content** editor. Type `/` for blocks: headings, lists, quotes, code,
+   tables, and the site's components — *Image*, *Video*, *Code block (tabs)*, *Link list*,
+   and every demo (*Demo: Colour picker* …). Images: drop/paste a file or use the Image
+   block; the file is saved to `public/blog/…` and referenced as `/blog/…`.
+5. **Save**. The `.mdx` (and images) are written to the repo. Preview at
+   `http://localhost:3000/blogs-new/<category>/<path>` — it's the real page.
+6. `npm run media:sync` (uploads any new images to R2 and updates
+   `content/media-manifest.json`), then commit and push; Vercel deploys and serves the
+   images from R2.
+
+Everything the editor writes is a plain file, so §1b still works whenever you prefer a
+text editor, and both can be mixed on the same post.
+
+### 1b. Add a post by hand (text editor)
+
+1. Create `content/blog/<category>/<slug>.mdx`. The **folder is the top-level category**;
+   for a subcategory add `subcategory: springs` (or `springs/drag`) to the frontmatter —
+   that's what the editor writes. Nested folders (`motion/springs/foo.mdx`) also work.
+   The file name is the URL slug (`kebab-case`, no spaces).
 2. Frontmatter (required fields marked *):
 
 ```yaml
@@ -28,9 +56,11 @@ src/components/BlogUI/demos/ ← interactive components usable inside MDX
 title: Hello MDX                       # *
 description: One sentence for cards, meta and llms.txt   # *
 publishedAt: "2026-09-18"              # * ISO date, quoted
+published: true                        # false/omitted = draft (local only)
+subcategory: springs                   # optional; "springs/drag" for deeper levels
 order: 1                               # position inside its category (lower first); default 0
 updatedAt: "2026-10-01"                # optional
-thumbnail: https://imagedelivery.net/<hash>/<id>/public   # optional; card + OG image
+thumbnail: /blog/motion/foo/hero.png   # optional; repo path, R2 key or URL; social preview image
 tags: [motion, springs]                # optional
 featured: true                         # optional; used by the home "Writing" section after cutover
 resources:                             # optional; rendered at the bottom + in the .md twin
@@ -43,27 +73,16 @@ resources:                             # optional; rendered at the bottom + in t
 3. Write Markdown. Standard syntax works: headings (`##`, `###`), lists, links, `**bold**`,
    blockquotes, tables, images, fenced code (` ```tsx `), inline code.
    Fenced and inline code are highlighted at build time (light + dark themes).
-4. Run `npm run dev` and open the URL. **In development every post renders**, launched or not.
-5. Reading time is computed automatically.
+4. Reading time is computed automatically.
 
-### Launching (making it live in production)
-Posts are hidden in production until listed in `LAUNCHED_POSTS` in `src/lib/blog/posts.ts`:
-
-```ts
-const LAUNCHED_POSTS = new Set<string>([
-  "motion/hello-mdx",              // <category path>/<slug>
-  "motion/springs/nested-sample",
-]);
-```
-
-Unlaunched posts: not in the sidebar/index/sitemap/llms/OG, and their URL 404s in prod.
-Remove the entry to unpublish.
+### Publishing
+`published: true` in frontmatter (the editor's **Published** toggle). Drafts still render
+in development so you can preview them; in production they are absent from the sidebar,
+index, sitemap, llms.txt and OG routes, and their URL 404s.
 
 ### Removing a post
-Delete the `.mdx` file and its `LAUNCHED_POSTS` entry. If it was public, keep the URL
-alive with a redirect in `next.config.mjs` (`redirects()`), or leave a short stub post.
-
----
+Delete it in the editor (item → *Delete*) or delete the `.mdx` file. If it was public,
+keep the URL alive with a redirect in `next.config.mjs` (`redirects()`).
 
 ## 2. Components you can use inside MDX (no imports needed)
 
@@ -99,6 +118,11 @@ alive with a redirect in `next.config.mjs` (`redirects()`), or leave a short stu
 - `code` is a JS template literal: escape backticks as `` \` `` and `${` as `\${`.
 - Leading indentation inside the template literal is preserved automatically.
 - Prefer plain fenced ` ``` ` blocks when there is only one snippet and no filename matters.
+- **Editor compatibility:** Keystatic can only open component props written as strings or
+  JSON (`tabs={[{"label":"CSS","language":"css","code":"…\n…"}]}`) — that is the form it
+  writes itself. A hand-written template-literal `CodeBlock` renders fine on the site but
+  the editor will refuse the file with "mdxJsxFlowElement has unexpected attributes".
+  If you write by hand and want to edit later in the editor, use the JSON form.
 
 ---
 
@@ -114,6 +138,8 @@ alive with a redirect in `next.config.mjs` (`redirects()`), or leave a short stu
    export { SpringDemo } from "./spring-demo";
    ```
 3. Use it in MDX: `<SpringDemo />`. Props must be JSX-literal (`stiffness={200}`, `label="x"`).
+   To make it insertable from the editor's `/` menu, add a `block()` for it in
+   `keystatic.config.ts` → `components` (label + a `fields.*` entry per prop).
 4. In the `.md` twin and `llms-full.txt` it becomes a "> Interactive demo: … open the page" note.
 
 Shared building blocks for demos live in `BlogUI/mdx/`: `Compare`, `SegmentedControl`,
@@ -123,71 +149,53 @@ edit the site-wide `src/components/ui/*`.
 
 ---
 
-## 4. Images and video (R2 + next/image)
+## 4. Images and video
 
-Full setup, upload script, caching details and troubleshooting: **`docs/media-guide.md`**.
+**In the editor** (default): the *Image* block, or drop/paste a picture into the content.
+Keystatic saves it under `public/blog/…` and writes `<Img src="/blog/…" alt="…" />`.
+Run **`npm run media:sync`** before committing: it mirrors `public/blog` to R2 (same
+folders, hashed names) and updates `content/media-manifest.json`; production then serves
+from R2, development from the local file. Width/height come from the manifest (or the file),
+and `next/image` resizes/converts with a 1-year cache. Thumbnails use the *Thumbnail* field
+the same way. Originals stay in git for the editor; keep them reasonable (≤ 2 MB, ≥ 1600 px
+wide for in-post, 1200×630 for thumbnails).
 
-1. Upload: `npm run media:upload -- ./file.png --alt "…"` → prints the `<Img>` snippet.
-2. Paste:
-   ```mdx
-   <Img src="blog/file.3f9a1c2b.png" alt="…" width={1600} height={900} />
-   <Img src="…" alt="…" width={…} height={…} priority caption="Fig. 1" />   # hero only
-   <Video src="blog/clip.9b1d2e3f.mp4" aspect="16 / 9" />                    # short muted loop
-   ```
-   - `alt`, `width`, `height` required; `priority` on at most one image per post.
-   - `src` is the R2 key from the script (or any absolute URL).
-3. Thumbnail for cards/OG: `thumbnail: blog/hero.8c1d9e0f.png` in frontmatter (1200×630).
-4. Env: `NEXT_PUBLIC_MEDIA_URL` (Vercel + `.env`) and the four `R2_*` vars (`.env` only).
+**Videos / off-repo media**: R2 + `npm run media:upload` (see `docs/media-guide.md`):
+```mdx
+<Img src="blog/shot.3f9a1c2b.png" alt="…" width={1600} height={900} />   # R2 key: size required
+<Video src="blog/clip.9b1d2e3f.mp4" aspect="16 / 9" />                    # short muted loop
+```
+The editor's *Video* block takes the R2 key/URL (or a Cloudflare Stream id).
+
+Env for R2: `NEXT_PUBLIC_MEDIA_URL` (Vercel + `.env`), `R2_*` (`.env` only).
 
 ---
 
-## 5. Add a category
+## 5. Add a category or subcategory
 
-Edit `src/lib/blog/categories.ts` and add an entry to `CATEGORIES`:
+**In the editor:** `/admin-panel` → **Categories** (or `/keystatic` → **Settings → Categories**). Add an item (name, slug,
+description, order; top-level ones also pick a colour and an icon), or open a category and add
+entries under **Subcategories** (and, inside those, **Sub-subcategories**). Save.
 
-```ts
-{
-  slug: "systems",                 // folder name + URL segment
-  name: "Systems",
-  description: "Shown on the category page and llms.txt.",
-  color: "rose",                   // one of CategoryColor (violet|orange|amber|cyan|emerald|blue|rose)
-  order: 7,                        // sidebar/index position among top-level categories
-  children: [],
-},
-```
+Then **restart `npm run dev`** — the editor builds its post collections from this file when
+it starts, so a new category only shows up in the *Posts* sidebar after a restart. The folder
+under `content/blog/` is created automatically when you add the first post to it.
 
-Then:
-1. `mkdir content/blog/systems` and add at least one post (empty categories are hidden from
-   the sidebar/index automatically, but the `/blogs-new/systems` page still exists).
-2. Give it an icon: `src/components/BlogUI/shell/category-icon.tsx` → `icons` map,
-   `systems: Boxes` (any `lucide-react` icon). Top-level categories only.
-3. Need a new colour name? Add it to `CategoryColor` in `categories.ts`, then to the three
-   maps in `category-icon.tsx` (`categoryTextColor`, `dotColorFrom`, `dotColorTo`) and to
-   `HUES` in `src/app/og/blog/[...path]/route.tsx`.
+The file behind the screen is `content/categories.json`; the site reads it at build, so
+sidebar order, colours, icons, routes, llms.txt and the sitemap all follow it.
 
-### Add a subcategory (any depth)
-```ts
-{
-  slug: "motion", …,
-  children: [
-    { slug: "springs", name: "Springs", order: 1 },
-    { slug: "gestures", name: "Gestures", order: 2, children: [
-      { slug: "drag", name: "Drag", order: 1 },   // → content/blog/motion/gestures/drag/
-    ]},
-  ],
-},
-```
-Create the matching nested folder. Subcategories inherit the parent's colour (set `color`
-to override) and have no icon. The sidebar indents each level; the breadcrumb shows the
-full path; the dot animation already accounts for nesting.
+Rules:
+- Slugs are kebab-case and become the folder + URL segment. **Renaming a slug does not move
+  existing posts** — rename the matching folder under `content/blog/` too.
+- Subcategories inherit the parent's colour; only top-level categories have icons.
+- The editor goes three levels deep; deeper nesting can be added by hand in the JSON.
+- Removing a category with posts in it makes the build fail (posts in an unknown folder) —
+  move or delete the posts first.
 
-### Rename / reorder / remove
-- **Reorder**: change `order`.
-- **Rename (label only)**: change `name`.
-- **Rename slug**: rename the folder **and** the slug, update `LAUNCHED_POSTS` entries, and
-  add a redirect for the old URLs.
-- **Remove**: delete the entry and folder; a post left in an unknown folder fails the build
-  with a clear error naming the file.
+**New colour or icon names:** `CATEGORY_COLORS` / `CATEGORY_ICONS` in
+`src/lib/blog/categories.ts`, then the matching maps in
+`src/components/BlogUI/shell/category-icon.tsx` (colour → three maps; icon → lucide component)
+and `HUES` in `src/app/og/blog/[...path]/route.tsx`.
 
 ---
 
@@ -196,6 +204,7 @@ full path; the dot animation already accounts for nesting.
 | What | Where |
 |---|---|
 | Blog URL prefix (`/blogs-new` → `/blog`) | `BLOG_BASE` in `src/lib/blog/site.ts` **and** the literal `BLOG_BASE` + `config.matcher` in `src/proxy.ts` |
+| Editor (fields, component blocks, collections per category) | `keystatic.config.ts`; UI at `/keystatic` (dev only), linked from `/admin-panel` |
 | Site URL, blog name/description, author | `src/lib/blog/site.ts` |
 | Media host (R2 URL → custom domain later) | `NEXT_PUBLIC_MEDIA_URL`; resolver in `src/lib/blog/media.ts`; `remotePatterns` + cache TTL in `next.config.mjs` |
 | GitHub "View source" links | `GITHUB_REPO` in `site.ts` (repo must be public for links to work) |
@@ -234,7 +243,8 @@ serialisable props and must not import from `content-collections`.
 
 - [ ] `npm run build` passes (content errors print the offending file path).
 - [ ] New post has `title`, `description`, `publishedAt`; slug is kebab-case; folder is a real category.
-- [ ] Post is in `LAUNCHED_POSTS` if it should be public.
+- [ ] `published: true` if it should be public.
+- [ ] `npm run media:sync` run; `content/media-manifest.json` committed with the images.
 - [ ] Every `<Img>` has `alt`, `width`, `height`; hero image has `priority`.
 - [ ] Demos are `"use client"`, exported from `demos/index.ts`, wrapped in `<Demo>`.
 - [ ] No `border-*` utilities in BlogUI (use `hairline-*` / `shadow-border`).

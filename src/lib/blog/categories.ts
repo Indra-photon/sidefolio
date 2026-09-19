@@ -1,20 +1,39 @@
-// The category tree is the single source of truth for the sidebar, the
-// index page, routes, llms.txt and the sitemap. Folders under content/blog
-// mirror it: content/blog/<slug>/<child-slug>/<post>.mdx.
-//
-// Adding a category  = one entry here + a folder.
-// Adding a subcategory = a `children` entry + a nested folder.
-// Top-level nodes carry the colour used by the sidebar dot; descendants
-// inherit it unless they set their own.
+import data from "../../../content/categories.json";
 
-export type CategoryColor =
-  | "violet"
-  | "orange"
-  | "amber"
-  | "cyan"
-  | "emerald"
-  | "blue"
-  | "rose";
+// The category tree is the single source of truth for the sidebar, the
+// index page, routes, llms.txt and the sitemap. It is edited in the
+// Keystatic "Categories" screen (content/categories.json) — or by hand.
+// Folders under content/blog mirror it: content/blog/<slug>/<child>/<post>.mdx.
+//
+// Top-level nodes carry the colour + icon used by the sidebar; descendants
+// inherit the colour unless they set their own.
+
+export const CATEGORY_COLORS = [
+  "violet",
+  "orange",
+  "amber",
+  "cyan",
+  "emerald",
+  "blue",
+  "rose",
+] as const;
+export type CategoryColor = (typeof CATEGORY_COLORS)[number];
+
+export const CATEGORY_ICONS = [
+  "spline",
+  "pen-tool",
+  "layers",
+  "sparkles",
+  "flask",
+  "server",
+  "code",
+  "palette",
+  "book",
+  "lightbulb",
+  "terminal",
+  "folder",
+] as const;
+export type CategoryIconName = (typeof CATEGORY_ICONS)[number];
 
 export type Category = {
   slug: string;
@@ -22,68 +41,51 @@ export type Category = {
   description?: string;
   /** Only top-level nodes need a colour; children inherit. */
   color?: CategoryColor;
+  /** Top-level only. */
+  icon?: CategoryIconName;
   /** Sidebar / index order within the parent. Lower first. */
   order: number;
   children?: Category[];
 };
 
-export const CATEGORIES: Category[] = [
-  {
-    slug: "motion",
-    name: "Motion",
-    description: "Easing, springs, gestures and the feel of interfaces in motion.",
-    color: "violet",
-    order: 1,
-    children: [
-      {
-        slug: "springs",
-        name: "Springs",
-        description: "Physics-based motion.",
-        order: 1,
-      },
-    ],
-  },
-  {
-    slug: "design-engineering",
-    name: "Design Engineering",
-    description: "Where design decisions meet implementation details.",
-    color: "orange",
-    order: 2,
-    children: [],
-  },
-  {
-    slug: "redesigning",
-    name: "Redesigning",
-    description: "Case studies: taking an existing interface apart and rebuilding it.",
-    color: "amber",
-    order: 3,
-    children: [],
-  },
-  {
-    slug: "how-to-ai",
-    name: "How to AI",
-    description: "Practical workflows for building with and alongside AI.",
-    color: "cyan",
-    order: 4,
-    children: [],
-  },
-  {
-    slug: "experiment",
-    name: "Experiment",
-    description: "Prototypes, half-ideas and things tried for the sake of it.",
-    color: "emerald",
-    order: 5,
-    children: [],
-  },
-  {
-    slug: "full-stack",
-    name: "Full Stack",
-    description: "Backends, data, deployment and the plumbing behind the UI.",
-    color: "blue",
-    order: 6,
-    children: [],
-  },
-];
+type RawCategory = {
+  slug: string;
+  name: string;
+  description?: string | null;
+  color?: string | null;
+  icon?: string | null;
+  order?: number | null;
+  children?: RawCategory[] | null;
+};
+
+const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+function normalise(raw: RawCategory, trail: string[]): Category {
+  const path = [...trail, raw.slug].join("/");
+  if (!SLUG.test(raw.slug)) {
+    throw new Error(`Category slug "${path}" must be kebab-case (letters, digits, hyphens).`);
+  }
+  if (!raw.name) throw new Error(`Category "${path}" has no name.`);
+  const color = raw.color && (CATEGORY_COLORS as readonly string[]).includes(raw.color)
+    ? (raw.color as CategoryColor)
+    : undefined;
+  const icon = raw.icon && (CATEGORY_ICONS as readonly string[]).includes(raw.icon)
+    ? (raw.icon as CategoryIconName)
+    : undefined;
+  return {
+    slug: raw.slug,
+    name: raw.name,
+    description: raw.description ?? undefined,
+    color,
+    icon,
+    order: raw.order ?? 0,
+    children: (raw.children ?? []).map((child) => normalise(child, [...trail, raw.slug])),
+  };
+}
+
+export const CATEGORIES: Category[] = (data.categories as RawCategory[]).map((raw) =>
+  normalise(raw, []),
+);
 
 /** A category plus the path of slugs from the root down to it. */
 export type CategoryNode = Category & {
@@ -94,11 +96,7 @@ export type CategoryNode = Category & {
   children: CategoryNode[];
 };
 
-function resolve(
-  category: Category,
-  parentPath: string[],
-  inherited: CategoryColor,
-): CategoryNode {
+function resolve(category: Category, parentPath: string[], inherited: CategoryColor): CategoryNode {
   const path = [...parentPath, category.slug];
   const color = category.color ?? inherited;
   const children = [...(category.children ?? [])]

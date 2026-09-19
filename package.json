@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "media:upload": "node scripts/media-upload.mjs"
+    "media:upload": "node scripts/media-upload.mjs",
+    "media:sync": "node scripts/media-sync.mjs"
   },
   "dependencies": {
     "@content-collections/core": "^0.15.2",
@@ -15,6 +16,8 @@
     "@content-collections/next": "^0.2.11",
     "@hugeicons/core-free-icons": "^4.3.3",
     "@hugeicons/react": "^1.1.10",
+    "@keystatic/core": "^0.6.9",
+    "@keystatic/next": "^5.0.5",
     "@mapbox/rehype-prism": "^0.8.0",
     "@mdx-js/loader": "^2.3.0",
     "@next/mdx": "^13.4.19",

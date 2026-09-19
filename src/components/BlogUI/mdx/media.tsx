@@ -1,6 +1,7 @@
 import Image from "next/image";
 
-import { mediaUrl, streamUrl } from "@/lib/blog/media";
+import { localImageSize } from "@/lib/blog/image-size";
+import { isLocalPath, mediaUrl, streamUrl, syncedMedia } from "@/lib/blog/media";
 import { cn } from "@/lib/utils";
 
 // Reading column is ~590px wide on desktop; below lg it spans the viewport.
@@ -30,12 +31,13 @@ function Figure({
 }
 
 /**
- * `<Img src="blog/shot.3f9a1c.png" alt="…" width={1600} height={900} />`
- * `src` is an R2 key (from `npm run media:upload`) or any absolute URL.
- * Width/height are the intrinsic size and are required so the page never
- * shifts; next/image resizes and converts on the way through.
+ * `<Img src="/blog/…/shot.png" alt="…" />` (editor upload, size read from
+ * the file at build) or `<Img src="blog/shot.3f9a1c.png" alt="…" width={1600}
+ * height={900} />` (R2 key / absolute URL, size required). Width/height are
+ * the intrinsic size so the page never shifts; next/image resizes and
+ * converts on the way through.
  */
-export function Img({
+export async function Img({
   src,
   alt,
   width,
@@ -46,19 +48,32 @@ export function Img({
 }: {
   src: string;
   alt: string;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
   caption?: string;
   priority?: boolean;
   className?: string;
 }) {
+  let size = width && height ? { width, height } : null;
+  if (!size && isLocalPath(src)) {
+    // Prefer the dimensions recorded by `media:sync`; fall back to reading
+    // the file for images that haven't been synced yet.
+    const synced = syncedMedia(src);
+    size =
+      synced?.width && synced?.height
+        ? { width: synced.width, height: synced.height }
+        : await localImageSize(src);
+  }
+  if (!size) {
+    throw new Error(`<Img src="${src}"> needs width and height (only repo images under /public are measured automatically).`);
+  }
   return (
     <Figure caption={caption} className={className}>
       <Image
         src={mediaUrl(src)}
         alt={alt}
-        width={width}
-        height={height}
+        width={size.width}
+        height={size.height}
         priority={priority}
         loading={priority ? undefined : "lazy"}
         sizes={COLUMN_SIZES}

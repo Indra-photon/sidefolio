@@ -6,7 +6,9 @@ Vercel — nothing else to pay for or configure. Long videos with sound can opti
 Cloudflare Stream.
 
 ```
-you upload  →  R2 (original file, immutable, hashed name)
+editor      →  public/blog/<post>/file.png   (local; shows in editor + dev server)
+media:sync  →  R2  blog/<post>/file.<hash>.png + content/media-manifest.json
+production  →  <Img src="/blog/…"> resolves to the R2 URL via the manifest
 browser     →  /_next/image?url=…&w=640   (Vercel resizes + converts once, caches 1 year)
 ```
 
@@ -63,6 +65,32 @@ allow the host in `images.remotePatterns`.
 ---
 
 ## 2. Uploading
+
+### 2a. Editor images → `npm run media:sync` (the normal path)
+Images you add in the editor are saved to `public/blog/<post>/…` and referenced in MDX as
+`/blog/…`. They work immediately in development from the local folder. Before you commit:
+
+```bash
+npm run media:sync            # uploads new/changed files, skips the rest
+npm run media:sync -- --dry   # preview
+```
+- Mirrors the **same folder structure** into the bucket, adding a content hash before the
+  extension: `public/blog/hello-mdx/shot.png` → `blog/hello-mdx/shot.3f9a1c2b.png`.
+- Records each file in `content/media-manifest.json` (path → key + width/height).
+  **Commit the manifest with the post** — the production build reads it and serves those
+  images from R2; anything not in the manifest falls back to the copy in `public/`.
+- Unchanged files are skipped by hash; existing objects are detected with a HEAD.
+- Files deleted (or replaced) locally are dropped from the manifest **and deleted from R2**.
+  `--keep` skips the delete; `--prune` additionally removes every object under `blog/`
+  in the bucket that the manifest doesn't reference (use after manual clean-ups).
+  A page that is already deployed keeps pointing at an old key until the next deploy, so
+  push soon after a sync that removed something.
+- The MDX never changes — the editor keeps working from the local files.
+
+Workflow: write & upload in the editor → `npm run media:sync` → `git add` post + images +
+manifest → push.
+
+### 2b. Files outside the editor → `npm run media:upload`
 
 ```bash
 npm run media:upload -- ./screenshots/dot-flight.png --alt "Sidebar dot mid-flight"

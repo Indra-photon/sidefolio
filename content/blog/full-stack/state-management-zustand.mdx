@@ -1,0 +1,136 @@
+---
+title: State management using zustand
+subcategory: state-management-with-zustand
+description: >-
+  All about state management using zustand. How to set up, install and use it
+  for smooth state management in react
+published: true
+publishedAt: 2026-09-19
+order: 1
+featured: true
+tags:
+  - zustand
+  - 'state management '
+  - react
+  - frontend
+thumbnail: /blog/state-management-zustand/thumbnail.avif
+resources: []
+---
+React is a component-based library, there will be data in your application that you need to access across multiple unrelated components at different nesting levels. For example, imagine you're building an e-commerce application and you need shopping cart data in many places - the navbar needs to show a cart icon with the item count badge, each product card needs an "Add to Cart" button that updates the cart, the sidebar shows a mini cart preview, the checkout page displays full cart details, and the footer shows an order summary.&#x20;
+
+Without a state management solution like Zustand, you'd have to store the cart data in your top-level App component and then pass it down through every single layer of components, even those that don't actually need the cart data but are just in the middle of the component tree. This is called prop drilling and it becomes extremely messy and hard to maintain as your app grows.
+
+State management is absolutely a necessary component in building a large scale applications. There are multiple solutions like Redux Toolkit or ContextAPI is available to solve this purpose. But in some cases they lack the simplicity. 
+
+Zustand is lightweight state management library that offers simple and flexible approach to efficiently manage states in applications. Think zustand as your global storage box. You can read the data in any component of your application
+
+Today we will build a state management for handling user data. Assume you are building an e-commerce website. You need \`username\` in multiple places. We will store the data i.e. user data using zustand and can use it in any component we want for example profile page, cart page, navbar, etc.
+
+Enough of motivations. Let's get started with the code.
+
+# Installation
+
+<CodeBlock tabs={[{"label":"Install code","language":"ts","code":"npm i zustand"}]} hideHeader />
+
+## Create your store
+
+<CodeBlock tabs={[{"label":"Import Statement","language":"tsx","code":"import { create } from 'zustand';"}]} hideHeader={false} />
+
+\`create\` is used for creating the store in your application, where you will store your data.
+
+<CodeBlock tabs={[{"label":"Typescript","language":"tsx","code":"interface User {\n    id?: string;\n    name?: string;\n    email?: string;\n    avatar?: string;\n}\n\ninterface UserStore {\n    user: User | null;\n    setUser: (user: User | null) => void;\n}"}]} hideHeader />
+
+* TypeScript interface defining what a User looks like
+* **`user`** : The actual data (state)
+* **`setUser`** : An action to update the user
+
+<CodeBlock tabs={[{"label":"Store Hook","language":"tsx","code":"export const useUserStore = create<UserStore>((set, get) => ({\n    user: null,\n    setUser: (user) => set(() => ({ user}))\n}));"}]} hideHeader={false} />
+
+* **`export const useUserStore = create<UserStore>((set, get) => ({`** : We are creating a hook named \`useUserStore\` to use any in components to get access the data or perorm any action on the data
+* **`user: null`** : we are initializing our data as null in the beginning
+* **`set`** : is used to UPDATE the state
+* **`setUser: (user) => set({ user })`** : This is an action to update the user written as an arrow function. It takes \`user\` parameter and update the store with this new user using **`set(() => ({ user}))`**
+
+## **Different ways to write \`set\`:**
+
+Let me give an example with more state so that the idea of writing \`set\` in different ways becomes clear.
+
+<CodeBlock tabs={[{"label":"Set example","language":"tsx","code":"export const useUserStore = create<UserStore>((set, get) => ({\n    // STATE (Data)\n    user: null,  // user data\n    cartCount: 0,  // get how many items are in the cart\n    isLoading: false,\n\n    // ACTIONS (Functions to modify state)\n    setUser: (user) => set({ user }),\n    \n    incrementcartCount: () => set((state) => ({ \n        cartCount: state.cartCount + 1 \n    })),\n    \n    setLoading: (loading) => set({ isLoading: loading }),\n    \n    // GETTERS (Read-only computed values)\n    getTotalcartCount: () => get().cartCount * 2,\n}))"}]} hideHeader />
+
+There are 3 different ways.
+
+<CodeBlock tabs={[{"label":"Method 1: Direct Update","language":"tsx","code":"setUser: (user) => set({ user })  // Just replace the value directly."},{"label":"Method 2:  Update the value using current state ","language":"tsx","code":"incrementCount: () => set((state) => ({ \n    count: state.cartCount + 1   // updating the value using current state as state.count \n}))"},{"label":"Method 3: Update Multiple Values","language":"tsx","code":"updateUserAndCount: (user, count) => set({ \n    user: user,\n    cartCount: cartCount,\n    isLoading: false\n}). // update multiple values at once"}]} hideHeader={false} />
+
+## **How you can use store in components**
+
+There are multiple ways to do so.
+
+<CodeBlock tabs={[{"label":"Method 1: Get Everything at once","language":"tsx","code":"const { user, setUser } = useUserStore()"}]} hideHeader={false} />
+
+But this hs one problem. Component re-renders even if any other value in the store changes. Therefore it s better to access only those values or functions which is needed.
+
+<CodeBlock tabs={[{"label":"Method 2 : Select specific values","language":"tsx","code":"const user = useUserStore((state) => state.user)\nconst setUser = useUserStore((state) => state.setUser)"}]} hideHeader={false} />
+
+* Call the hook **`useUserStore`**  
+* **`(state)`** : selector function receives the full state 
+* select only the value which is needed **`state.user`** or **`state.setUser`**
+
+
+
+## How to build a **Custom component using the store** 
+
+For handling the user which will change upon sign-in or logout we write a custom component that updates the store  whenever such user actions happens. Therefore this function returns null. 
+
+<CodeBlock tabs={[{"label":"Get an user details","language":"tsx","code":"export function UserSync() {\n    const { isSignedIn, user, isLoaded } = useUser(); // Clerk hook to get user data, user signed in status you can use your own hooks to get these data\n    const setUser = useUserStore((state) => state.setUser); // Zustand action\n\n    useEffect(() => {\n        if (isLoaded) {\n            if (isSignedIn && user) {\n                setUser({ // Update Zustand store\n                    id: user.id,\n                    name: user.firstName ?? undefined,\n                    email: user.primaryEmailAddress?.emailAddress,\n                    avatar: user.imageUrl,\n                });\n            } else {\n                setUser(null); // setUser as null\n            }\n        }\n    }, [isSignedIn, user, isLoaded, setUser]);\n\n    return null;\n}"}]} hideHeader />
+
+
+
+* Clerk provides user data via **`useUser`** hook
+* Get the Zustand action **`setUser`** from store
+* Watch for changes using useEffect
+* When Clerk user changes:
+  * If user logged in → Update Zustand with user data
+  * If user logged out → Set Zustand user to **`null`**
+
+We also need to add this into your main entry point of your application so that whole app has an access to it. For example i added this to main **`layout.tsx`** file in a NextJS project. 
+
+<CodeBlock tabs={[{"label":"RootLayout.tsx","language":"tsx","code":"ple i added this to main layout.tsx file in a NextJS project. \n\nexport default function RootLayout({\n  children,\n}: Readonly<{\n  children: React.ReactNode;\n}>) {\n  return (\n    <ClerkProvider>\n    <html lang=\"en\">\n      <body\n        className={`${geistSans.variable} ${geistMono.variable} antialiased`}\n      >\n        <NavBar />\n        <UserSync /> // here you add your user data controlling component \n        {children}\n        <GoogleTagManager gtmId=\"Your GTM ID\" />\n        <Toaster position=\"top-right\" />\n      </body>\n    </html>\n    </ClerkProvider>\n  );\n}"}]} hideHeader={false} />
+
+
+
+## Example: Profile Page
+
+Now you can write a profile page component with the use of data from your store.&#x20;
+
+<CodeBlock tabs={[{"label":"ProfileData.tsx","language":"tsx","code":"'use client';\n\nimport React from 'react'\nimport { useUserStore } from '@/lib/store'\nimport { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'\nimport { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'\nimport { Badge } from '@/components/ui/badge'\nimport { Separator } from '@/components/ui/separator'\nimport { Mail, User, IdCard, Shield } from 'lucide-react'\n\nfunction ProfileData() {\n  const user = useUserStore((state) => state.user);\n\n  // Get initials for avatar fallback\n  const getInitials = (name?: string) => {\n    if (!name) return 'U';\n    return name\n      .split(' ')\n      .map(n => n[0])\n      .join('')\n      .toUpperCase()\n      .slice(0, 2);\n  };\n\n  if (!user) {\n    return (\n      <div className=\"flex items-center justify-center min-h-[400px]\">\n        <Card className=\"w-full max-w-md\">\n          <CardContent className=\"pt-6\">\n            <p className=\"text-center text-neutral-500\">No user data available</p>\n          </CardContent>\n        </Card>\n      </div>\n    );\n  }\n\n  return (\n    <div className=\"container mx-auto px-4 py-8 md:py-12\">\n      <div className=\"max-w-4xl mx-auto space-y-6\">\n        \n        {/* Header Card with Avatar */}\n        <Card className=\"border-neutral-200 shadow-sm\">\n          <CardHeader className=\"pb-4\">\n            <div className=\"flex flex-col sm:flex-row items-center sm:items-start gap-6\">\n              <Avatar className=\"w-24 h-24 sm:w-28 sm:h-28 border-4 border-neutral-100 shadow-md\">\n                <AvatarImage src={user.avatar} alt={user.name || 'User'} />\n                <AvatarFallback className=\"bg-neutral-200 text-neutral-700 text-2xl font-semibold\">\n                  {getInitials(user.name)}\n                </AvatarFallback>\n              </Avatar>\n              \n              <div className=\"flex-1 text-center sm:text-left space-y-2\">\n                <div className=\"flex flex-col sm:flex-row sm:items-center gap-3\">\n                  <CardTitle className=\"text-3xl font-bold text-neutral-900\">\n                    {user.name || 'User'}\n                  </CardTitle>\n                  <Badge variant=\"secondary\" className=\"bg-neutral-100 text-neutral-700 hover:bg-neutral-200 w-fit mx-auto sm:mx-0\">\n                    Active\n                  </Badge>\n                </div>\n                <CardDescription className=\"text-neutral-600 text-base\">\n                  Member Profile\n                </CardDescription>\n              </div>\n            </div>\n          </CardHeader>\n        </Card>\n\n        {/* Profile Information Card */}\n        <Card className=\"border-neutral-200 shadow-sm\">\n          <CardHeader>\n            <CardTitle className=\"text-xl font-semibold text-neutral-900\">\n              Profile Information\n            </CardTitle>\n            <CardDescription className=\"text-neutral-600\">\n              Your personal details and account information\n            </CardDescription>\n          </CardHeader>\n          <CardContent className=\"space-y-6\">\n            \n            {/* Full Name */}\n            <div className=\"flex items-start gap-4\">\n              <div className=\"mt-1 p-2 rounded-lg bg-neutral-100\">\n                <User className=\"w-5 h-5 text-neutral-600\" />\n              </div>\n              <div className=\"flex-1 space-y-1\">\n                <p className=\"text-sm font-medium text-neutral-500\">Full Name</p>\n                <p className=\"text-base font-semibold text-neutral-900\">\n                  {user.name || 'Not provided'}\n                </p>\n              </div>\n            </div>\n\n            <Separator className=\"bg-neutral-200\" />\n\n            {/* Email */}\n            <div className=\"flex items-start gap-4\">\n              <div className=\"mt-1 p-2 rounded-lg bg-neutral-100\">\n                <Mail className=\"w-5 h-5 text-neutral-600\" />\n              </div>\n              <div className=\"flex-1 space-y-1\">\n                <p className=\"text-sm font-medium text-neutral-500\">Email Address</p>\n                <p className=\"text-base font-semibold text-neutral-900 break-all\">\n                  {user.email || 'Not provided'}\n                </p>\n              </div>\n            </div>\n\n            <Separator className=\"bg-neutral-200\" />\n\n            {/* User ID */}\n            <div className=\"flex items-start gap-4\">\n              <div className=\"mt-1 p-2 rounded-lg bg-neutral-100\">\n                <IdCard className=\"w-5 h-5 text-neutral-600\" />\n              </div>\n              <div className=\"flex-1 space-y-1\">\n                <p className=\"text-sm font-medium text-neutral-500\">User ID</p>\n                <p className=\"text-base font-mono text-neutral-700 break-all\">\n                  {user.id || 'Not provided'}\n                </p>\n              </div>\n            </div>\n\n          </CardContent>\n        </Card>\n\n        {/* Account Status Card */}\n        <Card className=\"border-neutral-200 shadow-sm bg-neutral-50\">\n          <CardHeader>\n            <CardTitle className=\"text-xl font-semibold text-neutral-900 flex items-center gap-2\">\n              <Shield className=\"w-5 h-5 text-neutral-600\" />\n              Account Status\n            </CardTitle>\n          </CardHeader>\n          <CardContent>\n            <div className=\"flex items-center justify-between\">\n              <div className=\"space-y-1\">\n                <p className=\"text-sm text-neutral-600\">Your account is active and verified</p>\n                <p className=\"text-xs text-neutral-500\">All features are available</p>\n              </div>\n              <div className=\"flex items-center gap-2\">\n                <div className=\"w-3 h-3 rounded-full bg-green-500 animate-pulse\"></div>\n                <span className=\"text-sm font-medium text-neutral-700\">Online</span>\n              </div>\n            </div>\n          </CardContent>\n        </Card>\n\n      </div>\n    </div>\n  )\n}\n\nexport default ProfileData"}]} hideHeader={false} />
+
+
+
+That's it for the day. Hope, you learnt something new.
+
+Share with your friends. Follow and tag me on [Twitter.](https://x.com/Nil_phy_dreamer) 
+
+
+
+I will be back with new concepts. See you next time.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

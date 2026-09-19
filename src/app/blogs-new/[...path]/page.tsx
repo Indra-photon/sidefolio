@@ -9,7 +9,7 @@ import { PostPager } from "@/components/BlogUI/post/post-pager";
 import { Text } from "@/components/UINewBlocks/Typography";
 import { buildRows } from "@/lib/blog/rows";
 import { allStaticPaths, getPrevNext, resolvePath } from "@/lib/blog/posts";
-import { mediaUrl } from "@/lib/blog/media";
+import { absoluteMediaUrl } from "@/lib/blog/media";
 import { AUTHOR, BLOG_NAME, SITE_URL } from "@/lib/blog/site";
 
 type Props = { params: Promise<{ path: string[] }> };
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (resolved.kind === "post") {
     const { post } = resolved;
     const ogImage = post.thumbnail
-      ? mediaUrl(post.thumbnail)
+      ? absoluteMediaUrl(post.thumbnail, SITE_URL)
       : `/og/blog/${[...post.categoryPath, post.slug].join("/")}`;
     return {
       title: post.title,
@@ -105,7 +105,7 @@ export default async function BlogPathPage({ params }: Props) {
     datePublished: post.publishedAt,
     dateModified: post.updatedAt ?? post.publishedAt,
     image: post.thumbnail
-      ? mediaUrl(post.thumbnail)
+      ? absoluteMediaUrl(post.thumbnail, SITE_URL)
       : `${SITE_URL}/og/blog/${[...post.categoryPath, post.slug].join("/")}`,
     keywords: post.tags.join(", "),
     author: { "@type": "Person", name: AUTHOR.name, url: AUTHOR.url },

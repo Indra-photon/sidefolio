@@ -1,4 +1,4 @@
-import { isAbsoluteUrl, mediaUrl } from "./media";
+import { absoluteMediaUrl, isAbsoluteUrl } from "./media";
 import { GITHUB_URL, SITE_URL } from "./site";
 
 // Converts a post's MDX into plain Markdown for agents: `<CodeBlock>` tabs
@@ -34,6 +34,20 @@ function attr(source: string, name: string) {
 }
 
 function parseTabs(attrs: string): CodeTab[] {
+  // The editor serialises props as JSON: tabs={[{"label":"CSS","code":"…"}]}
+  const json = /tabs=\{(\[[\s\S]*?\])\}\s*(?:hideHeader|\/>|$)/.exec(attrs)?.[1];
+  if (json) {
+    try {
+      const parsed = JSON.parse(json) as Partial<CodeTab>[];
+      return parsed.map((tab) => ({
+        label: tab.label ?? "",
+        language: tab.language ?? "",
+        code: (tab.code ?? "").trim(),
+      }));
+    } catch {
+      // Fall through to the hand-written template-literal form.
+    }
+  }
   const tabs: CodeTab[] = [];
   const codeRe = new RegExp(`code:\\s*${TEMPLATE_BODY.source}`, "g");
   let last = 0;
@@ -85,7 +99,7 @@ function renderMedia(name: string, attrs: string) {
     let url = src;
     if (!isAbsoluteUrl(src)) {
       try {
-        url = mediaUrl(src);
+        url = absoluteMediaUrl(src, SITE_URL);
       } catch {
         // NEXT_PUBLIC_MEDIA_URL unset: leave the key as-is.
       }

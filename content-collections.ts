@@ -123,6 +123,14 @@ const posts = defineCollection({
     thumbnail: z.string().optional(),
     tags: z.array(z.string()).default([]),
     featured: z.boolean().default(false),
+    /** Drafts (false) render in development only. Set from the editor. */
+    published: z.boolean().default(false),
+    /**
+     * Subcategory path below the folder's category, e.g. "springs" or
+     * "springs/drag" (the editor's Subcategory dropdown). Nested folders
+     * still work too; both are combined into categoryPath.
+     */
+    subcategory: z.string().default(""),
     resources: z
       .array(
         z.object({
@@ -134,10 +142,12 @@ const posts = defineCollection({
       .default([]),
   }),
   transform: async (document, context) => {
-    // content/blog/motion/springs/foo.mdx → categoryPath ["motion","springs"]
-    const categoryPath = document._meta.directory
-      .split(/[\\/]/)
-      .filter((segment) => segment && segment !== ".");
+    // content/blog/motion/springs/foo.mdx → ["motion","springs"], and/or
+    // content/blog/motion/foo.mdx + `subcategory: springs` → the same.
+    const categoryPath = [
+      ...document._meta.directory.split(/[\\/]/),
+      ...document.subcategory.split("/"),
+    ].filter((segment) => segment && segment !== ".");
     if (categoryPath.length === 0 || !isCategoryPath(categoryPath)) {
       throw new Error(
         `Post "${document._meta.filePath}" sits in a folder that is not a category in src/lib/blog/categories.ts (got "${categoryPath.join("/")}").`,

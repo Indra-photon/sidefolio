@@ -9,26 +9,19 @@ import {
 } from "./categories";
 import { BLOG_BASE } from "./site";
 
-// Posts that are live in production. Anything not listed still builds and
-// renders locally so drafts can be previewed, but is hidden from the sidebar,
-// index, sitemap, llms.txt and OG routes when NODE_ENV === "production".
-const LAUNCHED_POSTS = new Set<string>([
-  "motion/hello-mdx",
-  "motion/springs/nested-sample",
-]);
-
 /** Stable id for a post: category path + slug, e.g. "motion/springs/foo". */
 export function postId(post: Pick<Post, "categoryPath" | "slug">) {
   return [...post.categoryPath, post.slug].join("/");
 }
 
-export function isPostLaunched(post: Pick<Post, "categoryPath" | "slug">) {
-  return LAUNCHED_POSTS.has(postId(post));
-}
-
-export function isPostAvailable(post: Pick<Post, "categoryPath" | "slug">) {
+/**
+ * Drafts (`published: false` in frontmatter, the editor's "Published" toggle)
+ * still build and render locally so they can be previewed, but are hidden
+ * from the sidebar, index, sitemap, llms.txt and OG routes in production.
+ */
+export function isPostAvailable(post: Pick<Post, "published">) {
   if (process.env.NODE_ENV === "development") return true;
-  return isPostLaunched(post);
+  return post.published;
 }
 
 /** The minimal, serialisable shape client components (sidebar, ⌘K) receive. */

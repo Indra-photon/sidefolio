@@ -1,25 +1,37 @@
 import {
+  BookOpen,
+  Code2,
   FlaskConical,
+  Folder,
   Layers,
+  Lightbulb,
+  Palette,
   PenTool,
   Server,
   Sparkles,
   Spline,
+  Terminal,
   type LucideIcon,
   type LucideProps,
 } from "lucide-react";
 
-import type { CategoryColor } from "@/lib/blog/categories";
+import { rootCategory, type CategoryColor, type CategoryIconName } from "@/lib/blog/categories";
 import { cn } from "@/lib/utils";
 
-// Icon per top-level category slug. Nested categories have no icon.
-const icons: Record<string, LucideIcon> = {
-  motion: Spline,
-  "design-engineering": PenTool,
-  redesigning: Layers,
-  "how-to-ai": Sparkles,
-  experiment: FlaskConical,
-  "full-stack": Server,
+// Icon names selectable in the Categories editor → lucide components.
+const icons: Record<CategoryIconName, LucideIcon> = {
+  spline: Spline,
+  "pen-tool": PenTool,
+  layers: Layers,
+  sparkles: Sparkles,
+  flask: FlaskConical,
+  server: Server,
+  code: Code2,
+  palette: Palette,
+  book: BookOpen,
+  lightbulb: Lightbulb,
+  terminal: Terminal,
+  folder: Folder,
 };
 
 export const categoryTextColor: Record<CategoryColor, string> = {
@@ -66,8 +78,7 @@ export function CategoryIcon({
   className,
   ...props
 }: { slug: string; color: CategoryColor; className?: string } & LucideProps) {
-  const Icon = icons[slug];
-  if (!Icon) return null;
+  const Icon = icons[rootCategory([slug])?.icon ?? "folder"];
   return (
     <Icon
       aria-hidden="true"

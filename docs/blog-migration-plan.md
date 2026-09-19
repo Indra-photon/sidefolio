@@ -1,6 +1,6 @@
 # Blog migration plan — adopt `gustavo-fior/craft` mechanics, keep sidefolio styling
 
-Date: 2026-09-18. Status: **Phases 0–5 done** (⌘K menu deferred). `/blogs-new` is feature-complete on sample content: static pages, animated sidebar, `.md` twins + `Accept: text/markdown` proxy, `/llms.txt`, `/llms-full.txt`, `/og/blog/…` cards, post toolbar (copy Markdown / copy link / view source). Next: Phase 6 (content + media migration — needs Mongo access and Cloudflare details) or restyle of the legacy demos.
+Date: 2026-09-18. Status: **Phases 0–5 + 8 (editor) done** (⌘K menu deferred). `/blogs-new` is feature-complete on sample content: static pages, animated sidebar, `.md` twins + `Accept: text/markdown` proxy, `/llms.txt`, `/llms-full.txt`, `/og/blog/…` cards, post toolbar (copy Markdown / copy link / view source). Next: Phase 6 (content + media migration — needs Mongo access and Cloudflare details) or restyle of the legacy demos.
 
 ---
 
@@ -338,6 +338,23 @@ Settled (2026-09-18):
 Nothing blocks Phase 0–5.
 
 ---
+
+## 8. Editor — Keystatic, local mode (done 2026-09-19)
+- `keystatic.config.ts`: one collection per top-level category (built from `CATEGORIES`),
+  `path: content/blog/<slug>/**` so subcategory posts use a slashed slug; fields mirror the
+  content-collections schema; `fields.mdx` with component blocks for `Img`, `Video`,
+  `CodeBlock`, `LinkList` and every demo. Images → `public/blog/…` (repo), referenced as
+  `/blog/…`; `<Img>` measures repo images at build (`src/lib/blog/image-size.ts`).
+- Routes: `/keystatic` (UI, `notFound()` in production) + `/api/keystatic` (guarded).
+  Keystatic hard-codes `/keystatic` links, so the editor can't live under `/admin-panel`;
+  `/admin-panel` is the dashboard (posts, drafts, "new post in…", link to editor) and links
+  to it. Craft-videos admin untouched.
+- `published:` frontmatter replaced `LAUNCHED_POSTS`.
+- Deleted: admin blog/category pages and their API routes (`upload-blog`, `update-blog`,
+  `delete-blog`, `*-category`, `get-one-blog`, `dashboard-stats`). `get-all-blogs` stays
+  until `HomeBlog` moves at cutover.
+- GitHub mode (edit from the deployed site) not enabled — needs a GitHub App + sign-in;
+  can be added later without content changes.
 
 ## 9. Candidate follow-up: retire MongoDB + ImageKit entirely
 After Phase 7, the only remaining users of MongoDB and ImageKit are the **craft videos**

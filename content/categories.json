@@ -1,0 +1,74 @@
+{
+  "categories": [
+    {
+      "name": "Motion",
+      "slug": "motion",
+      "description": "Easing, springs, gestures and the feel of interfaces in motion.",
+      "order": 1,
+      "color": "violet",
+      "icon": "spline",
+      "children": [
+        {
+          "name": "Springs",
+          "slug": "springs",
+          "description": "Physics-based motion.",
+          "order": 1,
+          "children": []
+        }
+      ]
+    },
+    {
+      "name": "Design Engineering",
+      "slug": "design-engineering",
+      "description": "Some of the key decesions to make web or app interfaces more fluid and joyful to use. ",
+      "order": 2,
+      "color": "orange",
+      "icon": "pen-tool",
+      "children": []
+    },
+    {
+      "name": "Redesigning",
+      "slug": "redesigning",
+      "description": "Case studies: taking an existing interface apart and rebuilding it.",
+      "order": 3,
+      "color": "amber",
+      "icon": "layers",
+      "children": []
+    },
+    {
+      "name": "How to AI",
+      "slug": "how-to-ai",
+      "description": "Practical workflows for building with and alongside AI.",
+      "order": 4,
+      "color": "cyan",
+      "icon": "sparkles",
+      "children": []
+    },
+    {
+      "name": "Experiment",
+      "slug": "experiment",
+      "description": "Prototypes, half-ideas and things tried for the sake of it.",
+      "order": 5,
+      "color": "emerald",
+      "icon": "flask",
+      "children": []
+    },
+    {
+      "name": "Full Stack",
+      "slug": "full-stack",
+      "description": "Backends, data, deployment and the plumbing behind the UI.",
+      "order": 6,
+      "color": "blue",
+      "icon": "server",
+      "children": [
+        {
+          "name": "State Management",
+          "slug": "state-management-with-zustand",
+          "description": "I will discuss all about zustand library here. ",
+          "order": 1,
+          "children": []
+        }
+      ]
+    }
+  ]
+}

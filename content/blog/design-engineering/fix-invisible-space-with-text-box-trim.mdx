@@ -1,0 +1,72 @@
+---
+title: How you can fix invisible space issue with 2 lines of CSS
+subcategory: ''
+description: >-
+  How to use text-box-trim and text-box-edge CSS property to solve invisible
+  space issue in list, buttons in frontend design.
+published: true
+publishedAt: 2026-09-19
+order: 1
+featured: false
+tags:
+  - text-box-trim
+  - text-box-edge
+  - css
+  - frontend design
+  - design engineering
+thumbnail: /blog/fix-invisible-space-with-text-box-trim/thumbnail.png
+resources:
+  - url: https://developer.mozilla.org/en-US/docs/Web/CSS/text-box-edge
+    title: text-box-edge - MDN
+    description: Which font metrics define the top and bottom edge of a text box.
+  - url: https://developer.mozilla.org/en-US/docs/Web/CSS/text-box-trim
+    title: text-box-trim - MDN
+    description: Which sides of the text box get trimmed.
+---
+## The issue
+
+There is an invisible space around your buttons and card items. It causes optical misalignment and makes the UI look off, the kind of detail that reads as AI slop.
+
+When you design a button, or the description in a card list, you give it equal padding on every side and it still looks unbalanced. The reason is font geometry: the line box a font reserves above and below the letters is bigger than the letters themselves, so "equal" padding is not equal to the eye.
+
+Switch to the skeleton to see it. The hatched bands are the space the font claims above the capitals and below the baseline; the padding is identical on every side.
+
+<TextBoxTrimDemo fix={false} />
+
+## The solution
+
+Two CSS properties fix it: `text-box-edge` and `text-box-trim`.
+
+
+
+`text-box-edge` specifies which font metrics define the edges of a text element's box. It takes two values: the first is the over / top edge (block-start), the second is the under / bottom edge (block-end).
+
+<CodeBlock tabs={[{"label":"CSS","language":"css","filename":"styles.css","code":"text-box-edge: text text;       /* normal text/font metrics on both sides */\ntext-box-edge: text alphabetic; /* normal metrics on top, alphabetic baseline at the bottom */\ntext-box-edge: cap alphabetic;  /* from cap height down to the alphabetic baseline */\ntext-box-edge: ex text;         /* from x-height down to the normal text edge */"}]} hideHeader={false} />
+
+
+
+`text-box-trim` answers the question: which sides of the existing text box should be trimmed?
+
+<CodeBlock tabs={[{"label":"CSS","language":"css","filename":"styles.css","code":"text-box-trim: none;\ntext-box-trim: trim-start; /* trims the box at the top */\ntext-box-trim: trim-end;   /* trims the box at the bottom */\ntext-box-trim: trim-both;  /* trims both top and bottom */"}]} hideHeader={false} />
+
+## The fix
+
+The typical setting that removes the extra space around the font is:
+
+<CodeBlock tabs={[{"label":"CSS","language":"css","filename":"button.css","code":".my-button {\n  text-box-trim: trim-both;\n  text-box-edge: cap alphabetic;\n}"},{"label":"Tailwind","language":"html","filename":"button.tsx","code":"<button class=\"[text-box-trim:trim-both] [text-box-edge:cap_alphabetic] px-4 py-2\">\n  Save changes\n</button>"}]} hideHeader={false} />
+
+With this, the invisible space is gone and the button reads as visually balanced. Same demo, now with a third state that applies the two lines:
+
+<TextBoxTrimDemo fix />
+
+## Playground
+
+Pick a trim mode and the two edges. The left box applies the real CSS; the right one shows where each edge sits on the font and what gets cut.
+
+<TextBoxPlayground />
+
+Browser support is recent (Chrome 133+, Safari 18.2+), and unsupported browsers simply ignore the two lines, so there is no downside to shipping it today.
+
+## Finally
+
+Thank you for reading. Share your feedback, and see you in the next one.

@@ -1,0 +1,69 @@
+---
+title: Hello MDX
+description: A smoke test for the new blog pipeline - prose, code, and a live component.
+order: 1
+publishedAt: "2026-09-18"
+tags: [meta, setup]
+featured: true
+thumbnail: blog/r2-test.96f737bc.png
+resources:
+  - url: https://content-collections.dev
+    title: Content Collections
+    description: Typed content for the build step.
+  - url: https://shiki.style
+---
+
+This post exists to prove the whole chain works: frontmatter is validated,
+MDX compiles at build time, fenced code is highlighted by **shiki** with a
+light and a dark theme, and interactive components render inline.
+
+Inline code like `transform: scale(0.97)` or `useState()` is highlighted too.
+
+## A fenced block
+
+```tsx
+export function Button({ children }: { children: React.ReactNode }) {
+  return (
+    <button className="transition-transform duration-100 ease-out active:scale-[0.97]">
+      {children}
+    </button>
+  );
+}
+```
+
+## An image from R2
+
+<Img src="blog/r2-test.96f737bc.png" alt="R2 upload test" width={1200} height={630} caption="Stored on R2, resized and converted by next/image." />
+
+## A live component
+
+Pick a colour. The component is a client island inside server-rendered prose.
+
+<ColorPicker initialColor="#7c3aed" />
+
+## Tabs
+
+<CodeBlock
+  tabs={[
+    {
+      label: "Tailwind",
+      language: "html",
+      code: `<button class="transition-transform duration-100 ease-out active:scale-[0.97]">
+    Save changes
+</button>`,
+    },
+    {
+      label: "CSS",
+      language: "css",
+      code: `.button {
+    transition: transform 100ms ease-out;
+}
+
+.button:active {
+    transform: scale(0.97);
+}`,
+    },
+  ]}
+/>
+
+> Transition `transform` only, not `all`.
